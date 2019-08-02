@@ -47,7 +47,7 @@
             @else
                 
             @endif --}}
-            <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas"><i class="material-icons">info</i></button>
+            <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="ofertas({{ $vencimiento->idCredito }});"><i class="material-icons">info</i></button>
           </td>
         </tr>
         @endforeach
@@ -85,14 +85,7 @@
                   <th>Frecuencia</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+              <tbody id="tabla">
               </tbody>
             </table>
           </div>
@@ -151,3 +144,39 @@
 </div> --}}
 
 @endsection
+
+@push('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      let fechai, fechaf = "";
+      let tipo, plazo = "";
+      let monto, parcialidad, frecuencia = 0;
+      function ofertas(id){
+        $.ajax({
+          url     :  "/ofertas/"+id,
+          type    :  'get',
+          dataType:  'json',
+          success :   function (response) {
+              console.log(response[0]['fechai']);
+              $('#tabla').empty();
+              for(i=0;i<response.length;i++){
+                fechai      = response[i]['fechai'];
+                fechaf      = response[i]['fechaf'];
+                plazo       = response[i]['plazo'];
+                monto       = response[i]['monto'];
+                parcialidad    = response[i]['parcialidad'];
+                frecuencia     = response[i]['frecuencia'];           
+
+                $('#tabla').append("<tr>"+
+                    "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>"+monto+"</td><td>"+parcialidad+"</td><td>"+frecuencia+" </td></tr>"
+                );
+              }
+              //$("#miModal").modal("show");
+          },
+          error   :   function() {
+              alert('error');
+          }
+        });
+      }
+    </script>
+@endpush

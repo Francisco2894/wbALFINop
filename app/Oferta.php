@@ -13,8 +13,13 @@ class Oferta extends Model
     public $timestamps=false;
 
     protected $fillable=[
-        'idact','idto','fechai', 'fechaf', 'plazo', 'monto', 'parcialidad', 'frecuencia'
+        'idcliente','idto','fechai', 'fechaf', 'plazo', 'monto', 'parcialidad', 'frecuencia'
     ];
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class,'idcliente');
+    }
 
     protected $guarded=[ ];
 }
