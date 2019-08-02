@@ -1,0 +1,99 @@
+
+	Respaldo antes de PDF.
+- Se agrega registro de Nuevo Acuerdo y Edicion de Acuerdo 100%.
+
+	Respaldo antes de control de usuarios.
+- Descarga PDF funcionando.
+- PLantilla login, implementada.
+- Cambio nomenclatura tablas db de mayusculas a minusculas.
+- Prueba hosting exitoso.
+
+	Implementacion de importacion de datos Excel.
+- Importacion realizada-funcionando.
+- Se agrega opciones de resultado de gestion.
+- Se agrega modulo de vencimientos del mes.
+	-- Plantilla para guardar encuenta renovacion.
+
+07/11/2017
+
+- Asesor agenda sus actividades.
+- PDF vencimientos.
+- Correccion de tabla de datos a mostrar, solucionando problemas de duplicidad con union.
+
+
+08/11/2017
+
+- Fecha de acuerdo en devengos, plantilla y PDF.
+- Normalidad en PDF agenda.
+- Solo se muestran devengos con cuota > 0 en devengos.
+- Correccion de tabla de datos a mostrar, solucionando problemas con collections.transform().
+- Cambio de inputs text a number.
+- Funcionando todo.
+
+respaldo antes de crear bitacora de sesiones
+
+27/11/2017
+
+- Bitacora de sesiones.
+- Ya no se muestran todos los devengos para las frecuencias semanales y quincenales, se muestra el ultimo devengo vencido.
+- Promocion
+ -insertar
+ -editar
+
+14/12/2017
+
+- Modulo promocion realizado.
+- Selects mantienen valor al guardar un registro en resultado y renovaciones.
+- Se creo funcion para convertir fecha de d/m/y a y/m/d en importaciones.
+
+19/12/2017
+
+- Se agrega al pdf de agenda un resumen de la cartera del asesor.
+- Se crea modulo para gestores, pendiente pdf.
+
+
+03/01/2018
+
+- Actualizacion subida al Hosting.
+- Variables globales para conteo de registros importados y div para mostrar resultado.
+- PDF asesor ok.
+26/12/2017
+- Agenda Gestor realizado.
+- Validacion de nombre de archivo "SC"- o "DEVENGO-" al importar datos.
+- Input File accept solo .csv.
+- Query todos en prospeccion.
+
+- Se inicia desarrollo de modulo para gestion de acuerdos.
+
+05/02/2018
+
+- Implementado resumen de operaciones.
+- En desarrollo calculo de comisiones.
+
+18/02/2018
+
+- Calculo de comisiones al 90%, falta interfaz para mostrar.
+- Plantilla de resumen de cartera para Gerentes y Regionales.
+- Plantilla reporte de sesiones del día para regionales y Gerentes.
+- Calculo de normalidad corregido division entre 0.
+- Se agrega columna sucursal en plantilla Gestor.
+
+
+02-03-2018
+
+- Plantilla resumen cartera, se agrega mes anterior.
+
+17/03/2018
+
+- Se inicia desarrollo de calculo de comisiones con catalogo de reglas.
+
+15/04/2018
+
+- Se agrupa importacion de datos en un solo metodo por archivo.
+
+01/03/2019
+- Se agrega bucket +90 sin asignacion a gestor.
+
+07/05/2019
+- Se agrega a reporte diario (DashOper) concepto 19 recuperacion de creditos vencidos en plazo.
+
