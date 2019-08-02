@@ -15,6 +15,8 @@ use wbALFINop\Cliente;
 use wbALFINop\OtrosIngresos;
 use wbALFINop\ActivosFijos;
 use wbALFINop\Credito;
+use wbALFINop\Oferta;
+use wbALFINop\CatOferta;
 use Response;
 
 class SocioeconomicoController extends Controller
@@ -104,11 +106,11 @@ class SocioeconomicoController extends Controller
         return redirect()->route('socioeconomico.show',$actividad->idact);
     }
 
-    public function ofertas(Credito $idCliente)
+    public function ofertas(Request $request,Credito $idCliente)
     {
-        $cliente = Cliente::where('idcliente',$idCliente->idCliente)->first();
-        return $cliente->ofertas;
-        return Response::json($idCliente);
+            $cliente = Cliente::where('idcliente',$idCliente->idCliente)->first();
+            $cliente->ofertas;
+            return Response::json($cliente->ofertas);
     }
 
     /**

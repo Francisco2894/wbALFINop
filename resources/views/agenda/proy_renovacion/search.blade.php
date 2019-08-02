@@ -8,7 +8,7 @@
        {!! Form::select('searchTxt',$vendedores,$searchTxt,['class'=>'form-control', 'onchange'=>"this.form.submit()",'id'=>'searchTxt']) !!}
      </div>
        @else
-         <div class="form-group col-md-4">
+         <div class="form-group col-md-6">
            <label for="searchTxts">SUCURSAL</label>
            {{Form::select('searchTxts',$sucursales,$searchTxts,['class'=>'form-control','id'=>'searchTxts'])}}
          </div>
@@ -17,7 +17,4 @@
           {!! Form::select('searchTxt',$vendedores,$searchTxt,['class'=>'form-control', 'onchange'=>"this.form.submit()",'id'=>'searchTxt']) !!}
         </div>
     @endif
-    <div class="form-group col-md-2">
-   <a href="{{URL::action('ProspectobcController@create',['searchTxts'=>$searchTxts,'searchTxt'=>$searchTxt])}}" > <button type="button" class="btn btn-primary">NUEVO <i class="material-icons">person_add</i></button></a>
- </div>
 {{Form::close()}}

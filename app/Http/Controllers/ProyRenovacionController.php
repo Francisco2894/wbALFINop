@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use wbALFINop\Actividad;
+use wbALFINop\Oferta;
 
 class ProyRenovacionController extends Controller
 {
@@ -65,7 +67,7 @@ class ProyRenovacionController extends Controller
         ->join('tblsituacioncredito as s', 'c.idCredito', '=', 's.idCredito')
         ->join('tbldomicilioscredito as dc', 'c.idCredito', '=', 'dc.idCredito')
         ->join('catperfiles as cp', 'c.idPerfil', '=', 'cp.idPerfil')
-        ->select('c.idCredito', 'c.nomCliente', 'c.fechaFin', 's.maxDiasAtraso', 'c.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
+        ->select('c.idCredito','c.idCliente', 'c.nomCliente', 'c.fechaFin', 's.maxDiasAtraso', 'c.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
         ->where('c.idPerfil', '=', $query)
         ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<"'.$datef.'"')
         ->orderBy('c.fechaFin', 'asc')
@@ -109,9 +111,11 @@ class ProyRenovacionController extends Controller
                 $sucursales= array('0' => "Ninguno") + collect($catsucursal)
         ->pluck('sucursal', 'idSucursal')
         ->toArray();
+
+                $actividades = Actividad::all();
+                $ofertas = Oferta::all();
     
-    
-                return view('agenda.proy_renovacion.index')
+                return view('agenda.proy_renovacion.index',compact('actividades','ofertas'))
          -> with(['vencimientos'=>$vencimientos,"searchTxt"=>$query])
          ->with(['vendedores'=>$vendedores,"searchTxts"=>$querys])
          //->with(['mes'=>date('F')])
