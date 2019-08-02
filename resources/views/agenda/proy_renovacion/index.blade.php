@@ -22,7 +22,7 @@
           <th>Monto Credito</th>
           <th>Dom. Colonia</th>
           <th>Celular</th>
-          <th>oferta</th>
+          <th>Oferta</th>
           <th>Monto Oferta</th>
         </tr>
         </thead>
@@ -42,7 +42,12 @@
             <a href="{{URL::action('SocioeconomicoController@create',['id'=>$vencimiento->idCredito])}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
           </td>
           <td>
-            <a href="#"><button rel="tooltip" title="Información" class="btn btn-primary btn-simple btn-xs"><i class="material-icons">info</i></button></a>
+            {{-- @if ()
+            <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas"><i class="material-icons">info</i></button>                
+            @else
+                
+            @endif --}}
+            <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas"><i class="material-icons">info</i></button>
           </td>
         </tr>
         @endforeach
@@ -52,8 +57,52 @@
   </div>
 </div>
 
-<div>
-  
+<!-- Modal -->
+<div class="modal fade" id="ofertas" tabindex="-1" role="dialog" aria-labelledby="oferta" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+
+          </div>
+          <div class="panel-body">
+            <div class="responsive">
+
+            </div>
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Plazo</th>
+                  <th>Monto</th>
+                  <th>Parcialidad</th>
+                  <th>Frecuencia</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 {{-- <div class="row">

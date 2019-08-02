@@ -56,49 +56,49 @@ class SocioeconomicoController extends Controller
         $actividad = Actividad::create($request->all());
         
         //agrego gastos
-        $actividad = Actividad::first(); //borrar linea
-        // $request['idact'] = $actividad->idact;
-        // $tipo_gasto = 1;
-        // for ($i=1; $i <= 22; $i++) {
-        //     if ($i>11) { $tipo_gasto = 2; }
-        //     $gasto = Gastos::create([
-        //         'idtipogasto'   =>$tipo_gasto,
-        //         'idact'         =>$actividad->idact,
-        //         'idngasto'      =>$i,
-        //         'monto'         =>$request["gasto$i"]
-        //     ]);
-        // }
+        //$actividad = Actividad::first(); //borrar linea
+        $request['idact'] = $actividad->idact;
+        $tipo_gasto = 1;
+        for ($i=1; $i <= 22; $i++) {
+            if ($i>11) { $tipo_gasto = 2; }
+            $gasto = Gastos::create([
+                'idtipogasto'   =>$tipo_gasto,
+                'idact'         =>$actividad->idact,
+                'idngasto'      =>$i,
+                'monto'         =>$request["gasto$i"]
+            ]);
+        }
         
-        // //agrego transaciones
-        // $dia = 0;
-        // $tipo_transaccion = 1;
-        // for ($i=1; $i <= 10; $i++) {
-        //     $dia ++;
-        //     if ($dia>5) { $dia = 1; }
-        //     if ($i>5) { $tipo_transaccion = 2; }
-        //     $transaccion = TransaccionInventario::create([
-        //         'iddia'         => $dia,
-        //         'idtipotransac' => $tipo_transaccion,
-        //         'idact'         => $actividad->idact,
-        //         'lugar_compra'  => $request["lugar$i"],
-        //         'monto'         => $request["precio$i"]
-        //     ]);
-        // }
+        //agrego transaciones
+        $dia = 0;
+        $tipo_transaccion = 1;
+        for ($i=1; $i <= 10; $i++) {
+            $dia ++;
+            if ($dia>5) { $dia = 1; }
+            if ($i>5) { $tipo_transaccion = 2; }
+            $transaccion = TransaccionInventario::create([
+                'iddia'         => $dia,
+                'idtipotransac' => $tipo_transaccion,
+                'idact'         => $actividad->idact,
+                'lugar_compra'  => $request["lugar$i"],
+                'monto'         => $request["precio$i"]
+            ]);
+        }
 
-        // //agrego inventario
-        // for ($i=0; $i < $request->num_productos; $i++) { 
-        //     $inventario = Inventario::create([
-        //         'idact'         =>$actividad->idact,
-        //         'producto'      =>$request["producto$i"],
-        //         'cantidad'      =>$request["cantidad$i"],
-        //         'precio_compra' =>$request["precio_compra$i"],
-        //         'precio_venta'  =>$request["precio_venta$i"]
-        //     ]);
-        // }
+        //agrego inventario
+        for ($i=0; $i < $request->num_productos; $i++) { 
+            $inventario = Inventario::create([
+                'idact'         =>$actividad->idact,
+                'producto'      =>$request["producto$i"],
+                'cantidad'      =>$request["cantidad$i"],
+                'precio_compra' =>$request["precio_compra$i"],
+                'precio_venta'  =>$request["precio_venta$i"]
+            ]);
+        }
 
-        // //agrego activos fijos
-        // $activos = ActivosFijos::create($request->all());
-        // $otrosIngresos = OtrosIngresos::create($request->all());
+        //agrego activos fijos
+        $activos = ActivosFijos::create($request->all());
+        $otrosIngresos = OtrosIngresos::create($request->all());
 
         return redirect()->route('socioeconomico.show',$actividad->idact);
     }
