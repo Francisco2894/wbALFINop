@@ -29,34 +29,30 @@
         @php
             $i=0;
         @endphp
-       @foreach ($actividades as $actividad)
-        @foreach ($ofertas as $oferta)
-          @if ($oferta->idcliente == $actividad->idcliente)
-            @php
-              $i=1;   
-            @endphp
-          @endif
-          @if ($i=0)
-            <tr>
-              <td>{{$vencimiento->idCredito}}</td>
-              <td>{{$vencimiento->nomCliente}}</td>
-              <td>{{date_format(date_create($vencimiento->fechaFin),'d/m/Y')}}</td>
-              <td>{{$vencimiento->maxDiasAtraso}}</td>
-              <td>{{'$ '.number_format($vencimiento->montoInicial,2)}}</td>
-              <td>{{$vencimiento->colonia}}</td>
-              <td>{{$vencimiento->telefonoCelular}}</td>
-              <td>
-                <a href="{{URL::action('SocioeconomicoController@create',['id'=>$vencimiento->idCredito])}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
-              </td>
-              <td>
-                <button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">done</i></button>
-              </td>
-            </tr>
-          @endif
-        @endforeach
-        @php
-          $i=0;
-        @endphp
+       @foreach ($vencimientos as $vencimiento)
+        <tr>
+          <td>{{$vencimiento->idCredito}}</td>
+          <td>{{$vencimiento->nomCliente}}</td>
+          <td>{{date_format(date_create($vencimiento->fechaFin),'d/m/Y')}}</td>
+          <td>{{$vencimiento->maxDiasAtraso}}</td>
+          <td>{{'$ '.number_format($vencimiento->montoInicial,2)}}</td>
+          <td>{{$vencimiento->colonia}}</td>
+          <td>{{$vencimiento->telefonoCelular}}</td>
+          <td>
+              @if (count($vencimiento->actividades) > 0)
+              <a href="{{URL::action('SocioeconomicoController@edit',$vencimiento->idCredito)}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
+              @else
+              <a href="{{URL::action('SocioeconomicoController@create',['id'=>$vencimiento->idCredito])}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
+              @endif 
+          </td>
+          <td>
+              @foreach ($actividades as $actividad)
+              @if ($vencimiento->idCliente == $actividad->idcliente)
+              <button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button>
+              @endif 
+            @endforeach
+          </td>
+        </tr>
       @endforeach
       </table>
     </div>
@@ -81,9 +77,9 @@
             <th>Oferta</th>
           </tr>
           </thead>
-         @foreach ($vencimientos as $vencimiento)
+         @foreach ($vencimientosOfertas as $vencimientoOferta)
           @foreach ($ofertas as $oferta)
-            @if ($oferta->idcliente == $vencimiento->idCliente)
+            @if ($oferta->idcliente == $vencimientoOferta->idCliente)
               <tr>
                 {{-- <td>{{$liquidado->idCliente}}</td>v --}}
                 <td>{{$vencimiento->idCredito}}</td>

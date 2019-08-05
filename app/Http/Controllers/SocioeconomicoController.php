@@ -178,9 +178,13 @@ class SocioeconomicoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Credito $socioeconomico)
     {
         //
+        $actividad = Actividad::where('idcliente',$socioeconomico->idCliente)->first();
+        $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
+        $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
+        return view('socioeconomico.edit',compact('socioeconomico','gastosOperacion','gastosFamiliares'));
     }
 
     /**

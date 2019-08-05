@@ -26,5 +26,10 @@ class Credito extends Model
     'fechaEjercido'
   ];
 
+  public function actividades()
+  {
+      return $this->hasMany(Actividad::class, 'idcliente','idCliente');
+  }
+  
   protected $guarded=[ ];
 }

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use wbALFINop\Actividad;
 use wbALFINop\Oferta;
+use wbALFINop\Credito;
+use wbALFINop\Cliente;
 
 class ProyRenovacionController extends Controller
 {
@@ -61,18 +63,34 @@ class ProyRenovacionController extends Controller
                 }else {
                   $datef=date('Y')."/".$month."/01";
                 }
+
+                $ofertas = Oferta::pluck('idcliente');
     
-                $vencimientos=DB::table('tblcreditos as c')
-        ->leftjoin('tblrenovaciones as r', 'c.idCredito', '=', 'r.idCredito')
-        ->join('tblsituacioncredito as s', 'c.idCredito', '=', 's.idCredito')
-        ->join('tbldomicilioscredito as dc', 'c.idCredito', '=', 'dc.idCredito')
-        ->join('catperfiles as cp', 'c.idPerfil', '=', 'cp.idPerfil')
-        ->select('c.idCredito','c.idCliente', 'c.nomCliente', 'c.fechaFin', 's.maxDiasAtraso', 'c.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
-        ->where('c.idPerfil', '=', $query)
+                $vencimientos = Credito::
+        leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
+        ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
+        ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
+        ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
+        ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
+        ->where('tblcreditos.idPerfil', '=', $query)
+        ->whereNotIn('idcliente',[$ofertas])
         ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<"'.$datef.'"')
-        ->orderBy('c.fechaFin', 'asc')
+        ->orderBy('tblcreditos.fechaFin', 'asc')
         ->orderBy('dc.colonia', 'desc')
         ->paginate(40);
+
+        $vencimientosOfertas = Credito::
+        leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
+        ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
+        ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
+        ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
+        ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
+        ->where('tblcreditos.idPerfil', '=', $query)
+        ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<"'.$datef.'"')
+        ->orderBy('tblcreditos.fechaFin', 'asc')
+        ->orderBy('dc.colonia', 'desc')
+        ->paginate(40);
+
     
     
                 if (Auth::user()->idNivel==3) {
@@ -115,7 +133,7 @@ class ProyRenovacionController extends Controller
                 $actividades = Actividad::all();
                 $ofertas = Oferta::all();
     
-                return view('agenda.proy_renovacion.index',compact('actividades','ofertas'))
+                return view('agenda.proy_renovacion.index',compact('actividades','ofertas','vencimientosOfertas'))
          -> with(['vencimientos'=>$vencimientos,"searchTxt"=>$query])
          ->with(['vendedores'=>$vendedores,"searchTxts"=>$querys])
          //->with(['mes'=>date('F')])
