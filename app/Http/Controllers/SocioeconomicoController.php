@@ -109,13 +109,27 @@ class SocioeconomicoController extends Controller
     public function ofertas(Request $request,Credito $idCliente)
     {
         $cliente = Cliente::where('idcliente',$idCliente->idCliente)->first();
-        $cliente->ofertas;
+        //$cliente->ofertas;
         return Response::json($cliente->ofertas);
     }
 
     public function inventario(Actividad $actividad){
         $inventario = Inventario::where('idact',$actividad->idact)->get();
         return Response::json($inventario);
+    }
+
+    public function informacion(Cliente $cliente){
+        $actividad = Actividad::where('idcliente',$cliente->idcliente)->first();
+        $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
+        $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
+        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
+        $activos = ActivosFijos::where('idact',$actividad->idact)->first();
+        $productos = Inventario::where('idact',$actividad->idact)->get();
+        $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->orderBy('iddia','ASC')->get();
+        $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->orderBy('iddia','ASC')->get();
+
+        return view('socioeconomico.info',compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
+        'productos','transacionesVenta','transacionesCompra','actividad'));
     }
 
     /**

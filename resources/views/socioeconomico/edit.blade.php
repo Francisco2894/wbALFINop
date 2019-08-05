@@ -44,25 +44,25 @@
                         <div class="col-xs-12 col-md-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Producto</label>
-                                <input class="form-control" style="text-transform:uppercase;" type="text" name="" id="producto">
+                                <input class="form-control"  type="text" name="" id="producto">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Cantidad</label>
-                                <input class="form-control" style="text-transform:uppercase;" type="number" name="" id="cantidad">
+                                <input class="form-control"  type="number" name="" id="cantidad">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Precio Compra</label>
-                                <input class="form-control" style="text-transform:uppercase;" type="number" name="" id="precio_compra">
+                                <input class="form-control"  type="number" name="" id="precio_compra">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Precio Venta</label>
-                                <input class="form-control" style="text-transform:uppercase;" type="number" name="" id="precio_venta">
+                                <input class="form-control"  type="number" name="" id="precio_venta">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-1">

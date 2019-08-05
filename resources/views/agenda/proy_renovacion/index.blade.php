@@ -16,6 +16,7 @@
         <thead>
           <tr>
           <th>ID Crédito</th>
+          <th>ID Cliente</th>
           <th>Nombre del Cliente</th>
           <th>Fecha Fin</th>
           <th>Max Atraso</th>
@@ -30,8 +31,9 @@
             $i=0;
         @endphp
        @foreach ($vencimientos as $vencimiento)
-        <tr>
+        <tr class="{{ count($vencimiento->actividades) > 0 ? 'bg-success' : '' }}">
           <td>{{$vencimiento->idCredito}}</td>
+          <td>{{$vencimiento->idCliente}}</td>
           <td>{{$vencimiento->nomCliente}}</td>
           <td>{{date_format(date_create($vencimiento->fechaFin),'d/m/Y')}}</td>
           <td>{{$vencimiento->maxDiasAtraso}}</td>
@@ -68,12 +70,14 @@
           <thead>
             <tr>
             <th>ID Crédito</th>
+            <th>ID Cliente</th>
             <th>Nombre del Cliente</th>
             <th>Fecha Fin</th>
             <th>Max Atraso</th>
             <th>Monto Credito</th>
             <th>Dom. Colonia</th>
             <th>Celular</th>
+            <th>Socioeconomico</th>
             <th>Oferta</th>
           </tr>
           </thead>
@@ -82,15 +86,19 @@
             @if ($oferta->idcliente == $vencimientoOferta->idCliente)
               <tr>
                 {{-- <td>{{$liquidado->idCliente}}</td>v --}}
-                <td>{{$vencimiento->idCredito}}</td>
-                <td>{{$vencimiento->nomCliente}}</td>
-                <td>{{date_format(date_create($vencimiento->fechaFin),'d/m/Y')}}</td>
-                <td>{{$vencimiento->maxDiasAtraso}}</td>
-                <td>{{'$ '.number_format($vencimiento->montoInicial,2)}}</td>
-                <td>{{$vencimiento->colonia}}</td>
-                <td>{{$vencimiento->telefonoCelular}}</td>
+                <td>{{ $vencimientoOferta->idCredito }}</td>
+                <td>{{ $vencimientoOferta->idCliente }}</td>
+                <td>{{$vencimientoOferta->nomCliente}}</td>
+                <td>{{date_format(date_create($vencimientoOferta->fechaFin),'d/m/Y')}}</td>
+                <td>{{$vencimientoOferta->maxDiasAtraso}}</td>
+                <td>{{'$ '.number_format($vencimientoOferta->montoInicial,2)}}</td>
+                <td>{{$vencimientoOferta->colonia}}</td>
+                <td>{{$vencimientoOferta->telefonoCelular}}</td>
                 <td>
-                  <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="ofertas({{ $vencimiento->idCredito }});"><i class="material-icons">info</i></button>
+                  <a href="{{ route('informacion',$vencimientoOferta->idCliente) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
+                </td>
+                <td>
+                  <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="ofertas({{ $vencimientoOferta->idCredito }});"><i class="material-icons">info</i></button>
                 </td>
               </tr>
             @endif 
@@ -98,7 +106,7 @@
         @endforeach
         </table>
       </div>
-      {{$vencimientos->render()}}
+      {{$vencimientosOfertas->render()}}
     </div>
   </div>
 
@@ -113,26 +121,24 @@
       </div>
       <div class="modal-body">
         <div class="panel panel-success">
-          <div class="panel-heading">
-
+          <div class="panel-heading" id="titulo">
           </div>
           <div class="panel-body">
             <div class="responsive">
-
+              <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Plazo</th>
+                      <th>Monto</th>
+                      <th>Parcialidad</th>
+                      <th>Frecuencia</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla">
+                  </tbody>
+                </table>
             </div>
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Plazo</th>
-                  <th>Monto</th>
-                  <th>Parcialidad</th>
-                  <th>Frecuencia</th>
-                </tr>
-              </thead>
-              <tbody id="tabla">
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
@@ -170,15 +176,15 @@
                     $('#tabla').append("<tr>"+
                         "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>"+monto+"</td><td>"+parcialidad+"</td><td>"+frecuencia+" </td></tr>"
                     );
-
                 }
               }
+              $('#titulo').text("Oferta ID Cliente: "+response[0]['idcliente']);
               //$("#miModal").modal("show");
           },
           error   :   function() {
               alert('error');
           }
-        });
+        });        
       }
     </script>
 @endpush

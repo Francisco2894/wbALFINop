@@ -22,4 +22,9 @@ class Cliente extends Model
     {
         return $this->hasMany(Oferta::class,'idcliente');
     }
+    
+    public function actividades()
+    {
+        return $this->hasMany(Actividad::class, 'idcliente','idcliente');
+    }
 }
