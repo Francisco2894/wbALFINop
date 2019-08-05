@@ -10,13 +10,13 @@
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
                       <label for="">GIRO DEL NEGOCIO:</label>
-                      <input type="text" name="giro" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->giro}}">
+                      <input type="text" disabled name="giro" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->giro}}">
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
                         <label for="">OBJETIVO DEL PR&Eacute;STAMO:</label>
-                        <input type="text" name="destinoprestamo" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->destinoprestamo}}">
+                        <input type="text" disabled name="destinoprestamo" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->destinoprestamo}}">
                     </div>
                 </div>
             </div>
@@ -25,13 +25,13 @@
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
                         <label for="">&iquest;C&oacute;mo inici&oacute; con su negocio?</label>
-                        <input type="text" name="comoinicio" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->comoinicio}}">
+                        <input type="text" disabled name="comoinicio" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->comoinicio}}">
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
                         <label for="">Describe brevemente el proceso de producci&oacute;n, venta o servicio:</label >
-                        <input type="text" name="desc_negocio" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->desc_negocio}}">
+                        <input type="text" disabled name="desc_negocio" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->desc_negocio}}">
                     </div>
                 </div>
             </div>

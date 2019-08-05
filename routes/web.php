@@ -27,6 +27,7 @@ Route::resource('agenda/renovacion', 'ProyRenovacionController');
 Route::get('ofertas/{idCliente}', 'SocioeconomicoController@ofertas')->name('ofertas');
 Route::get('inventario/{actividad}', 'SocioeconomicoController@inventario')->name('inventario');
 Route::get('informacion_socioeconomica/{cliente}','SocioeconomicoController@informacion')->name('informacion');
+Route::get('agenda/dataexcel/datos_renovacion','ExcelController@viewRenovacion')->name('datosrenovacion');
 
 Route::post('agenda/agendadiaria','AgendaDiariaController@agendar');
 // PDF

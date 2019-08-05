@@ -74,7 +74,7 @@
 				</ul>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{route('socioeconomico.create')}}">Plantilla</a>
+					<a class="nav-link" href="{{route('datosrenovacion')}}">Datos Renovaci&oacute;n</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{route('renovacion.index')}}">Renovacion</a>

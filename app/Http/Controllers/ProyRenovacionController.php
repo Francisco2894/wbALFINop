@@ -40,15 +40,14 @@ class ProyRenovacionController extends Controller
                 }
     
                 $nummonth=0;
-    
                 $nummonth=date('m');
-                if ($nummonth>9) {
-                    $month=$nummonth;
-                } else {
-                    $month="0".$nummonth;
-                }
+                // if ($nummonth>9) {
+                //     $month=$nummonth;
+                // } else {
+                //     $month="0".$nummonth;
+                // }
     
-                $datei=date('Y')."/".$month."/01";
+                $datei=date('Y')."/".$nummonth."/01";
     
                 $nummonth=0;
     
@@ -58,10 +57,11 @@ class ProyRenovacionController extends Controller
                 } else {
                     $month="0".$nummonth;
                 }
-                if ($nummonth>12) {
-                   $datef=(date('Y')+ 1)."/"."01"."/01";
+
+                if ($nummonth>11) {
+                   $datef=(date('Y')+ 1)."/"."01"."/31";
                 }else {
-                  $datef=date('Y')."/".$month."/01";
+                  $datef=date('Y')."/".$month."/31";
                 }
 
                 $ofertas = Oferta::pluck('idcliente');
@@ -75,7 +75,8 @@ class ProyRenovacionController extends Controller
         ->where('tblcreditos.idPerfil', '=', $query)
         ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%")
         ->whereNotIn('idcliente',[$ofertas])
-        ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<"'.$datef.'"')
+        ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
+        ->where('s.maxDiasAtraso', "<", 16) //maximo dias atrazado es 16
         ->orderBy('tblcreditos.fechaFin', 'asc')
         ->orderBy('dc.colonia', 'desc')
         ->paginate(40);
@@ -88,7 +89,8 @@ class ProyRenovacionController extends Controller
         ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
         ->where('tblcreditos.idPerfil', '=', $query)
         ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%")
-        ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<"'.$datef.'"')
+        ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
+        ->where('s.maxDiasAtraso', "<", 16) //maximo dias atrazado es 16
         ->orderBy('tblcreditos.fechaFin', 'asc')
         ->orderBy('dc.colonia', 'desc')
         ->paginate(40);

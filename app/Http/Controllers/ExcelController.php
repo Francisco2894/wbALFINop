@@ -57,6 +57,15 @@ class ExcelController extends Controller
         }
     }
 
+    public function viewRenovacion(){
+      if (Auth::user()->idNivel<3) {
+        return view('agenda.dataexcel.importdatosrenovacion')
+        ->with(['records'=>0,'updaterecords'=>0,'records2'=>0,'updaterecords2'=>0,'records3'=>0,'updaterecords3'=>0]);
+      } else {
+          return back()->withInput();
+      }
+    }
+
     public function importsca()
     {
       global $r,$u,$r2,$u2;
