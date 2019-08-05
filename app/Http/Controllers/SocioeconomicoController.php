@@ -108,9 +108,14 @@ class SocioeconomicoController extends Controller
 
     public function ofertas(Request $request,Credito $idCliente)
     {
-            $cliente = Cliente::where('idcliente',$idCliente->idCliente)->first();
-            $cliente->ofertas;
-            return Response::json($cliente->ofertas);
+        $cliente = Cliente::where('idcliente',$idCliente->idCliente)->first();
+        $cliente->ofertas;
+        return Response::json($cliente->ofertas);
+    }
+
+    public function inventario(Actividad $actividad){
+        $inventario = Inventario::where('idact',$actividad->idact)->get();
+        return Response::json($inventario);
     }
 
     /**
@@ -184,7 +189,14 @@ class SocioeconomicoController extends Controller
         $actividad = Actividad::where('idcliente',$socioeconomico->idCliente)->first();
         $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
         $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
-        return view('socioeconomico.edit',compact('socioeconomico','gastosOperacion','gastosFamiliares'));
+        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
+        $activos = ActivosFijos::where('idact',$actividad->idact)->first();
+        $productos = Inventario::where('idact',$actividad->idact)->get();
+        $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->orderBy('iddia','ASC')->get();
+        $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->orderBy('iddia','ASC')->get();
+
+        return view('socioeconomico.edit',compact('socioeconomico','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
+        'productos','transacionesVenta','transacionesCompra','actividad'));
     }
 
     /**
@@ -197,6 +209,59 @@ class SocioeconomicoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        //actualizar actividad
+        $actividad = Actividad::where('idcliente',$id)->first();
+        $actividad->update($request->all());
+
+        //actualizar gastos
+        //$actividad = Actividad::first(); //borrar linea
+        $tipo_gasto = 1;
+        for ($i=1; $i <= 22; $i++) {
+            if ($i>11) { $tipo_gasto = 2; }
+            $gasto = Gastos::where('idact',$actividad->idact)->where('idtipogasto',$tipo_gasto)->where('idngasto',$i)->first();
+            $gasto->update([
+                'monto'         =>$request["gasto$i"]
+            ]);
+        }
+        
+        //actualizo transaciones
+        $dia = 0;
+        $tipo_transaccion = 1;
+        for ($i=1; $i <= 10; $i++) {
+            $dia ++;
+            if ($dia>5) { $dia = 1; }
+            if ($i>5) { $tipo_transaccion = 2; }
+            $transaccion = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac',$tipo_transaccion)->where('iddia',$dia)->first();
+            $transaccion->update([
+                'lugar_compra'  => $request["lugar$i"],
+                'monto'         => $request["precio$i"]
+            ]);
+        }
+
+        //actualizar inventario
+        $articulos = Inventario::where('idact',$actividad->idact)->get();
+        if (count($articulos) > 0) {
+            foreach ($articulos as $articulo) {
+                $articulo->delete();
+            }
+        }
+        for ($i=0; $i < $request->num_productos; $i++) { 
+            $inventario = Inventario::create([
+                'idact'         =>$actividad->idact,
+                'producto'      =>$request["producto$i"],
+                'cantidad'      =>$request["cantidad$i"],
+                'precio_compra' =>$request["precio_compra$i"],
+                'precio_venta'  =>$request["precio_venta$i"]
+            ]);
+        }
+
+        //actualizo activos fijos
+        $activo = ActivosFijos::where('idact',$actividad->idact)->first();
+        $activo->update($request->all());
+        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
+        $otrosIngresos->update($request->all());
+
+        return redirect()->route('socioeconomico.show',$actividad->idact);
     }
 
     /**

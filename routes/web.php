@@ -25,6 +25,7 @@ Route::resource('agenda/gestor','GestorController');
 Route::resource('socioeconomico', 'SocioeconomicoController');
 Route::resource('agenda/renovacion', 'ProyRenovacionController');
 Route::get('ofertas/{idCliente}', 'SocioeconomicoController@ofertas')->name('ofertas');
+Route::get('inventario/{actividad}', 'SocioeconomicoController@inventario')->name('inventario');
 
 Route::post('agenda/agendadiaria','AgendaDiariaController@agendar');
 // PDF
