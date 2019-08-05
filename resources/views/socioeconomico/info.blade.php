@@ -53,7 +53,7 @@
                         </tbody>
                         <tbody>
                             <tr>
-                                <td colspan="4" class="table-success">TOTAL</td>
+                                <td colspan="3" class="table-success">TOTAL</td>
                                 <td colspan="2" class="text-right" id="totalInventario">0</td>
                                 <td class="text-right" id="totalInventarioPorcentaje">0</td>
                             </tr>
@@ -85,28 +85,28 @@
                             <tbody >
                                 <tr class="form-group">
                                     <td><br>Lunes</td>
-                                    <td><input type="text" class="form-control" name="lugar1" required value="{{ $transacionesCompra[0]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio1" id="vlunes1" value="{{ $transacionesCompra[0]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar1" required value="{{ $transacionesCompra[0]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio1" id="vlunes1" value="{{ $transacionesCompra[0]->monto }}"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Martes</td>
-                                    <td><input type="text" class="form-control" name="lugar2" required value="{{ $transacionesCompra[1]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio2" id="vmartes1" value="{{ $transacionesCompra[1]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar2" required value="{{ $transacionesCompra[1]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio2" id="vmartes1" value="{{ $transacionesCompra[1]->monto }}"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Miercoles</td>
-                                    <td><input type="text" class="form-control" name="lugar3" required value="{{ $transacionesCompra[2]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio3" id="vmiercoles1" value="{{ $transacionesCompra[2]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar3" required value="{{ $transacionesCompra[2]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio3" id="vmiercoles1" value="{{ $transacionesCompra[2]->monto }}"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Jueves</td>
-                                    <td><input type="text" class="form-control" name="lugar4" required value="{{ $transacionesCompra[3]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio4" id="vjueves1" value="{{ $transacionesCompra[3]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar4" required value="{{ $transacionesCompra[3]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio4" id="vjueves1" value="{{ $transacionesCompra[3]->monto }}"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Viernes</td>
-                                    <td><input type="text" class="form-control" name="lugar5" required value="{{ $transacionesCompra[4]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio5" id="vviernes1" value="{{ $transacionesCompra[4]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar5" required value="{{ $transacionesCompra[4]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio5" id="vviernes1" value="{{ $transacionesCompra[4]->monto }}"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="table-success">TOTAL SEMANAL</td>
@@ -134,24 +134,24 @@
                             </thead>
                             <tbody>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar6" required value="{{ $transacionesVenta[0]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio6" id="vlunes2" value="{{ $transacionesVenta[0]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar6" required value="{{ $transacionesVenta[0]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio6" id="vlunes2" value="{{ $transacionesVenta[0]->monto }}"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar7" required value="{{ $transacionesVenta[1]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio7" id="vmartes2" value="{{ $transacionesVenta[1]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar7" required value="{{ $transacionesVenta[1]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio7" id="vmartes2" value="{{ $transacionesVenta[1]->monto }}"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar8" required value="{{ $transacionesVenta[2]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio8" id="vmiercoles2" value="{{ $transacionesVenta[2]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar8" required value="{{ $transacionesVenta[2]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio8" id="vmiercoles2" value="{{ $transacionesVenta[2]->monto }}"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar9" required value="{{ $transacionesVenta[3]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio9" id="vjueves2" value="{{ $transacionesVenta[3]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar9" required value="{{ $transacionesVenta[3]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio9" id="vjueves2" value="{{ $transacionesVenta[3]->monto }}"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar10" required value="{{ $transacionesVenta[4]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio10" id="vviernes2"  value="{{ $transacionesVenta[4]->monto }}"></td>
+                                    <td><input type="text" disabled class="form-control" name="lugar10" required value="{{ $transacionesVenta[4]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio10" id="vviernes2"  value="{{ $transacionesVenta[4]->monto }}"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="text-right" id="totalSemanalVentas">0</td>
@@ -180,47 +180,47 @@
                             <tbody>
                                 <tr class="form-group">
                                     <td><br> <label for="">RENTA</label></td>
-                                    <td><input class="form-control" type="number" name="gasto1" value="{{ $gastosOperacion[0]->monto}}" id="op1"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto1" value="{{ $gastosOperacion[0]->monto}}" id="op1"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">LUZ</label></td>
-                                    <td><input class="form-control" type="number" name="gasto2" value="{{ $gastosOperacion[1]->monto}}" id="op2"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto2" value="{{ $gastosOperacion[1]->monto}}" id="op2"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">AGUA</label></td>
-                                    <td><input class="form-control" type="number" name="gasto3" value="{{ $gastosOperacion[2]->monto}}" id="op3"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto3" value="{{ $gastosOperacion[2]->monto}}" id="op3"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">GAS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto4" value="{{ $gastosOperacion[3]->monto}}" id="op4"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto4" value="{{ $gastosOperacion[3]->monto}}" id="op4"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">CELULAR</label></td>
-                                    <td><input class="form-control" type="number" name="gasto5" value="{{ $gastosOperacion[4]->monto}}" id="op5"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto5" value="{{ $gastosOperacion[4]->monto}}" id="op5"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">IMPUESTOS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto6"value="{{ $gastosOperacion[5]->monto}}" id="op6"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto6"value="{{ $gastosOperacion[5]->monto}}" id="op6"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TRANSPORTE</label></td>
-                                    <td><input class="form-control" type="number" name="gasto7" value="{{ $gastosOperacion[6]->monto}}" id="op7"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto7" value="{{ $gastosOperacion[6]->monto}}" id="op7"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">SALARIOS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto8" value="{{ $gastosOperacion[7]->monto}}" id="op8"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto8" value="{{ $gastosOperacion[7]->monto}}" id="op8"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">MANTENIMIENTO</label></td>
-                                    <td><input class="form-control" type="number" name="gasto9" value="{{ $gastosOperacion[8]->monto}}" id="op9"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto9" value="{{ $gastosOperacion[8]->monto}}" id="op9"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">PAGOS DEUDAS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto10" value="{{ $gastosOperacion[9]->monto}}" id="op10"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto10" value="{{ $gastosOperacion[9]->monto}}" id="op10"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">OTROS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto11" value="{{ $gastosOperacion[10]->monto}}" id="op11"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto11" value="{{ $gastosOperacion[10]->monto}}" id="op11"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (C)</td>
@@ -237,47 +237,47 @@
                             <tbody>
                                 <tr class="form-group">
                                     <td><br> <label for="">ALIMENTOS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto12" value="{{ $gastosFamiliares[0]->monto}}" id="op12"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto12" value="{{ $gastosFamiliares[0]->monto}}" id="op12"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">LUZ, AGUA</label></td>
-                                    <td><input class="form-control" type="number" name="gasto13" value="{{ $gastosFamiliares[1]->monto}}" id="op13"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto13" value="{{ $gastosFamiliares[1]->monto}}" id="op13"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">GAS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto14" value="{{ $gastosFamiliares[2]->monto}}" id="op14"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto14" value="{{ $gastosFamiliares[2]->monto}}" id="op14"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TEL&Eacute;FONO</label></td>
-                                    <td><input class="form-control" type="number" name="gasto15" value="{{ $gastosFamiliares[3]->monto}}" id="op15"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto15" value="{{ $gastosFamiliares[3]->monto}}" id="op15"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">RENTA</label></td>
-                                    <td><input class="form-control" type="number"" name="gasto16" value="{{ $gastosFamiliares[4]->monto}}" id="op16"></td>
+                                    <td><input class="form-control" disabled type="number"" name="gasto16" value="{{ $gastosFamiliares[4]->monto}}" id="op16"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">VESTIDO</label></td>
-                                    <td><input class="form-control" type="number" name="gasto17" value="{{ $gastosFamiliares[5]->monto}}" id="op17"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto17" value="{{ $gastosFamiliares[5]->monto}}" id="op17"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">SALUD</label></td>
-                                    <td><input class="form-control" type="number" name="gasto18" value="{{ $gastosFamiliares[6]->monto}}" id="op18"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto18" value="{{ $gastosFamiliares[6]->monto}}" id="op18"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">ESCUELA</label></td>
-                                    <td><input class="form-control" type="number" name="gasto19" value="{{ $gastosFamiliares[7]->monto}}0" id="op19"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto19" value="{{ $gastosFamiliares[7]->monto}}0" id="op19"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TRANSPORTE</label></td>
-                                    <td><input class="form-control" type="number" name="gasto20" value="{{ $gastosFamiliares[8]->monto}}" id="op20"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto20" value="{{ $gastosFamiliares[8]->monto}}" id="op20"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">PAGOS DEUDAS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto21" value="{{ $gastosFamiliares[9]->monto}}" id="op21"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto21" value="{{ $gastosFamiliares[9]->monto}}" id="op21"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">OTROS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto22" value="{{ $gastosFamiliares[10]->monto}}" id="op22"></td>
+                                    <td><input class="form-control" disabled type="number" name="gasto22" value="{{ $gastosFamiliares[10]->monto}}" id="op22"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (E)</td>
@@ -308,15 +308,15 @@
                             <tbody >
                                 <tr class="form-group">
                                     <td><br> <label for="">OTRO NEGOCIO</label></td>
-                                    <td><input type="number" class="form-control" name="otro_negocio" id="ingreso1" value="{{ $otrosIngresos->otro_negocio }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="otro_negocio" id="ingreso1" value="{{ $otrosIngresos->otro_negocio }}"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">EMPLEO</label></td>
-                                    <td><input type="number" class="form-control" name="empleo" id="ingreso2" value="{{ $otrosIngresos->empleo }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="empleo" id="ingreso2" value="{{ $otrosIngresos->empleo }}"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">CÓNYUGE</label></td>
-                                    <td><input type="number" class="form-control" name="conyuge" id="ingreso3" value="{{ $otrosIngresos->conyuge }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="conyuge" id="ingreso3" value="{{ $otrosIngresos->conyuge }}"></td>
                                 </tr>
                                 <tr>
                                     <td>TOTAL</td>
@@ -341,15 +341,15 @@
                             <tbody>
                                 <tr class="form-group">
                                     <td><br> <label for="">MAQUINARIA, EQUIPO, HERRAMIENTAS</label></td>
-                                    <td><input type="number" class="form-control" name="maquinaria" id="fijo1" value="{{ $activos->maquinaria }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="maquinaria" id="fijo1" value="{{ $activos->maquinaria }}"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">LOCAL</label></td>
-                                    <td><input type="number" class="form-control" name="local" id="fijo2" value="{{ $activos->local }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="local" id="fijo2" value="{{ $activos->local }}"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">AUTO</label></td>
-                                    <td><input type="number" class="form-control" name="auto" id="fijo3" value="{{ $activos->auto }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="auto" id="fijo3" value="{{ $activos->auto }}"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="text-right" id="totalFijos">0</td>
@@ -551,10 +551,7 @@
                             inventario.push(registro);
                             
 
-                            $('#cont').append("<tr>"+
-                                "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
-                                    "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                                "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a4)+"</td>"+
+                            $('#cont').append("<tr> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a4)+"</td>"+
                             "</tr>"
                             );
                             cont = cont + 1;
