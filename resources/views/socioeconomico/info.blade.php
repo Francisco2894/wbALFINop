@@ -108,6 +108,16 @@
                                     <td><input type="text" disabled class="form-control" name="lugar5" required value="{{ $transacionesCompra[4]->lugar_compra }}"></td>
                                     <td><input type="number" disabled class="form-control" name="precio5" id="vviernes1" value="{{ $transacionesCompra[4]->monto }}"></td>
                                 </tr>
+                                <tr class="form-group">
+                                    <td><br>Sabado</td>
+                                    <td><input type="text" disabled class="form-control" name="lugar6" required value="{{ $transacionesCompra[5]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio6" id="vviernes1" value="{{ $transacionesCompra[5]->monto }}"></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td><br>Domingo</td>
+                                    <td><input type="text" disabled class="form-control" name="lugar7" required value="{{ $transacionesCompra[6]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio7" id="vviernes1" value="{{ $transacionesCompra[6]->monto }}"></td>
+                                </tr>
                                 <tr>
                                     <td colspan="2" class="table-success">TOTAL SEMANAL</td>
                                     <td class="text-right" id="totalSemanalCompras">0</td>
@@ -152,6 +162,14 @@
                                 <tr class="form-group">
                                     <td><input type="text" disabled class="form-control" name="lugar10" required value="{{ $transacionesVenta[4]->lugar_compra }}"></td>
                                     <td><input type="number" disabled class="form-control" name="precio10" id="vviernes2"  value="{{ $transacionesVenta[4]->monto }}"></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td><input type="text" disabled class="form-control" name="lugar10" required value="{{ $transacionesVenta[5]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio10" id="vviernes2"  value="{{ $transacionesVenta[5]->monto }}"></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td><input type="text" disabled class="form-control" name="lugar10" required value="{{ $transacionesVenta[6]->lugar_compra }}"></td>
+                                    <td><input type="number" disabled class="form-control" name="precio10" id="vviernes2"  value="{{ $transacionesVenta[6]->monto }}"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="text-right" id="totalSemanalVentas">0</td>
@@ -551,7 +569,7 @@
                             inventario.push(registro);
                             
 
-                            $('#cont').append("<tr> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a4)+"</td>"+
+                            $('#cont').append("<tr> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"</td>"+
                             "</tr>"
                             );
                             cont = cont + 1;
@@ -587,7 +605,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
                                 "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a4)+"</td>"+
+                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -620,7 +638,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
                                 "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a4)+"</td>"+
+                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -652,7 +670,7 @@
                 $('#cont').append("<tr>"+
                     "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
                                         "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                                    "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a4)+"%</td>"+
+                                    "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"%</td>"+
                                 "</tr>"
                 );
 

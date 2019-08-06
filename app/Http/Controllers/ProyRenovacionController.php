@@ -26,50 +26,34 @@ class ProyRenovacionController extends Controller
         //
         $i = 0;
         $creditos = Credito::all();
-        return $productos = Producto::all();
+        $productos = Producto::all();
         $contador = 0;
         $noiguales = 0;
         $no_exite = array();
-        $idProducto = Producto::where('producto','CREDITO MEJORA VIVIENDA CON SUBSIDIO SUPERV FINANC')->first();
 
-        //return count($creditos);
-        //MEJORA DE VIVIENDA SUPERVISION  FINANCIADA-GLOBAL
-        // $c = Credito::where('producto','AUTOPRODUCCION TERRATULUM 2018')->get();
-        // return count($c);
-        foreach ($creditos as $credito) {
-            foreach($productos as $producto){
-                $cve = $producto->producto;
-                if($credito->producto == $producto->producto) {
-                    $i = $i+1;
-                    $id = $cve;
-                }
-            }
-            if ($i==1) {
-                //$contador = $contador + 1;
-                $idProducto = Producto::where('producto',$id)->first();
-                return $idProducto;
-                $c->update(['cveproducto' => $id]);
-            }else{
-                // if (count($no_exite)>0) {
-                //     foreach ($no_exite as $n) {
-                //         if ($n == $c->producto) {
-                //             $noiguales=0;
-                //         }
-                //     }
-                // }else {
-                //     array_push($no_exite,$c->producto);
-                // }
-                // if ($noiguales==1) {
-                //     array_push($no_exite,$c->producto);
-                // }
-                $c->update(['cveproducto' => '0']);
-            }
-            $i = 0;
-            $id = '';
-            $noiguales = 1;
-        }
+        //Proceso para actualizar el campo cveproducto de la tabla credito
+        // foreach ($creditos as $c) {
+        //     foreach($productos as $p){
+        //         if($c->producto == $p->producto) {
+        //             $i = 1;
+        //             $id = $p->cveproducto;
+        //         }
+        //     }
+        //     if ($i==1) {
+        //         $c->update(['cveproducto' => $id]);
+        //     }else{
+        //         $c->update(['cveproducto' => '0']);
+        //     }
+        //     $i = 0;
+        //     $id = '';
+        // }
 
-        return 'echo';
+        //modificar registros por separado
+        // $credito = Credito::where('producto','AUTOPRODUCCIÓN TERRATULUM 2018')->get();
+        // foreach ($credito as $c) {
+        //     $c->update(['cveproducto' => 'CAVATULUM']);
+
+        // }
 
 
         if (Auth::user()->idNivel==6) {
@@ -117,47 +101,20 @@ class ProyRenovacionController extends Controller
                 $ofertas = Oferta::pluck('idcliente');
                 $blackList = BlackList::pluck('idcredito');
 
-                // $venc = Credito::
-                // leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
-                // ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
-                // ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
-                // ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
-                // ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
-                // ->where('tblcreditos.idPerfil', '=', $query)
-                // ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%")
-                // ->whereNotIn('idcliente',[$ofertas])
-                // ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
-                // ->where('s.maxDiasAtraso', "<", 16) //maximo dias atrazado es 16
-                // ->orderBy('tblcreditos.fechaFin', 'asc')
-                // ->orderBy('dc.colonia', 'desc')
-                // ->paginate(40);
-                
-                // $credito = "";
-
-                // foreach ($blackList as $black) {
-                //     foreach ($venc as $v) {
-                //         if ($v->idCredito == $black->idcredito) {
-                //             $credito = $credito.','.$black->idcredito;
-                //         }
-                //     }
-                // }
-                            //$credito = $credito.$black->idcredito;
-                // return $cred= Credito::where('idCredito',['102993','103350'])->get(); 
-                // return $creditos = substr ($credito , 1);
-                
-                //return $creditos;
                 $vencimientos = Credito::
         leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
         ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
         ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
         ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
-        ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
+        ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
+        ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
         ->where('tblcreditos.idPerfil', '=', $query)
         ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
         ->whereNotIn('tblcreditos.idCliente',$ofertas) //que no este en ofertas
         ->whereNotIn('tblcreditos.idCredito',$blackList) //que no este en lista actual
         ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
         ->where('s.maxDiasAtraso', "<", 16) //maximo dias atrazado es 16
+        ->where('refinan_si',1) //refinan_si con valor en 1
         ->orderBy('tblcreditos.fechaFin', 'asc')
         ->orderBy('dc.colonia', 'desc')
         ->paginate(40);
@@ -167,12 +124,14 @@ class ProyRenovacionController extends Controller
         ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
         ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
         ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
-        ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion')
+        ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
+        ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
         ->where('tblcreditos.idPerfil', '=', $query)
         ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
         ->whereNotIn('tblcreditos.idCredito',$blackList) //que no este en lista actual
         ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
         ->where('s.maxDiasAtraso', "<", 16) //maximo dias atrazado es 16
+        //->where('refinan_si',1) //refinan_si con valor en 1
         ->orderBy('tblcreditos.fechaFin', 'asc')
         ->orderBy('dc.colonia', 'desc')
         ->paginate(40);

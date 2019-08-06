@@ -143,6 +143,16 @@
                                     <td><input type="text" class="form-control" name="lugar5" required></td>
                                     <td><input type="number" class="form-control" name="precio5" id="vviernes1" value="0"></td>
                                 </tr>
+                                <tr class="form-group">
+                                    <td><br>Sabado</td>
+                                    <td><input type="text" class="form-control" name="lugar6" required></td>
+                                    <td><input type="number" class="form-control" name="precio6" id="vsabado1" value="0"></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td><br>Domingo</td>
+                                    <td><input type="text" class="form-control" name="lugar7" required></td>
+                                    <td><input type="number" class="form-control" name="precio7" id="vdomingo1" value="0"></td>
+                                </tr>
                                 <tr>
                                     <td colspan="2" class="table-success">TOTAL SEMANAL</td>
                                     <td class="text-right" id="totalSemanalCompras">0</td>
@@ -169,24 +179,32 @@
                             </thead>
                             <tbody>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar6" required></td>
-                                    <td><input type="number" class="form-control" name="precio6" id="vlunes2" value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar7" required></td>
-                                    <td><input type="number" class="form-control" name="precio7" id="vmartes2" value="0"></td>
-                                </tr>
-                                <tr class="form-group">
                                     <td><input type="text" class="form-control" name="lugar8" required></td>
-                                    <td><input type="number" class="form-control" name="precio8" id="vmiercoles2" value="0"></td>
+                                    <td><input type="number" class="form-control" name="precio8" id="vlunes2" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><input type="text" class="form-control" name="lugar9" required></td>
-                                    <td><input type="number" class="form-control" name="precio9" id="vjueves2" value="0"></td>
+                                    <td><input type="number" class="form-control" name="precio9" id="vmartes2" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><input type="text" class="form-control" name="lugar10" required></td>
-                                    <td><input type="number" class="form-control" name="precio10" id="vviernes2"  value="0"></td>
+                                    <td><input type="number" class="form-control" name="precio10" id="vmiercoles2" value="0"></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td><input type="text" class="form-control" name="lugar11" required></td>
+                                    <td><input type="number" class="form-control" name="precio11" id="vjueves2" value="0"></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td><input type="text" class="form-control" name="lugar12" required></td>
+                                    <td><input type="number" class="form-control" name="precio12" id="vviernes2"  value="0"></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td><input type="text" class="form-control" name="lugar13" required></td>
+                                    <td><input type="number" class="form-control" name="precio13" id="vsabado2"  value="0"></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td><input type="text" class="form-control" name="lugar14" required></td>
+                                    <td><input type="number" class="form-control" name="precio14" id="vdomingo2"  value="0"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="text-right" id="totalSemanalVentas">0</td>
@@ -421,7 +439,7 @@
     <script>
         let s1,s2,s3 = 0;
         let v1,v2,v3,v4,v5 = 0;
-        let v6,v7,v8,v9,v10 = 0;
+        let v6,v7,v8,v9,v10,v11,v12,v13,v14 = 0;
         let total = 0;
         let g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11 = 0
         let g12,g13,g14,g15,g16,g17,g18,g19,g20,g21,g22 = 0;
@@ -496,25 +514,30 @@
                 console.log(total);    
             });
 
-            $("#vlunes1, #vmartes1, #vmiercoles1, #vjueves1, #vviernes1").on("keyup", function() {
+            $("#vlunes1, #vmartes1, #vmiercoles1, #vjueves1, #vviernes1, #vsabado1, #vdomingo1").on("keyup", function() {
                 v1 = parseFloat($('#vlunes1').val());
                 v2 = parseFloat($('#vmartes1').val());
                 v3 = parseFloat($('#vmiercoles1').val());
                 v4 = parseFloat($('#vjueves1').val());
                 v5 = parseFloat($('#vviernes1').val());
-                total = v4+v2+v3+v1+v5;
+                v6 = parseFloat($('#vsabado1').val());
+                v7 = parseFloat($('#vdomingo1').val());
+                total = v4+v2+v3+v1+v5+v6+v7;
                 $("#totalSemanalCompras").text(total);
                 $("#totalMensualCompras").text(total*4);
                 console.log(total);    
             });
 
-            $("#vlunes2, #vmartes2, #vmiercoles2, #vjueves2, #vviernes2").on("keyup", function() {
-                v6 = parseFloat($('#vlunes2').val());
-                v7 = parseFloat($('#vmartes2').val());
-                v8 = parseFloat($('#vmiercoles2').val());
-                v9 = parseFloat($('#vjueves2').val());
-                v10 = parseFloat($('#vviernes2').val());
-                total = v6+v7+v8+v9+v10;
+            $("#vlunes2, #vmartes2, #vmiercoles2, #vjueves2, #vviernes2, #vsabado2, #vdomingo2").on("keyup", function() {
+                v8 = parseFloat($('#vlunes2').val());
+                v9 = parseFloat($('#vmartes2').val());
+                v10 = parseFloat($('#vmiercoles2').val());
+                v11 = parseFloat($('#vjueves2').val());
+                v12 = parseFloat($('#vviernes2').val());
+                v13 = parseFloat($('#vsabado2').val());
+                v14 = parseFloat($('#vdomingo2').val());
+
+                total = v8+v9+v10+v11+v12+v13+v14;
                 $("#totalSemanalVentas").text(total);
                 $("#totalMensualVentas").text(total*4);
                 console.log(total);    

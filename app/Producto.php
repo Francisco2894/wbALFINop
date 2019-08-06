@@ -9,6 +9,7 @@ class Producto extends Model
     //
     protected $table='catproducto';
     protected $primaryKey='cveproducto';
+    public $keyType = 'string';
 
     public $timestamps=false;
 

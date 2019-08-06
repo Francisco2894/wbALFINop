@@ -75,10 +75,10 @@ class SocioeconomicoController extends Controller
         //agrego transaciones
         $dia = 0;
         $tipo_transaccion = 1;
-        for ($i=1; $i <= 10; $i++) {
+        for ($i=1; $i <= 14; $i++) {
             $dia ++;
-            if ($dia>5) { $dia = 1; }
-            if ($i>5) { $tipo_transaccion = 2; }
+            if ($dia>7) { $dia = 1; }
+            if ($i>7) { $tipo_transaccion = 2; }
             $transaccion = TransaccionInventario::create([
                 'iddia'         => $dia,
                 'idtipotransac' => $tipo_transaccion,
@@ -241,10 +241,10 @@ class SocioeconomicoController extends Controller
         //actualizo transaciones
         $dia = 0;
         $tipo_transaccion = 1;
-        for ($i=1; $i <= 10; $i++) {
+        for ($i=1; $i <= 14; $i++) {
             $dia ++;
-            if ($dia>5) { $dia = 1; }
-            if ($i>5) { $tipo_transaccion = 2; }
+            if ($dia>7) { $dia = 1; }
+            if ($i>7) { $tipo_transaccion = 2; }
             $transaccion = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac',$tipo_transaccion)->where('iddia',$dia)->first();
             $transaccion->update([
                 'lugar_compra'  => $request["lugar$i"],
