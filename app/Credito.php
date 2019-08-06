@@ -23,7 +23,8 @@ class Credito extends Model
     'fechaFin',
     'idPerfil',
     'cveAseCol',
-    'fechaEjercido'
+    'fechaEjercido',
+    'cveproducto'
   ];
 
   public function actividades()
