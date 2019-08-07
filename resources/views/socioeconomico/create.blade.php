@@ -120,46 +120,46 @@
                             <tbody >
                                 <tr class="form-group">
                                     <td><br>Lunes</td>
-                                    <td><input type="text" class="form-control" name="lugar1" required></td>
-                                    <td><input type="number" class="form-control" name="precio1" id="vlunes1" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar1" ></td>
+                                    <td><input type="number" class="form-control" name="precio1" id="vlunes1" required value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Martes</td>
-                                    <td><input type="text" class="form-control" name="lugar2" required></td>
-                                    <td><input type="number" class="form-control" name="precio2" id="vmartes1" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar2" ></td>
+                                    <td><input type="number" class="form-control" name="precio2" id="vmartes1" required value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Miercoles</td>
-                                    <td><input type="text" class="form-control" name="lugar3" required></td>
-                                    <td><input type="number" class="form-control" name="precio3" id="vmiercoles1" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar3" ></td>
+                                    <td><input type="number" class="form-control" name="precio3" id="vmiercoles1" required value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Jueves</td>
-                                    <td><input type="text" class="form-control" name="lugar4" required></td>
-                                    <td><input type="number" class="form-control" name="precio4" id="vjueves1" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar4" ></td>
+                                    <td><input type="number" class="form-control" name="precio4" id="vjueves1" required value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Viernes</td>
-                                    <td><input type="text" class="form-control" name="lugar5" required></td>
-                                    <td><input type="number" class="form-control" name="precio5" id="vviernes1" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar5" ></td>
+                                    <td><input type="number" class="form-control" name="precio5" id="vviernes1" required value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Sabado</td>
-                                    <td><input type="text" class="form-control" name="lugar6" required></td>
-                                    <td><input type="number" class="form-control" name="precio6" id="vsabado1" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar6" ></td>
+                                    <td><input type="number" class="form-control" name="precio6" id="vsabado1" required value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br>Domingo</td>
-                                    <td><input type="text" class="form-control" name="lugar7" required></td>
-                                    <td><input type="number" class="form-control" name="precio7" id="vdomingo1" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar7" ></td>
+                                    <td><input type="number" class="form-control" name="precio7" id="vdomingo1" required value="0"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="table-success">TOTAL SEMANAL</td>
-                                    <td class="text-right" id="totalSemanalCompras">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalSemanalCompras">0</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="table-success">TOTAL MENSUAL</td>
-                                    <td class="text-right" id="totalMensualCompras">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalMensualCompras">0</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -179,38 +179,38 @@
                             </thead>
                             <tbody>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar8" required></td>
-                                    <td><input type="number" class="form-control" name="precio8" id="vlunes2" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar8"></td>
+                                    <td><input type="number" class="form-control" name="precio8" required id="vlunes2" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar9" required></td>
-                                    <td><input type="number" class="form-control" name="precio9" id="vmartes2" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar9"></td>
+                                    <td><input type="number" class="form-control" name="precio9" required id="vmartes2" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar10" required></td>
-                                    <td><input type="number" class="form-control" name="precio10" id="vmiercoles2" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar10"></td>
+                                    <td><input type="number" class="form-control" name="precio10" required id="vmiercoles2" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar11" required></td>
-                                    <td><input type="number" class="form-control" name="precio11" id="vjueves2" value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar11"></td>
+                                    <td><input type="number" class="form-control" name="precio11" required id="vjueves2" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar12" required></td>
-                                    <td><input type="number" class="form-control" name="precio12" id="vviernes2"  value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar12"></td>
+                                    <td><input type="number" class="form-control" name="precio12" required id="vviernes2"  value="0"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar13" required></td>
-                                    <td><input type="number" class="form-control" name="precio13" id="vsabado2"  value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar13"></td>
+                                    <td><input type="number" class="form-control" name="precio13" required id="vsabado2"  value="0"></td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar14" required></td>
-                                    <td><input type="number" class="form-control" name="precio14" id="vdomingo2"  value="0"></td>
+                                    <td><input type="text" class="form-control" name="lugar14" ></td>
+                                    <td><input type="number" class="form-control" name="precio14" required id="vdomingo2"  value="0"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right" id="totalSemanalVentas">0</td>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalSemanalVentas">0</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right" id="totalMensualVentas">0</td>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalMensualVentas">0</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -233,51 +233,51 @@
                             <tbody>
                                 <tr class="form-group">
                                     <td><br> <label for="">RENTA</label></td>
-                                    <td><input class="form-control" type="number" name="gasto1" value="0" id="op1"></td>
+                                    <td><input class="form-control" type="number" name="gasto1" requiered value="0" id="op1"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">LUZ</label></td>
-                                    <td><input class="form-control" type="number" name="gasto2" value="0" id="op2"></td>
+                                    <td><input class="form-control" type="number" name="gasto2" requiered value="0" id="op2"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">AGUA</label></td>
-                                    <td><input class="form-control" type="number" name="gasto3" value="0" id="op3"></td>
+                                    <td><input class="form-control" type="number" name="gasto3" requiered value="0" id="op3"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">GAS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto4" value="0" id="op4"></td>
+                                    <td><input class="form-control" type="number" name="gasto4" requiered value="0" id="op4"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">CELULAR</label></td>
-                                    <td><input class="form-control" type="number" name="gasto5" value="0" id="op5"></td>
+                                    <td><input class="form-control" type="number" name="gasto5" requiered value="0" id="op5"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">IMPUESTOS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto6" value="0" id="op6"></td>
+                                    <td><input class="form-control" type="number" name="gasto6" requiered value="0" id="op6"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TRANSPORTE</label></td>
-                                    <td><input class="form-control" type="number" name="gasto7" value="0" id="op7"></td>
+                                    <td><input class="form-control" type="number" name="gasto7" requiered value="0" id="op7"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">SALARIOS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto8" value="0" id="op8"></td>
+                                    <td><input class="form-control" type="number" name="gasto8" requiered value="0" id="op8"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">MANTENIMIENTO</label></td>
-                                    <td><input class="form-control" type="number" name="gasto9" value="0" id="op9"></td>
+                                    <td><input class="form-control" type="number" name="gasto9" requiered value="0" id="op9"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">PAGOS DEUDAS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto10" value="0" id="op10"></td>
+                                    <td><input class="form-control" type="number" name="gasto10" requiered value="0" id="op10"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">OTROS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto11" value="0" id="op11"></td>
+                                    <td><input class="form-control" type="number" name="gasto11" requiered value="0" id="op11"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (C)</td>
-                                    <td id="totalOperacion">0</td>
+                                    <td id="totalOperacion" style="font-weight: 900;">0</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -290,51 +290,51 @@
                             <tbody>
                                 <tr class="form-group">
                                     <td><br> <label for="">ALIMENTOS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto12" value="0" id="op12"></td>
+                                    <td><input class="form-control" type="number" name="gasto12" required value="0" id="op12"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">LUZ, AGUA</label></td>
-                                    <td><input class="form-control" type="number" name="gasto13" value="0" id="op13"></td>
+                                    <td><input class="form-control" type="number" name="gasto13" required value="0" id="op13"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">GAS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto14" value="0" id="op14"></td>
+                                    <td><input class="form-control" type="number" name="gasto14" required value="0" id="op14"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TEL&Eacute;FONO</label></td>
-                                    <td><input class="form-control" type="number" name="gasto15" value="0" id="op15"></td>
+                                    <td><input class="form-control" type="number" name="gasto15" required value="0" id="op15"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">RENTA</label></td>
-                                    <td><input class="form-control" type="number"" name="gasto16" value="0" id="op16"></td>
+                                    <td><input class="form-control" type="number" name="gasto16" required value="0" id="op16"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">VESTIDO</label></td>
-                                    <td><input class="form-control" type="number" name="gasto17" value="0" id="op17"></td>
+                                    <td><input class="form-control" type="number" name="gasto17" required value="0" id="op17"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">SALUD</label></td>
-                                    <td><input class="form-control" type="number" name="gasto18" value="0" id="op18"></td>
+                                    <td><input class="form-control" type="number" name="gasto18" required value="0" id="op18"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">ESCUELA</label></td>
-                                    <td><input class="form-control" type="number" name="gasto19" value="0" id="op19"></td>
+                                    <td><input class="form-control" type="number" name="gasto19" required value="0" id="op19"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TRANSPORTE</label></td>
-                                    <td><input class="form-control" type="number" name="gasto20" value="0" id="op20"></td>
+                                    <td><input class="form-control" type="number" name="gasto20" required value="0" id="op20"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">PAGOS DEUDAS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto21" value="0" id="op21"></td>
+                                    <td><input class="form-control" type="number" name="gasto21" required value="0" id="op21"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">OTROS</label></td>
-                                    <td><input class="form-control" type="number" name="gasto22" value="0" id="op22"></td>
+                                    <td><input class="form-control" type="number" name="gasto22" required value="0" id="op22"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (E)</td>
-                                    <td id="totalFamiliar">0</td>
+                                    <td id="totalFamiliar" style="font-weight: 900;">0</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -361,23 +361,23 @@
                             <tbody >
                                 <tr class="form-group">
                                     <td><br> <label for="">OTRO NEGOCIO</label></td>
-                                    <td><input type="number" class="form-control" name="otro_negocio" id="ingreso1" value="0"></td>
+                                    <td><input type="number" class="form-control" name="otro_negocio" required id="ingreso1" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">EMPLEO</label></td>
-                                    <td><input type="number" class="form-control" name="empleo" id="ingreso2" value="0"></td>
+                                    <td><input type="number" class="form-control" name="empleo" required id="ingreso2" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">CÓNYUGE</label></td>
-                                    <td><input type="number" class="form-control" name="conyuge" id="ingreso3" value="0"></td>
+                                    <td><input type="number" class="form-control" name="conyuge" required id="ingreso3" value="0"></td>
                                 </tr>
                                 <tr>
                                     <td>TOTAL</td>
-                                    <td class="text-right" id="totalIngresos">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalIngresos">0</td>
                                 </tr>
                                 <tr>
                                     <td>DISPONIBLE DE OTROS INGRESOS (30%)</td>
-                                    <td class="text-right" id="totalIngresosPorcentaje">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalIngresosPorcentaje">0</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -394,18 +394,18 @@
                             <tbody>
                                 <tr class="form-group">
                                     <td><br> <label for="">MAQUINARIA, EQUIPO, HERRAMIENTAS</label></td>
-                                    <td><input type="number" class="form-control" name="maquinaria" id="fijo1" value="0"></td>
+                                    <td><input type="number" class="form-control" required name="maquinaria" id="fijo1" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">LOCAL</label></td>
-                                    <td><input type="number" class="form-control" name="local" id="fijo2" value="0"></td>
+                                    <td><input type="number" class="form-control" required name="local" id="fijo2" value="0"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">AUTO</label></td>
-                                    <td><input type="number" class="form-control" name="auto" id="fijo3" value="0"></td>
+                                    <td><input type="number" class="form-control" required name="auto" id="fijo3" value="0"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right" id="totalFijos">0</td>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalFijos">0</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -609,8 +609,8 @@
                         
 
                         $('#cont').append("<tr>"+
-                            "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
-                                "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
+                            "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
+                                "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
                             "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a3)*100)+"%</td>"+
                         "</tr>"
                         );
@@ -642,8 +642,8 @@
                         
 
                         $('#cont').append("<tr>"+
-                            "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
-                                "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
+                            "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
+                                "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
                             "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a3)*100)+"%</td>"+
                         "</tr>"
                         );
@@ -674,8 +674,8 @@
                 console.log(inventario);
 
                 $('#cont').append("<tr>"+
-                    "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
-                                        "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
+                    "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
+                                        "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
                                     "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a3)*100)+"%</td>"+
                                 "</tr>"
                 );

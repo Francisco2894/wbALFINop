@@ -54,8 +54,8 @@
                         <tbody>
                             <tr>
                                 <td colspan="3" class="table-success">TOTAL</td>
-                                <td colspan="2" class="text-right" id="totalInventario">0</td>
-                                <td class="text-right" id="totalInventarioPorcentaje">0</td>
+                                <td colspan="2" class="text-right" style="font-weight: 900;" id="totalInventario">0</td>
+                                <td class="text-right" style="font-weight: 900;" id="totalInventarioPorcentaje">0</td>
                             </tr>
                         </tbody>
                     </table>
@@ -120,11 +120,11 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="table-success">TOTAL SEMANAL</td>
-                                    <td class="text-right" id="totalSemanalCompras">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalSemanalCompras">{{ $totalc }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="table-success">TOTAL MENSUAL</td>
-                                    <td class="text-right" id="totalMensualCompras">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalMensualCompras">{{ $totalc*4 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -172,10 +172,10 @@
                                     <td><input type="number" disabled class="form-control" name="precio10" id="vviernes2"  value="{{ $transacionesVenta[6]->monto }}"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right" id="totalSemanalVentas">0</td>
+                                    <td colspan="2" class="text-right" style="font-weight: 900;" id="totalSemanalVentas">{{ $totalv }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right" id="totalMensualVentas">0</td>
+                                    <td colspan="2" class="text-right" style="font-weight: 900;" id="totalMensualVentas">{{ $totalv*4 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -242,7 +242,7 @@
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (C)</td>
-                                    <td id="totalOperacion">0</td>
+                                    <td id="totalOperacion" style="font-weight: 900;">{{ $totalo }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -299,7 +299,7 @@
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (E)</td>
-                                    <td id="totalFamiliar">0</td>
+                                    <td id="totalFamiliar" style="font-weight: 900;">{{ $totalf }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -338,11 +338,11 @@
                                 </tr>
                                 <tr>
                                     <td>TOTAL</td>
-                                    <td class="text-right" id="totalIngresos">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalIngresos">{{ $totaloi }}</td>
                                 </tr>
                                 <tr>
                                     <td>DISPONIBLE DE OTROS INGRESOS (30%)</td>
-                                    <td class="text-right" id="totalIngresosPorcentaje">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalIngresosPorcentaje">{{ round($totaloi*0.3) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -370,7 +370,7 @@
                                     <td><input type="number" disabled class="form-control" name="auto" id="fijo3" value="{{ $activos->auto }}"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right" id="totalFijos">0</td>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalFijos">{{ $totala }}</td>
                                 </tr>
                             </tbody>
                         </table>

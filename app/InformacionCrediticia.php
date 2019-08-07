@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class InformacionCrediticia extends Model
 {
     //
-    protected $table='tblgasto';
-    protected $primaryKey='idgasto';
+    protected $table='tblinfcrediticia';
+    protected $primaryKey='idnfc';
 
     public $timestamps=false;
 
     protected $fillable=[
-        'idtipogasto','idact','idngasto','monto'
+        'idsoc','score','fechaconsulta','idcliente'
     ];
 
     protected $guarded=[ ];

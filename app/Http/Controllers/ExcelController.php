@@ -66,6 +66,51 @@ class ExcelController extends Controller
       }
     }
 
+    public function importInfCreticia(){
+      global $r, $u;
+        $r=0;
+        $u=0;
+
+        if (Input::hasFile('infc')) {
+            $path = Input::file('infc')->getRealPath();
+
+            $name = Input::file('infc')->getClientOriginalName();
+            $ext = Input::file('infc')->getClientOriginalExtension();
+            List($pref,$date)=explode("-",trim($name));
+
+            return $pref;
+            if ($pref=="RCE") {
+
+            Excel::filter('chunk')->load($path)->chunk(250, function ($reader) {
+              //Se crea archivo con detalle de salida
+             // $fr=fopen("result.txt","w");
+             global $r, $u;
+                if (!empty($reader) && $reader->count()) {
+                    foreach ($reader as $fila) {
+                        $existId=Credito::where('idCredito', '=', $fila->id_credito)->first();
+                        if (count($existId)==1) {
+                            $existId->cveAseCol=$fila->clave_asesor;
+                            $existId->fechaEjercido=$this->getDateYmd($fila->fecha_ejercido);
+                            $existId->update();
+                            $u++;
+                        }
+                    }
+                }
+            });
+          }
+        } else {
+            return view('agenda.dataexcel.index')
+          ->with(['records'=>0,'updaterecords'=>0,'proceso'=>"Importación Fecha Ejercido ".$name])
+          ->with(['records2'=>0,'updaterecords2'=>0,'proceso2'=>"Importación Fecha Ejercido ".$name])
+          ->with(['records3'=>0,'updaterecords3'=>0,'proceso3'=>"Importación Fecha Ejercido ".$name]);
+        }
+        return view('agenda.dataexcel.index')
+        ->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación Fecha Ejercido ".$name])
+        ->with(['records2'=>0,'updaterecords2'=>0,'proceso2'=>"Importación Fecha Ejercido ".$name])
+        ->with(['records3'=>$r,'updaterecords3'=>$u,'proceso3'=>"Importación Fecha Ejercido ".$name]);
+
+    }
+
     public function importsca()
     {
       global $r,$u,$r2,$u2;

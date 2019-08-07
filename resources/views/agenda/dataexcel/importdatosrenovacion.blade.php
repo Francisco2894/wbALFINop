@@ -77,7 +77,7 @@
           </div>
         </div>
       </form>
-      <form class="form-horizontal" method="POST" action="{{action('ExcelController@importFliq')}}" enctype="multipart/form-data">
+      <form class="form-horizontal" method="POST" action="{{action('ExcelController@importInfCreticia')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="row">
           <div class="col-xs-6">
@@ -87,7 +87,7 @@
             <div class="card card-nav">
               <div class="content">
                 <label for="rptliqc">Reporte Liquidados y Cerrados</label>
-                <input class="btn btn-simple" type="file" name="rptliqc" accept=".csv" value="">
+                <input class="btn btn-simple" type="file" name="infc" accept=".csv" value="">
                 <button class="btn btn-primary btn-sm" type="submit"><i class="material-icons">save</i>  GUARDAR EN BD</button>
               </div>
             </div>

@@ -24,6 +24,9 @@ class ProyRenovacionController extends Controller
     public function index(Request $request)
     {
         //
+        if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6) {
+            return redirect()->route('devengo.index');
+        }
         $i = 0;
         $creditos = Credito::all();
         $productos = Producto::all();
