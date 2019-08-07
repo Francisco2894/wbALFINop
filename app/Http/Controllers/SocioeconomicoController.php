@@ -41,12 +41,13 @@ class SocioeconomicoController extends Controller
     public function create(Request $request)
     {
         //
+        $urlanterior = $_SERVER['HTTP_REFERER'];
         if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6) {
             return redirect()->route('devengo.index');
         }
         $cliente = Credito::where('idCredito',$request->id)->first();
         $clienteRenovacion = Cliente::where('idcliente',$cliente->idCliente)->first();
-        return view('socioeconomico.create',compact('clienteRenovacion'));
+        return view('socioeconomico.create',compact('clienteRenovacion','urlanterior'));
     }
 
     /**
@@ -112,8 +113,9 @@ class SocioeconomicoController extends Controller
         //agrego activos fijos
         $activos = ActivosFijos::create($request->all());
         $otrosIngresos = OtrosIngresos::create($request->all());
-
-        return redirect()->route('socioeconomico.show',$actividad->idact);
+        //return back()->withInput();
+        return redirect("$request->url");
+        //return redirect()->route('socioeconomico.show',$actividad->idact);
     }
 
     public function ofertas(Request $request,Credito $idCliente)
@@ -132,6 +134,7 @@ class SocioeconomicoController extends Controller
         if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6) {
             return redirect()->route('devengo.index');
         }
+        $urlanterior = $_SERVER['HTTP_REFERER'];
         $actividad = Actividad::where('idcliente',$cliente->idcliente)->first();
         $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
         $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
@@ -164,7 +167,7 @@ class SocioeconomicoController extends Controller
         $totala = $activos->local + $activos->auto + $activos->maquinaria;
 
         return view('socioeconomico.info',compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
-        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala'));
+        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','urlanterior'));
     }
 
     /**
@@ -179,6 +182,7 @@ class SocioeconomicoController extends Controller
         if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6) {
             return redirect()->route('devengo.index');
         }
+        $urlanterior = $_SERVER['HTTP_REFERER'];
         $activos = ActivosFijos::where('idact',$socioeconomico->idact)->first();
         $otrosIngresos = OtrosIngresos::where('idact',$socioeconomico->idact)->first();
         
@@ -226,7 +230,7 @@ class SocioeconomicoController extends Controller
         $capacidadPago = $disponible * 0.3;
         
         return view('socioeconomico.show',compact('activos','otrosIngresos','inventario','totalActivoFijo','totalOtrosIngresos',
-        'ventasMensuales','compraMensuales','utilidadBruta','operacion','utilidadNeta','porcentajeOtrosIngresos','familiares','disponible','capacidadPago'));
+        'ventasMensuales','compraMensuales','utilidadBruta','operacion','utilidadNeta','porcentajeOtrosIngresos','familiares','disponible','capacidadPago','urlanterior'));
     }
 
     /**
@@ -241,6 +245,7 @@ class SocioeconomicoController extends Controller
         if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6) {
             return redirect()->route('devengo.index');
         }
+        $urlanterior = $_SERVER['HTTP_REFERER'];
         $actividad = Actividad::where('idcliente',$socioeconomico->idCliente)->first();
         $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
         $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
@@ -273,7 +278,7 @@ class SocioeconomicoController extends Controller
 
 
         return view('socioeconomico.edit',compact('socioeconomico','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
-        'productos','transacionesVenta','transacionesCompra','actividad','totalv','totalc','totalo','totalf','totaloi','totala'));
+        'productos','transacionesVenta','transacionesCompra','actividad','totalv','totalc','totalo','totalf','totaloi','totala','urlanterior'));
     }
 
     /**
@@ -343,8 +348,8 @@ class SocioeconomicoController extends Controller
         $activo->update($request->all());
         $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
         $otrosIngresos->update($request->all());
-
-        return redirect()->route('socioeconomico.show',$actividad->idact);
+        return redirect("$request->url");
+        //return redirect()->route('socioeconomico.show',$actividad->idact);
     }
 
     /**

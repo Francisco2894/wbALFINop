@@ -174,6 +174,6 @@
 </div>
 
 <div class="col-md-4 col-xs-offset-4">
-    <a href="{{ route('renovacion.index')}}" class="btn btn-block btn-primary text-center">Regresar</a>
+    <a href="{{ url("$urlanterior") }}" class="btn btn-block btn-primary text-center">Regresar</a>
 </div>
 @endsection

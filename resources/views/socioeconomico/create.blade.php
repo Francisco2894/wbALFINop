@@ -418,6 +418,7 @@
         
     </div>
     <input type="hidden" value="{{$clienteRenovacion->idcliente}}" name="cliente">
+    <input type="hidden" value="{{$urlanterior}}" name="url">
     <div class="col-md-4 col-xs-offset-4">
         <button type="submit" class="btn btn-block btn-primary text-center" onclick="inputs()">Guardar</button>
     </div>
@@ -700,7 +701,7 @@
                     );
                 }
                 $('#inputs').append(
-                        "<input type='text' name='num_productos' value='"+inventario.length+"'>"
+                        "<input type='hidden' name='num_productos' value='"+inventario.length+"'>"
                     );
             }
         }

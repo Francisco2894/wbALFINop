@@ -418,6 +418,7 @@
     <div id="inputs">
         
     </div>
+    <input type="hidden" value="{{ $urlanterior }}" name="url">
     <div class="col-md-4 col-xs-offset-4">
         <button type="submit" class="btn btn-block btn-primary text-center" onclick="inputs()">Guardar</button>
     </div>

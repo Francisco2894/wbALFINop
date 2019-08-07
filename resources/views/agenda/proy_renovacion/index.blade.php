@@ -50,7 +50,7 @@
           <td>
               @foreach ($actividades as $actividad)
               @if ($vencimiento->idCliente == $actividad->idcliente)
-              <button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button>
+              <a href="{{ route('socioeconomico.show',$actividad->idact) }}"><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button></a>
               @endif 
             @endforeach
           </td>
