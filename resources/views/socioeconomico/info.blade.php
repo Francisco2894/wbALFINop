@@ -543,7 +543,7 @@
             var porciento = 0;
             for(i=0;i<inventario.length;i++){
                 suma = suma + (inventario[i]['precio_compra'] * inventario[i]['cantidad']);
-                porciento = porciento + ((inventario[i]['precio_venta'] - inventario[i]['precio_compra'])/inventario[i]['precio_venta']);
+                porciento = porciento + (Math.round(((inventario[i]['precio_venta'] - inventario[i]['precio_compra'])/inventario[i]['precio_compra'])*100))/inventario.length;
             }
             $('#totalInventario').text(suma);
             $('#totalInventarioPorcentaje').text(porciento+"%");
@@ -569,7 +569,7 @@
                             inventario.push(registro);
                             
 
-                            $('#cont').append("<tr> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"</td>"+
+                            $('#cont').append("<tr> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a3)*100)+"%</td>"+
                             "</tr>"
                             );
                             cont = cont + 1;
@@ -605,7 +605,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
                                 "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"</td>"+
+                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"%</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -638,7 +638,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>cached</i></button>"+
                                 "<button class='btn btn-primary btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"</td>"+
+                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+((a4-a3)/a3)+"%</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;

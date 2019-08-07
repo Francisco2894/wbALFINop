@@ -17,23 +17,23 @@
                         <tbody >
                             <tr class="form-group">
                                 <td>OTRO NEGOCIO</td>
-                                <td>${{$otrosIngresos->otro_negocio}}</td>
+                                <td><strong>${{$otrosIngresos->otro_negocio}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>EMPLEO</td>
-                                <td>${{$otrosIngresos->empleo}}</td>
+                                <td><strong>${{$otrosIngresos->empleo}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>CÓNYUGE</td>
-                                <td>${{$otrosIngresos->conyuge}}</td>
+                                <td><strong>${{$otrosIngresos->conyuge}}</strong></td>
                             </tr>
                             <tr>
                                 <td>TOTAL</td>
-                                <td>${{$otrosIngresos->conyuge + $otrosIngresos->empleo + $otrosIngresos->otro_negocio}}</td>
+                                <td><strong>${{$otrosIngresos->conyuge + $otrosIngresos->empleo + $otrosIngresos->otro_negocio}}</strong></td>
                             </tr>
                             <tr>
                                 <td>DISPONIBLE DE OTROS INGRESOS (30%)</td>
-                                <td>${{$totalOtrosIngresos*0.3}}</td>
+                                <td><strong>${{$totalOtrosIngresos*0.3}}</strong></td>
                             </tr>
                         </tbody>
                     </table>
@@ -50,19 +50,19 @@
                         <tbody>
                             <tr class="form-group">
                                 <td>MAQUINARIA, EQUIPO, HERRAMIENTAS</td>
-                                <td>${{$activos->maquinaria}}</td>
+                                <td><strong>${{$activos->maquinaria}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>LOCAL</td>
-                                <td>${{$activos->local}}</td>
+                                <td><strong>${{$activos->local}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>AUTO</td>
-                                <td>${{$activos->auto}}</td>
+                                <td><strong>${{$activos->auto}}</strong></td>
                             </tr>
                             <tr>
                                 <td>TOTAL ACTIVOS FIJOS</td>
-                                <td>${{$totalActivoFijo}}</td>
+                                <td><strong>${{$totalActivoFijo}}</strong></td>
                             </tr>
                         </tbody>
                     </table>
@@ -94,7 +94,7 @@
                             </tr>
                             <tr class="form-group">
                                 <td>INVENTARIO</td>
-                                <td>${{$inventario}}</td>
+                                <td><strong>${{$inventario}}</strong></td>
                                 <td class="bg-danger">TOTAL PASIVO</td>
                                 <td class="bg-danger">&nbsp;</td>
                             </tr>
@@ -106,7 +106,7 @@
                             </tr>
                             <tr class="form-group">
                                 <td>TOTAL ACTIVO FIJO</td>
-                                <td>${{$totalActivoFijo}}</td>
+                                <td><strong>${{$totalActivoFijo}}</strong></td>
                                 <td></td>
                                 <td>&nbsp;</td>
                             </tr>
@@ -131,39 +131,39 @@
                         <tbody>
                             <tr class="form-group">
                                 <td>(+) VENTAS (A)</td>
-                                <td>${{$ventasMensuales}}</td>
+                                <td><strong>${{$ventasMensuales}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>(-) COSTO DE VENTAS (B)</td>
-                                <td>${{$compraMensuales}}</td>
+                                <td><strong>${{$compraMensuales}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>(=) UTILIDAD BRUTA</td>
-                                <td>${{$utilidadBruta}}</td>
+                                <td><strong>${{$utilidadBruta}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>(-) GASTOS DE OPERACIÓN ( C )</td>
-                                <td>${{$operacion}}</td>
+                                <td><strong>${{$operacion}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>(=) UTILIDAD NETA</td>
-                                <td>${{$utilidadNeta}}</td>
+                                <td><strong>${{$utilidadNeta}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>(+) OTROS INGRESOS (D)</td>
-                                <td>${{$porcentajeOtrosIngresos}}</td>
+                                <td><strong>${{$porcentajeOtrosIngresos}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>(-) GASTOS FAMILIARES ( E )</td>
-                                <td>${{$familiares}}</td>
+                                <td><strong>${{$familiares}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>(=) DISPONIBLE</td>
-                                <td>${{$disponible}}</td>
+                                <td><strong>${{$disponible}}</strong></td>
                             </tr>
                             <tr class="form-group">
                                 <td>($) CAPACIDAD MÁXIMA DE PAGO</td>
-                                <td>${{$capacidadPago}}</td>
+                                <td><strong>${{$capacidadPago}}</strong></td>
                             </tr>
                         </tbody>
                     </table>
