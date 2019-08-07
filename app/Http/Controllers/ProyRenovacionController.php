@@ -52,6 +52,42 @@ class ProyRenovacionController extends Controller
         // }
 
         //modificar registros por separado
+        // $credito = Credito::where('producto','MEJORA DE VIVIENDA SUPERVISION  FINANCIADA-GLOBAL')->get();
+        // foreach ($credito as $c) {
+        //     $c->update(['cveproducto' => 'CMVSP04_G	']);
+
+        // }
+
+        // $credito = Credito::where('producto','3.5% INSOLUTOS -  GANADERO AGRICOLA COM -SEMESTRAL')->get();
+        // foreach ($credito as $c) {
+        //     $c->update(['cveproducto' => 'CGANFRO-S']);
+
+        // }
+
+        // $credito = Credito::where('producto','MEJORA SIN SUBS COM FINAN  QUINCENAL 2017')->get();
+        // foreach ($credito as $c) {
+        //     $c->update(['cveproducto' => 'CMVSS-Q17']);
+
+        // }
+
+        // $credito = Credito::where('producto','MEJORA SIN SUBS COM FINAN  SEMANAL 2017')->get();
+        // foreach ($credito as $c) {
+        //     $c->update(['cveproducto' => 'CMVSS-S17']);
+
+        // }
+
+        // $credito = Credito::where('producto','AUTOPRODUCCIÓN TERRA MONTEBELLO OCOSINGO2018')->get();
+        // foreach ($credito as $c) {
+        //     $c->update(['cveproducto' => 'CAVAMON18C']);
+
+        // }
+
+        // $credito = Credito::where('producto','AUTOPRODUCCIÓN TERRACHINCULTIK 2018')->get();
+        // foreach ($credito as $c) {
+        //     $c->update(['cveproducto' => 'CAVACHINC']);
+
+        // }
+
         // $credito = Credito::where('producto','AUTOPRODUCCIÓN TERRATULUM 2018')->get();
         // foreach ($credito as $c) {
         //     $c->update(['cveproducto' => 'CAVATULUM']);

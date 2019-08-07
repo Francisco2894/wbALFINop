@@ -13,7 +13,7 @@ class Cliente extends Model
     public $timestamps=false;
 
     protected $fillable=[
-        'nombre','paterno','materno','nombre2','curp'
+        'idcliente','nombre','paterno','materno','nombre2','curp'
     ];
 
     protected $guarded=[ ];

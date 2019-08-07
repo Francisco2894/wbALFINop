@@ -16,6 +16,7 @@ use wbALFINop\Perfil;
 use wbALFINop\DomicilioCredito;
 use wbALFINop\CondicionCm;
 use wbALFINop\Pagos;
+use wbALFINop\Cliente;
 
 ini_set('max_execution_time', 360);
 
@@ -118,7 +119,7 @@ class ExcelController extends Controller
       $u=0;
       $r2=0;
       $u2=0;
-
+      //return count($cliente = Cliente::where('idcliente',1)->first());
         if (Input::hasFile('scafile')) {
             $path = Input::file('scafile')->getRealPath();
             $name = Input::file('scafile')->getClientOriginalName();
@@ -132,9 +133,17 @@ class ExcelController extends Controller
 
                 if (!empty($reader) && $reader->count()) {
                     foreach ($reader as $fila) {
+
+                        $cliente = Cliente::where('idcliente',$fila->id_persona)->first();
+                        if (is_null($cliente)) {
+                          $crearCliente = Cliente::create([
+                            'idcliente'=>$fila->id_persona,
+                            'nombre'=>$fila->vnombre_completo_cliente
+                          ]);
+                        }
                         $existId=Credito::where('idCredito', '=', $fila->id_credito)->first();//se valida que el crédito no exista en la BD
                         $existPerfil=Perfil::where('idPerfil', '=', trim($fila->clave_vendedor))->first();//se valida que el crédito no exista en la BD
-                        if (count($existId)==0 && count($existPerfil)>=1) {
+                        if (is_null($existId) && !is_null($existPerfil)) {
                             $credito=new Credito;
                             $credito->idCredito=$fila->id_credito;
                             $credito->idCliente=$fila->id_persona;
@@ -150,7 +159,7 @@ class ExcelController extends Controller
                             $credito->idPerfil=$fila->clave_vendedor;
                             $credito->save();
                             $r=$r+1;
-                        }else if (count($existId)>0 && count($existPerfil)>=1) {
+                        }else if (!is_null($existId) && !is_null($existPerfil)) {
                           $existId->nomCliente=$fila->vnombre_completo_cliente;
                           $existId->negocio=$fila->negocio;
                           $existId->fechaInicio=$this->getDateYmd($fila->fecha_inicio);
@@ -162,7 +171,7 @@ class ExcelController extends Controller
                             // Importacion de situacion credito
                           $existIdc=Credito::where('idCredito', '=', $fila->id_credito)->first();//se valida que el crédito exista en la BD
                           $existIds=SituacionCredito::where('idCredito', '=', $fila->id_credito)->first();
-                          if (count($existIds)==0 && count($existIdc)>=1) {
+                          if (is_null($existIds) && !is_null($existIdc)) {
                               $situacioncredito=new SituacionCredito;
                               $situacioncredito->saldo=$fila->saldo_capital;
                               $situacioncredito->capitalVigente=$fila->capital_vigente;
@@ -180,7 +189,7 @@ class ExcelController extends Controller
                               $situacioncredito->monto_ult_pago=$fila->importe_ult_pago;
                               $situacioncredito->save();
                               $r2++;
-                          } elseif (count($existIds)==1 && count($existIdc)>=1) {
+                          } elseif (!is_null($existIds) && !is_null($existIdc)) {
                               //$situacioncredito=SituacionCredito::where('idCredito', '=', $fila->id_credito)->first();
                               //$situacioncredito=SituacionCredito::findOrFail($ids);
                               $existIds->saldo=$fila->saldo_capital;
@@ -207,14 +216,14 @@ class ExcelController extends Controller
             return view('agenda.dataexcel.index')
             ->with(['records'=>0,'updaterecords'=>0,'proceso'=>"Favor de revisar el nombre del archivo ".$name])
             ->with(['records2'=>0,'updaterecords2'=>0,'proceso2'=>"Importación Situación de Creditos ".$name])
-            >with(['records3'=>0,'updaterecords3'=>0,'proceso3'=>"Importación Fecha Ejercido ".$name]);
+            ->with(['records3'=>0,'updaterecords3'=>0,'proceso3'=>"Importación Fecha Ejercido ".$name]);
           }
           }
 
         return view('agenda.dataexcel.index')
         ->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación de Créditos ".$name])
         ->with(['records2'=>$r2,'updaterecords2'=>$u2,'proceso2'=>"Importación Situación de Créditos ".$name])
-        >with(['records3'=>0,'updaterecords3'=>0,'proceso3'=>"Importación Fecha Ejercido ".$name]);
+        ->with(['records3'=>0,'updaterecords3'=>0,'proceso3'=>"Importación Fecha Ejercido ".$name]);
     }
 
     public function importFliq()
