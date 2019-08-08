@@ -16,7 +16,9 @@
           <label for="searchTxt">ASESOR</label>
           {!! Form::select('searchTxt',$vendedores,$searchTxt,['class'=>'form-control', 'onchange'=>"this.form.submit()",'id'=>'searchTxt']) !!}
         </div>
-        <div class="col-sm-10">
+        
+    @endif
+    <div class="col-sm-10">
             <div class="form-group label-floating">
                 <label class="control-label">Buscar...</label>
                 <input class="form-control" type="text" name="cliente" id="cliente">
@@ -25,5 +27,4 @@
         <div class="col-sm-2">
           <button class="btn btn-info btn-block" type="submit">Buscar</button>
         </div>
-    @endif
 {{Form::close()}}

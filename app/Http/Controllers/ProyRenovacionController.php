@@ -33,7 +33,8 @@ class ProyRenovacionController extends Controller
         $contador = 0;
         $noiguales = 0;
         $no_exite = array();
-
+        
+        //return count($cre = Credito::where('cveproducto',0)->get());
         //Proceso para actualizar el campo cveproducto de la tabla credito
         // foreach ($creditos as $c) {
         //     foreach($productos as $p){
@@ -52,42 +53,6 @@ class ProyRenovacionController extends Controller
         // }
 
         //modificar registros por separado
-        // $credito = Credito::where('producto','MEJORA DE VIVIENDA SUPERVISION  FINANCIADA-GLOBAL')->get();
-        // foreach ($credito as $c) {
-        //     $c->update(['cveproducto' => 'CMVSP04_G	']);
-
-        // }
-
-        // $credito = Credito::where('producto','3.5% INSOLUTOS -  GANADERO AGRICOLA COM -SEMESTRAL')->get();
-        // foreach ($credito as $c) {
-        //     $c->update(['cveproducto' => 'CGANFRO-S']);
-
-        // }
-
-        // $credito = Credito::where('producto','MEJORA SIN SUBS COM FINAN  QUINCENAL 2017')->get();
-        // foreach ($credito as $c) {
-        //     $c->update(['cveproducto' => 'CMVSS-Q17']);
-
-        // }
-
-        // $credito = Credito::where('producto','MEJORA SIN SUBS COM FINAN  SEMANAL 2017')->get();
-        // foreach ($credito as $c) {
-        //     $c->update(['cveproducto' => 'CMVSS-S17']);
-
-        // }
-
-        // $credito = Credito::where('producto','AUTOPRODUCCIÓN TERRA MONTEBELLO OCOSINGO2018')->get();
-        // foreach ($credito as $c) {
-        //     $c->update(['cveproducto' => 'CAVAMON18C']);
-
-        // }
-
-        // $credito = Credito::where('producto','AUTOPRODUCCIÓN TERRACHINCULTIK 2018')->get();
-        // foreach ($credito as $c) {
-        //     $c->update(['cveproducto' => 'CAVACHINC']);
-
-        // }
-
         // $credito = Credito::where('producto','AUTOPRODUCCIÓN TERRATULUM 2018')->get();
         // foreach ($credito as $c) {
         //     $c->update(['cveproducto' => 'CAVATULUM']);
@@ -95,12 +60,10 @@ class ProyRenovacionController extends Controller
         // }
 
 
-        if (Auth::user()->idNivel==6) {
-            return Redirect::to('agenda/promocion');
-          }
+        
             
                 if (Auth::user()->idNivel>3) {
-                    if (Auth::user()->idNivel==4) {
+                    if (Auth::user()->idNivel==6) {
                         $query= trim($request ->get('searchTxt'));
                     } else {
                         $query=Auth::user()->idPerfil;
@@ -139,6 +102,7 @@ class ProyRenovacionController extends Controller
 
                 $ofertas = Oferta::pluck('idcliente');
                 $blackList = BlackList::pluck('idcredito');
+                $blackListp = BlackList::pluck('idcliente');
 
                 $vencimientos = Credito::
         leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
@@ -148,11 +112,12 @@ class ProyRenovacionController extends Controller
         ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
         ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
         ->where('tblcreditos.idPerfil', '=', $query)
+         ->where('s.estatus', '=', '1')
         ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
         ->whereNotIn('tblcreditos.idCliente',$ofertas) //que no este en ofertas
-        ->whereNotIn('tblcreditos.idCredito',$blackList) //que no este en lista actual
+        ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
         ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
-        ->where('s.maxDiasAtraso', "<", 16) //maximo dias atrazado es 16
+        ->where('s.maxDiasAtraso', "<", 31) //maximo dias atrazado es 16
         ->where('refinan_si',1) //refinan_si con valor en 1
         ->orderBy('tblcreditos.fechaFin', 'asc')
         ->orderBy('dc.colonia', 'desc')
@@ -167,9 +132,9 @@ class ProyRenovacionController extends Controller
         ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
         ->where('tblcreditos.idPerfil', '=', $query)
         ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
-        ->whereNotIn('tblcreditos.idCredito',$blackList) //que no este en lista actual
+        ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
         ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
-        ->where('s.maxDiasAtraso', "<", 16) //maximo dias atrazado es 16
+        ->where('s.maxDiasAtraso', "<", 30) //maximo dias atrazado es 16
         //->where('refinan_si',1) //refinan_si con valor en 1
         ->orderBy('tblcreditos.fechaFin', 'asc')
         ->orderBy('dc.colonia', 'desc')

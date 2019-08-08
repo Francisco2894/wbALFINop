@@ -79,6 +79,7 @@
             <th>Celular</th>
             <th>Socioeconomico</th>
             <th>Oferta</th>
+            <th>&nbsp;</th>
           </tr>
           </thead>
          @foreach ($vencimientosOfertas as $vencimientoOferta)
@@ -99,6 +100,9 @@
                 </td>
                 <td>
                   <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="ofertas({{ $vencimientoOferta->idCredito }});"><i class="material-icons">info</i></button>
+                </td>
+                <td>
+                  <a href="{{ route('pdfrenovacion',$vencimientoOferta->idCliente) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
                 </td>
               </tr>
             @endif 

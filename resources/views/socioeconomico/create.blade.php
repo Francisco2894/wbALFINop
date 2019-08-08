@@ -109,56 +109,111 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th class="text-center" colspan="3"> C&Aacute;LCULO COMPRAS</th>
+                                    <th class="text-center" colspan="2"> C&Aacute;LCULO COMPRAS</th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center">D&Iacute;A</th>
                                     <th class="text-center">LUGAR DE COMPRA</th>
                                     <th class="text-center">COMPRAS DIARIAS $</th>
                                 </tr>
                             </thead>
                             <tbody >
-                                <tr class="form-group">
-                                    <td><br>Lunes</td>
-                                    <td><input type="text" class="form-control" name="lugar1" ></td>
-                                    <td><input type="number" class="form-control" name="precio1" id="vlunes1" required value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Martes</td>
-                                    <td><input type="text" class="form-control" name="lugar2" ></td>
-                                    <td><input type="number" class="form-control" name="precio2" id="vmartes1" required value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Miercoles</td>
-                                    <td><input type="text" class="form-control" name="lugar3" ></td>
-                                    <td><input type="number" class="form-control" name="precio3" id="vmiercoles1" required value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Jueves</td>
-                                    <td><input type="text" class="form-control" name="lugar4" ></td>
-                                    <td><input type="number" class="form-control" name="precio4" id="vjueves1" required value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Viernes</td>
-                                    <td><input type="text" class="form-control" name="lugar5" ></td>
-                                    <td><input type="number" class="form-control" name="precio5" id="vviernes1" required value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Sabado</td>
-                                    <td><input type="text" class="form-control" name="lugar6" ></td>
-                                    <td><input type="number" class="form-control" name="precio6" id="vsabado1" required value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Domingo</td>
-                                    <td><input type="text" class="form-control" name="lugar7" ></td>
-                                    <td><input type="number" class="form-control" name="precio7" id="vdomingo1" required value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Lunes</label>
+                                            <input type="text" class="form-control" name="lugar1" >
+                                        </div>
+                                    </td>
+                                    <td style="margin: 0px">
+                                        <div class="form-group" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio1" id="vlunes1" required value="0">
+                                        </div>                            
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="table-success">TOTAL SEMANAL</td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Martes</label>
+                                            <input type="text" class="form-control" name="lugar2" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio2" id="vmartes1" required value="0">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Mi&eacute;rcoles</label>
+                                            <input type="text" class="form-control" name="lugar3" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group" style="margin: 0px">                                                                                
+                                            <input type="number" class="form-control" name="precio3" id="vmiercoles1" required value="0" style="margin: 0px">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px; padding: 0px;">
+                                            <label class="control-label">Jueves</label>
+                                            <input type="text" class="form-control" name="lugar4">
+                                        </div>
+                                    </td>                                    
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio4" id="vjueves1" required value="0">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Viernes</label>
+                                            <input type="text" class="form-control" name="lugar5" >
+                                        </div>
+                                    </td>                                    
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio5" id="vviernes1" required value="0">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Sabado</label>
+                                            <input type="text" class="form-control" name="lugar6" >
+                                        </div>
+                                    </td>
+                                    <td >  
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio6" id="vsabado1" required value="0">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Domingo</label>
+                                            <input type="text" class="form-control" name="lugar7" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio7" id="vdomingo1" required value="0">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table-success">TOTAL SEMANAL</td>
                                     <td class="text-right" style="font-weight: 900;" id="totalSemanalCompras">0</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="table-success">TOTAL MENSUAL</td>
+                                    <td class="table-success">TOTAL MENSUAL</td>
                                     <td class="text-right" style="font-weight: 900;" id="totalMensualCompras">0</td>
                                 </tr>
                             </tbody>
@@ -178,33 +233,97 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar8"></td>
-                                    <td><input type="number" class="form-control" name="precio8" required id="vlunes2" value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Lunes</label>
+                                            <input type="text" class="form-control" name="lugar8">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio8" required id="vlunes2" value="0">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar9"></td>
-                                    <td><input type="number" class="form-control" name="precio9" required id="vmartes2" value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Martes</label>
+                                            <input type="text" class="form-control" name="lugar9">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio9" required id="vmartes2" value="0">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar10"></td>
-                                    <td><input type="number" class="form-control" name="precio10" required id="vmiercoles2" value="0"></td>
+                                
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Miercoles</label>
+                                            <input type="text" class="form-control" name="lugar10">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio10" required id="vmiercoles2" value="0">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar11"></td>
-                                    <td><input type="number" class="form-control" name="precio11" required id="vjueves2" value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Jueves</label>
+                                            <input type="text" class="form-control" name="lugar11">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio11" required id="vjueves2" value="0">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar12"></td>
-                                    <td><input type="number" class="form-control" name="precio12" required id="vviernes2"  value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Viernes</label>
+                                            <input type="text" class="form-control" name="lugar12">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio12" required id="vviernes2"  value="0">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar13"></td>
-                                    <td><input type="number" class="form-control" name="precio13" required id="vsabado2"  value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Sabado</label>
+                                            <input type="text" class="form-control" name="lugar13">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio13" required id="vsabado2"  value="0">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar14" ></td>
-                                    <td><input type="number" class="form-control" name="precio14" required id="vdomingo2"  value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Domingo</label>
+                                            <input type="text" class="form-control" name="lugar14" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio14" required id="vdomingo2"  value="0">
+                                        </div>
+                                    </td>                                                                
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="font-weight: 900;" class="text-right" id="totalSemanalVentas">0</td>

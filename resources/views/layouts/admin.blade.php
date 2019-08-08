@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-	<meta charset="utf-8" />
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb18030">
+	
 	<link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/img/logo.png')}}">
 	<link rel="icon" type="image/png" href="{{asset('assets/img/logo.png')}}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -42,6 +42,32 @@
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::user()->idNivel<3)
 						<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">work</i>
+							ASESOR<span class="caret"></span>
+					</a>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="{{URL::action('DevengoController@index')}}"><i class="material-icons">view_agenda</i>Cobranza</a>
+				</li>
+				<li>
+					<a href="{{URL::action('VencimientoController@index')}}"><i class="material-icons">hourglass_empty</i>Retencion</a>
+				</li>
+				<li>
+					<a href="{{URL::action('ProspectobcController@index')}}"><i class="material-icons">attach_money</i>Promoci&oacute;n</a>
+				</li>
+			</ul>
+			</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">assignment</i>
+							GESTOR<span class="caret"></span>
+					</a>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="{{URL::action('GestorController@index')}}"><i class="material-icons">view_agenda</i>Cobranza</a>
+				</li>
+			</ul>
+			</li>
+						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">multiline_chart</i>
 								PROCESOS<span class="caret"></span>
 							</a>
@@ -73,21 +99,14 @@
 					</li>
 				</ul>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{route('datosrenovacion')}}">Datos Renovaci&oacute;n</a>
-				</li>
-				@if (auth()->user()->idNivel=1 || auth()->user()->idNivel==6)
-				<li class="nav-item">
-					<a class="nav-link" href="{{route('renovacion.index')}}">Renovacion</a>
-				</li>	
-				@endif
+				
 				
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">settings_applications</i>
 								<span class="caret"></span>
 							</a>
 					<ul class="dropdown-menu" role="menu">
-						<li>
+					    	<li>
 							<a href="{{ route('register') }}"><i class="material-icons">person_add</i>Admin Usuarios</a>
 						</li>
 						<li>
@@ -148,6 +167,11 @@
 			</ul>
 			</li>
 			@endif
+			@if (auth()->user()->idNivel=1 || auth()->user()->idNivel=6)
+				<li class="nav-item">
+					<a class="nav-link" href="{{route('renovacion.index')}}">Renovacion</a>
+				</li>	
+				@endif
 					<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">account_box</i>
 									{{ Auth::user()->name }} <span class="caret"></span>

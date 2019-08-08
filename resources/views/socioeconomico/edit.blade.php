@@ -113,54 +113,109 @@
                                     <th class="text-center" colspan="3"> C&Aacute;LCULO COMPRAS</th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center">D&Iacute;A</th>
                                     <th class="text-center">LUGAR DE COMPRA</th>
                                     <th class="text-center">COMPRAS DIARIAS $</th>
                                 </tr>
                             </thead>
                             <tbody >
-                                <tr class="form-group">
-                                    <td><br>Lunes</td>
-                                    <td><input type="text" class="form-control" name="lugar1" value="{{ $transacionesCompra[0]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio1" required id="vlunes1" value="{{ $transacionesCompra[0]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Martes</td>
-                                    <td><input type="text" class="form-control" name="lugar2" value="{{ $transacionesCompra[1]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio2" required id="vmartes1" value="{{ $transacionesCompra[1]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Miercoles</td>
-                                    <td><input type="text" class="form-control" name="lugar3" value="{{ $transacionesCompra[2]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio3" required id="vmiercoles1" value="{{ $transacionesCompra[2]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Jueves</td>
-                                    <td><input type="text" class="form-control" name="lugar4" value="{{ $transacionesCompra[3]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio4" required id="vjueves1" value="{{ $transacionesCompra[3]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Viernes</td>
-                                    <td><input type="text" class="form-control" name="lugar5" value="{{ $transacionesCompra[4]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio5" required id="vviernes1" value="{{ $transacionesCompra[4]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Sabado</td>
-                                    <td><input type="text" class="form-control" name="lugar6" value="{{ $transacionesCompra[5]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio6" required id="vsabado1" value="{{ $transacionesCompra[5]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br>Domingo</td>
-                                    <td><input type="text" class="form-control" name="lugar7" value="{{ $transacionesCompra[6]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio7" required id="vdomingo1" value="{{ $transacionesCompra[6]->monto }}"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Lunes</label>
+                                            <input type="text" class="form-control" name="lugar1" value="{{ $transacionesCompra[0]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td style="margin: 0px">
+                                        <div class="form-group" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio1" required id="vlunes1" value="{{ $transacionesCompra[0]->monto }}">
+                                        </div>                            
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="table-success">TOTAL SEMANAL</td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Martes</label>
+                                            <input type="text" class="form-control" name="lugar2" value="{{ $transacionesCompra[1]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio2" required id="vmartes1" value="{{ $transacionesCompra[1]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Mi&eacute;rcoles</label>
+                                            <input type="text" class="form-control" name="lugar3" value="{{ $transacionesCompra[2]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group" style="margin: 0px">                                                                                
+                                            <input type="number" class="form-control" name="precio3" required id="vmiercoles1" value="{{ $transacionesCompra[2]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px; padding: 0px;">
+                                            <label class="control-label">Jueves</label>
+                                            <input type="text" class="form-control" name="lugar4" value="{{ $transacionesCompra[3]->lugar_compra }}">
+                                        </div>
+                                    </td>                                    
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio4" required id="vjueves1" value="{{ $transacionesCompra[3]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Viernes</label>
+                                            <input type="text" class="form-control" name="lugar5" value="{{ $transacionesCompra[4]->lugar_compra }}">
+                                        </div>
+                                    </td>                                    
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio5" required id="vviernes1" value="{{ $transacionesCompra[4]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Sabado</label>
+                                            <input type="text" class="form-control" name="lugar6" value="{{ $transacionesCompra[5]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td >  
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio6" required id="vsabado1" value="{{ $transacionesCompra[5]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Domingo</label>
+                                            <input type="text" class="form-control" name="lugar7" value="{{ $transacionesCompra[6]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio7" required id="vdomingo1" value="{{ $transacionesCompra[6]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table-success">TOTAL SEMANAL</td>
                                     <td class="text-right" style="font-weight: 900;" id="totalSemanalCompras">{{ $totalc }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="table-success">TOTAL MENSUAL</td>
-                                    <td class="text-right" id="totalMensualCompras" style="font-weight: 900;">{{ $totalc*4 }}</td>
+                                    <td class="table-success">TOTAL MENSUAL</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalMensualCompras">{{ $totalc*4 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -179,39 +234,103 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar8" value="{{ $transacionesVenta[0]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio8" required id="vlunes2" value="{{ $transacionesVenta[0]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar9" value="{{ $transacionesVenta[1]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio9" required id="vmartes2" value="{{ $transacionesVenta[1]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar10" value="{{ $transacionesVenta[2]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio10" required id="vmiercoles2" value="{{ $transacionesVenta[2]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar11" value="{{ $transacionesVenta[3]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio11" required id="vjueves2" value="{{ $transacionesVenta[3]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar12" value="{{ $transacionesVenta[4]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio12" required id="vviernes2"  value="{{ $transacionesVenta[4]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar13" value="{{ $transacionesVenta[5]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio13" required id="vsabado2"  value="{{ $transacionesVenta[5]->monto }}"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><input type="text" class="form-control" name="lugar14" value="{{ $transacionesVenta[6]->lugar_compra }}"></td>
-                                    <td><input type="number" class="form-control" name="precio14" required id="vdomingo2"  value="{{ $transacionesVenta[6]->monto }}"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Lunes</label>
+                                            <input type="text" class="form-control" name="lugar8" value="{{ $transacionesVenta[0]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio8" required id="vlunes2" value="{{ $transacionesVenta[0]->monto }}">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right" style="font-weight: 900;" style="font-weight: 900;" id="totalSemanalVentas">{{ $totalv }}</td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Martes</label>
+                                            <input type="text" class="form-control" name="lugar9" value="{{ $transacionesVenta[1]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio9" required id="vmartes2" value="{{ $transacionesVenta[1]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Miercoles</label>
+                                            <input type="text" class="form-control" name="lugar10" value="{{ $transacionesVenta[2]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio10" required id="vmiercoles2" value="{{ $transacionesVenta[2]->monto }}">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right" style="font-weight: 900;" style="font-weight: 900;" id="totalMensualVentas">{{ $totalv*4 }}</td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Jueves</label>
+                                            <input type="text" class="form-control" name="lugar11" value="{{ $transacionesVenta[3]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio11" required id="vjueves2" value="{{ $transacionesVenta[3]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Viernes</label>
+                                            <input type="text" class="form-control" name="lugar12" value="{{ $transacionesVenta[4]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio12" required id="vviernes2"  value="{{ $transacionesVenta[4]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Sabado</label>
+                                            <input type="text" class="form-control" name="lugar13" value="{{ $transacionesVenta[5]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio13" required id="vsabado2"  value="{{ $transacionesVenta[5]->monto }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <label class="control-label">Domingo</label>
+                                            <input type="text" class="form-control" name="lugar14" value="{{ $transacionesVenta[6]->lugar_compra }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating" style="margin: 0px">
+                                            <input type="number" class="form-control" name="precio14" required id="vdomingo2"  value="{{ $transacionesVenta[6]->monto }}">
+                                        </div>
+                                    </td>                                                                
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalSemanalVentas">{{ $totalv }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalMensualVentas">{{ $totalv*4 }}</td>
                                 </tr>
                             </tbody>
                         </table>

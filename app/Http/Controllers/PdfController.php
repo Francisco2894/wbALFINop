@@ -9,12 +9,64 @@ use PDF;
 use DB;
 use wbALFINop\AgendaDiaria;
 use wbALFINop\Devengo;
+use wbALFINop\Actividad;
+use wbALFINop\Cliente;
+use wbALFINop\Dia;
+use wbALFINop\TipoTransaccion;
+use wbALFINop\TransaccionInventario;
+use wbALFINop\Inventario;
+use wbALFINop\CatGasto;
+use wbALFINop\Gastos;
+use wbALFINop\TipoGasto;
+use wbALFINop\OtrosIngresos;
+use wbALFINop\ActivosFijos;
+use wbALFINop\Credito;
+use wbALFINop\Oferta;
+use wbALFINop\CatOferta;
 
 class PdfController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function resultadosRenovacion(Cliente $cliente){
+        $actividad = Actividad::where('idcliente',$cliente->idcliente)->first();
+        $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
+        $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
+        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
+        $activos = ActivosFijos::where('idact',$actividad->idact)->first();
+        $productos = Inventario::where('idact',$actividad->idact)->get();
+        $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->orderBy('iddia','ASC')->get();
+        $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->orderBy('iddia','ASC')->get();
+
+        $totalc=0;
+        $totalv=0;
+        $totalo=0;
+        $totalf=0;
+        $totaloi=0;
+        $totala=0;
+
+        foreach ($transacionesVenta as $venta) {
+            $totalv = $totalv + $venta->monto;
+        }
+        foreach ($transacionesCompra as $compra) {
+            $totalc = $totalc + $compra->monto;
+        }
+        foreach($gastosOperacion as $operacion){
+            $totalo = $totalo + $operacion->monto;
+        }
+        foreach($gastosFamiliares as $familiar){
+            $totalf = $totalf + $familiar->monto;
+        }
+        $totaloi = $otrosIngresos->otro_negocio + $otrosIngresos->conyuge + $otrosIngresos->empleo;
+        $totala = $activos->local + $activos->auto + $activos->maquinaria;
+
+        $pdf = PDF::loadView('socioeconomico.pdfinfo', compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
+        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala'));
+
+        return $pdf->stream('listado.pdf');
     }
 
     public function getPdfagnd(request $request)
@@ -593,6 +645,7 @@ class PdfController extends Controller
            ->with(['date'=>$date])
            ->with(['vendedor'=>$this->getAsesoresp($query)])
            ->with(['devengos'=>$devengos])
+           ->with(['devengos'=>$devengosV])
            ->with(['devengos1_90'=>$devengos1_90])
            ->with(['devengosV1_90'=>$devengosV1_90])
            ->with(['devengos_mas90'=>$devengos_mas90])

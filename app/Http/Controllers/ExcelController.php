@@ -152,6 +152,7 @@ class ExcelController extends Controller
                             $credito->montoInicial=$fila->capital_inicial;
                             $credito->plazo=$fila->plazo;
                             $credito->frecuenciaPago=$fila->frecuencia_de_pago;
+                            $credito->cveproducto=$fila->producto;
                             $credito->producto=$fila->producto_financiero;
                             $credito->negocio=$fila->negocio;
                             $credito->fechaInicio=$this->getDateYmd($fila->fecha_inicio);
@@ -162,6 +163,7 @@ class ExcelController extends Controller
                         }else if (!is_null($existId) && !is_null($existPerfil)) {
                           $existId->nomCliente=$fila->vnombre_completo_cliente;
                           $existId->negocio=$fila->negocio;
+                          $existId->cveproducto=$fila->producto;
                           $existId->fechaInicio=$this->getDateYmd($fila->fecha_inicio);
                           $existId->fechaFin=$this->getDateYmd($fila->fecha_fin);
                           $existId->idPerfil=$fila->clave_vendedor;
