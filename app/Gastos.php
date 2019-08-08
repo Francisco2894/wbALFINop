@@ -16,5 +16,10 @@ class Gastos extends Model
         'idtipogasto','idact','idngasto','monto'
     ];
 
+    public function catgasto()
+    {
+        return $this->belongsTo(CatGasto::class, 'idngasto');
+    }
+
     protected $guarded=[ ];
 }

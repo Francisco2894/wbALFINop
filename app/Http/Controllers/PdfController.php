@@ -40,13 +40,14 @@ class PdfController extends Controller
         $productos = Inventario::where('idact',$actividad->idact)->get();
         $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->orderBy('iddia','ASC')->get();
         $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->orderBy('iddia','ASC')->get();
-
         $totalc=0;
         $totalv=0;
         $totalo=0;
         $totalf=0;
         $totaloi=0;
         $totala=0;
+        $totalp=0;
+        $totalpv=0;
 
         foreach ($transacionesVenta as $venta) {
             $totalv = $totalv + $venta->monto;
@@ -60,11 +61,18 @@ class PdfController extends Controller
         foreach($gastosFamiliares as $familiar){
             $totalf = $totalf + $familiar->monto;
         }
+        foreach ($productos as $producto) {
+            $totalp = $totalp + ($producto->cantidad * $producto->precio_compra);
+        }
+        foreach ($productos as $producto) {
+            $totalpv = $totalpv + round((($producto->precio_venta - $producto->precio_compra)/$producto->precio_compra)*100);
+        }
+        $totalpv = $totalpv/count($productos);
         $totaloi = $otrosIngresos->otro_negocio + $otrosIngresos->conyuge + $otrosIngresos->empleo;
         $totala = $activos->local + $activos->auto + $activos->maquinaria;
 
         $pdf = PDF::loadView('socioeconomico.pdfinfo', compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
-        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala'));
+        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','totalp','totalpv','cliente'));
 
         return $pdf->stream('listado.pdf');
     }

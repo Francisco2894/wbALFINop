@@ -106,7 +106,7 @@
             <div class="row">
                 <div class="col-sm-6" style="padding: 0;" id="tabla">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="" style="width: 97%; margin-left: 3%;">
                             <thead>
                                 <tr>
                                     <th class="text-center" colspan="2"> C&Aacute;LCULO COMPRAS</th>
@@ -222,7 +222,7 @@
                 </div>
                 <div class="col-sm-6" style="padding: 0;">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table style="width: 97%; margin-right: 3%;">
                             <thead>
                                 <tr>
                                     <th class="text-center table-success" colspan="2">C&Aacute;LCULO VENTAS</th>
