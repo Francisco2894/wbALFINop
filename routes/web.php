@@ -32,6 +32,7 @@ Route::post('importarExcelInfoCred','ExcelController@importInfoCred');
 Route::post('importarExcelBlackList','ExcelController@importBlackList');
 Route::get('pdfrenovacion/{cliente}', 'PdfController@resultadosRenovacion')->name('pdfrenovacion');
 Route::post('calificar_ofera', 'SocioeconomicoController@calificarOferta')->name('califiaroferta');
+Route::resource('cambiar_password','PasswordController');
 
 Route::post('agenda/agendadiaria','AgendaDiariaController@agendar');
 // PDF

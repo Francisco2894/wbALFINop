@@ -176,24 +176,24 @@
 				</li>	
 				@endif
 					<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">account_box</i>
-									{{ Auth::user()->name }} <span class="caret"></span>
-							</a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">account_box</i>
+								{{ Auth::user()->name }} <span class="caret"></span>
+						</a>
 
-							<ul class="dropdown-menu" role="menu">
-									<li>
-											<a href="{{ route('logout') }}"
-													onclick="event.preventDefault();
-																	 document.getElementById('logout-form').submit();"><i class="material-icons">lock_outline</i>
-													Cerrar sesión
-											</a>
-											<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-													{{ csrf_field() }}
-											</form>
-									</li>
-							</ul>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<a href="{{ route('logout') }}"
+									onclick="event.preventDefault();
+									document.getElementById('logout-form').submit();"><i class="material-icons">lock_outline</i>
+									Cerrar sesión
+								</a>
+								<a href="{{ route('cambiar_password.create') }}"><i class="material-icons">vpn_key</i> Cambiar Contraseña</a>
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+										{{ csrf_field() }}
+								</form>
+							</li>
+						</ul>
 					</li>
-
 				</ul>
 			</div>
 		</div>

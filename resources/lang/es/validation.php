@@ -110,7 +110,9 @@ return [
     |
     */
     'attributes' => [
-        'infc' => 'Información Crediticia',
-        'blklst' => ' Black List'
+        'infc'              => 'Información Crediticia',
+        'blklst'            => 'Black List',
+        'password'          => 'Contraseña',
+        'current_password'  => 'Confirmar Contraseña'
     ],
 ];
