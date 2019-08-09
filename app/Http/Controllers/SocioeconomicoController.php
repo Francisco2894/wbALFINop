@@ -19,6 +19,7 @@ use wbALFINop\Credito;
 use wbALFINop\Oferta;
 use wbALFINop\CatOferta;
 use wbALFINop\InformacionCrediticia;
+use wbALFINop\BlackList;
 use Response;
 
 class SocioeconomicoController extends Controller
@@ -174,13 +175,83 @@ class SocioeconomicoController extends Controller
     public function calificarOferta(Request $request)
     {
         $credito = Credito::where('idCredito',$request->idCredito)->first();
-        $informacion = InformacionCrediticia::where('idcliente',$credito->idCliente)->orderBy('fechaconsulta',' DESC')->get();
-        $fecha_actual = date("Y-m-d");
-        $fecha = round((strtotime($fecha_actual)-strtotime($informacion[0]->fechaconsulta))/86400);//calcular los dias si es menor al dia de hoy
+        $informacion = InformacionCrediticia::where('idcliente',$credito->idCliente)->orderBy('fechaconsulta',' DESC')->get();//buscamos la informacion crediticia
+        if (count($informacion)>0) {
+            $fecha_actual = date("Y-m-d");
+            $fecha = round((strtotime($fecha_actual)-strtotime($informacion[0]->fechaconsulta))/86400);//calcular los dias si es menor al dia de hoy
+            $listaNegra = BlackList::where('idcliente',$credito->idCliente)->where('idcredito',$credito->idCredito)->first();// verifica si el cliente con el credito seleccionado estan en la black list
+            
+            //analisis de solvencia
+            $actividad = Actividad::where('idcliente',$credito->idCliente)->first();
+            if (!is_null($actividad)) {
+                $activos = ActivosFijos::where('idact',$actividad->idact)->first();
+                $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
+                
+                $productos = Inventario::where('idact',$actividad->idact)->get();
+                $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->get();
+                $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->get();
+                $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->get();
+                $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->get();
+                
+                $inventario = 0;
+                $venta = 0;
+                $compra = 0;
+                $operacion = 0;
+                $familiares = 0;
+                $totalActivoFijo = $activos->auto + $activos->local + $activos->maquinaria;
+                $totalOtrosIngresos = $otrosIngresos->conyuge + $otrosIngresos->empleo + $otrosIngresos->otro_negocio;
+                $porcentajeOtrosIngresos = ($otrosIngresos->conyuge + $otrosIngresos->empleo + $otrosIngresos->otro_negocio) * 0.3;
 
-        //proceso de filtrado
-        if ($fecha<=60 && $informacion[0]->score > 500) {
-            return 'paso';
+                foreach ($productos as $producto) {
+                    $inventario = $inventario + ($producto->cantidad * $producto->precio_compra); 
+                }
+
+                foreach ($transacionesVenta as $trans) {
+                    $venta = $venta + $trans->monto;
+                }
+                $ventasMensuales = $venta * 4;
+
+                foreach ($transacionesCompra as $trans) {
+                    $compra = $compra + $trans->monto;
+                }
+                $compraMensuales = $compra * 4;
+                $utilidadBruta = $ventasMensuales - $compraMensuales;
+
+                foreach ($gastosOperacion as $trans) {
+                    $operacion = $operacion + $trans->monto;
+                }
+
+                $utilidadNeta = $utilidadBruta - $operacion;
+
+                foreach ($gastosFamiliares as $trans) {
+                    $familiares = $familiares + $trans->monto;
+                }
+
+                $disponible = $utilidadNeta + $porcentajeOtrosIngresos - $familiares;
+                $capacidadPago = $disponible * 0.3;
+
+                //proceso de filtrado
+                if ($fecha<=59) {
+                    if ($informacion[0]->score > 500) {
+                        if (is_null($listaNegra)) {
+                            return $capacidadPago;
+                        }else{
+                            return back()->withInput()->with(['error'=>'Esta Presente en Lista Negra']);
+                            return 'esta en lista negra';
+                        }
+                    }else{
+                        return back()->withInput()->with(['error'=>'Score < 500']);
+                    }
+                }else{
+                    return back()->withInput()->with(['error'=>'Fecha Mayor a 59 días']);
+                    return 'fecha pasada';
+                }
+            }else{
+                return back()->withInput()->with(['error'=>'No tiene Información Socioeconómica ']);
+                return 'no tiene datos socioeconomicos';
+            }
+        }else{
+            return back()->withInput()->with(['error'=>'No tiene Información Crediticia']);   
         }
     }
 

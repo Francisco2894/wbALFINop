@@ -8,6 +8,14 @@
 
   </div>
 </div>
+@if (session('error'))
+<div class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <ul>
+      <li>{{ session('error') }}</li>
+    </ul>
+</div>
+@endif
 <div class="row">
   <div class="col-xs-12">
     <div class="table-responsive">
@@ -49,11 +57,9 @@
               @endif 
           </td>
           <td class="text-center">
-              @foreach ($actividades as $actividad)
+            @foreach ($actividades as $actividad)
               @if ($vencimiento->idCliente == $actividad->idcliente)
-                {!!Form::open(array('url'=>'agenda/renovacion/','method'=>'GET','autocomplete'=>'off','role'=>'search'))!!}
-                  <a href="{{ route('socioeconomico.show',$actividad->idact) }}"><button class="btn btn-primary btn-simple tn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button></a>
-                {{Form::close()}}
+                <a href="{{ route('socioeconomico.show',$actividad->idact) }}"><button class="btn btn-primary btn-simple tn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button></a>
               @endif 
             @endforeach
           </td>
