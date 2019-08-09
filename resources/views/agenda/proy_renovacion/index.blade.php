@@ -61,7 +61,7 @@
             @foreach ($actividades as $actividad)
               @if ($vencimiento->idCliente == $actividad->idcliente)
                 {!!Form::open(['route'=>'califiaroferta','method'=>'POST'])!!}
-                  <input type="hidden" value="{{ $actividad->idcliente }}">
+                  <input type="hidden" value="{{ $vencimiento->idCredito }}" name="idCredito">
                   <button class="btn btn-primary btn-xs" type="submit" name="btnSocioeconomico" rel="tooltip" title="¿Calificar?"><i class="material-icons">rate_review</i></button>
                 {{Form::close()}}
               @endif 

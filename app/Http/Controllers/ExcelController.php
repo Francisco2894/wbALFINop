@@ -100,12 +100,18 @@ class ExcelController extends Controller
 
                         $infCred = InformacionCrediticia::where('folio',$fila->folio)->first();
                         if (is_null($infCred)) {
+                          //$fecha = implode("-",rsort($fila->date));
+
+                          $fecha_es = explode("/",$fila->fechaconsulta);  
+                          krsort($fecha_es); 
+                          $fecha = implode("-",$fecha_es); 
+
                           $infCred = InformacionCrediticia::create([
                             'folio'         => $fila->folio,
                             'idsoc'         => $fila->idsoc,
                             'idcliente'     => $fila->idcliente,
                             'score'         => $fila->score,
-                            'fechaconsulta' => date("Y/m/d", strtotime($fila->date))
+                            'fechaconsulta' => date("Y-m-d", strtotime($fecha))
                           ]);
                           $r++;
                         }

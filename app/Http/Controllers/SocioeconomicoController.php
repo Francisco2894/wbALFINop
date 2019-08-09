@@ -18,6 +18,7 @@ use wbALFINop\ActivosFijos;
 use wbALFINop\Credito;
 use wbALFINop\Oferta;
 use wbALFINop\CatOferta;
+use wbALFINop\InformacionCrediticia;
 use Response;
 
 class SocioeconomicoController extends Controller
@@ -170,9 +171,17 @@ class SocioeconomicoController extends Controller
         'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','urlanterior'));
     }
 
-    public function calificarOferta()
+    public function calificarOferta(Request $request)
     {
-        return 'calificar';
+        $credito = Credito::where('idCredito',$request->idCredito)->first();
+        $informacion = InformacionCrediticia::where('idcliente',$credito->idCliente)->orderBy('fechaconsulta',' DESC')->get();
+        $fecha_actual = date("Y-m-d");
+        $fecha = round((strtotime($fecha_actual)-strtotime($informacion[0]->fechaconsulta))/86400);//calcular los dias si es menor al dia de hoy
+
+        //proceso de filtrado
+        if ($fecha<=60 && $informacion[0]->score > 500) {
+            return 'paso';
+        }
     }
 
     /**
