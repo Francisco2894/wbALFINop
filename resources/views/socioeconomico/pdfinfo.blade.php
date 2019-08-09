@@ -20,9 +20,9 @@
 			</figure>
 		</header>
     <main>
-		<h2 class="clearfix"> Informacion</h2>
+		<h2 class="clearfix">An&aacute;lisis de Solvencia Crediticia</h2>
 		<div class="details">
-			hola
+			SUCURSAL: {{ $sucursal->sucursal }}
 		</div>		
 		<table style="width: 98%;">
 			<tbody>
@@ -58,14 +58,6 @@
 										{{ $actividad->desc_negocio }}
 									</td>
 								</tr>
-								<tr>
-									<td class="text-center">
-				
-									</td>
-									<td class="text-center">
-				
-									</td>
-								</tr>
 							</tbody>
 						</table>
 					</td>
@@ -87,15 +79,15 @@
 								<tr>
 									<td class="text-right">{{ $producto->producto }}</td>
 									<td class="text-right">{{ $producto->cantidad }}</td>
-									<td class="text-right">{{ $producto->precio_compra }}</td>
-									<td class="text-right">{{ $producto->precio_venta }}</td>
-									<td class="text-right">{{ $producto->precio_compra* $producto->cantidad }}</td>
+									<td class="text-right">{{ number_format($producto->precio_compra,2) }}</td>
+									<td class="text-right">{{ number_format($producto->precio_venta,2) }}</td>
+									<td class="text-right">{{ number_format($producto->precio_compra * $producto->cantidad,2) }}</td>
 									<td class="text-right">{{ round((($producto->precio_venta-$producto->precio_compra)/$producto->precio_compra)*100) }}%</td>
 								</tr>
 								@endforeach
 								<tr>
 									<td class="text-right"><strong>Total</strong></td>
-									<td class="text-right" colspan="4"><strong>${{ $totalp }}</strong></td>
+									<td class="text-right" colspan="4"><strong>${{ number_format($totalp,2) }}</strong></td>
 									<td class="text-right"><strong>{{ $totalpv }}%</strong></td>
 								</tr>
 							</tbody>
@@ -119,9 +111,9 @@
 							@for ($i = 0; $i < 7; $i++)
 								<tr>
 									<td class="text-center" class="text-right">{{ $transacionesCompra[$i]->lugar_compra }}</td>
-									<td class="text-right" class="text-right">${{ $transacionesCompra[$i]->monto }}</td>
+									<td class="text-right" class="text-right">${{ number_format($transacionesCompra[$i]->monto,2) }}</td>
 									<td class="text-center" class="text-right">{{ $transacionesVenta[$i]->lugar_compra }}</td>
-									<td class="text-right" class="text-right">${{ $transacionesVenta[$i]->monto }}</td>
+									<td class="text-right" class="text-right">${{ number_format($transacionesVenta[$i]->monto,2) }}</td>
 								</tr>
 							@endfor
 							<tr style="font-weight: 900;" class="text-right">
@@ -150,9 +142,9 @@
 							@for ($i = 0; $i < 11; $i++)
 								<tr>
 									<td class="text-right" class="text-right">{{ $gastosOperacion[$i]->catgasto->descripcion }}</td>
-									<td class="text-right" class="text-right">${{ $gastosOperacion[$i]->monto }}</td>
+									<td class="text-right" class="text-right">${{ number_format($gastosOperacion[$i]->monto,2) }}</td>
 									<td class="text-right" class="text-right">{{ $gastosFamiliares[$i]->catgasto->descripcion }}</td>
-									<td class="text-right" class="text-right">${{ $gastosFamiliares[$i]->monto }}</td>
+									<td class="text-right" class="text-right">${{ number_format($gastosFamiliares[$i]->monto,2) }}</td>
 								</tr>
 							@endfor
 							<tr style="font-weight: 900;" class="text-right">
@@ -176,21 +168,21 @@
 			<tbody>
 				<tr>
 					<td class="text-right" class="text-right">OTRO NEGOCIO</td>
-					<td class="text-right" class="text-right">${{ $otrosIngresos->otro_negocio }}</td>
+					<td class="text-right" class="text-right">${{ number_format($otrosIngresos->otro_negocio,2) }}</td>
 					<td class="text-right" class="text-right">MAQUINARIA, EQUIPO, HERRAMIENTAS</td>
-					<td class="text-right" class="text-right">${{ $activos->maquinaria }}</td>
+					<td class="text-right" class="text-right">${{ number_format($activos->maquinaria,2) }}</td>
 				</tr>
 				<tr>
 					<td class="text-right" class="text-right">EMPLEO</td>
-					<td class="text-right" class="text-right">${{ $otrosIngresos->empleo }}</td>
+					<td class="text-right" class="text-right">${{ number_format($otrosIngresos->empleo,2) }}</td>
 					<td class="text-right" class="text-right">LOCAL</td>
-					<td class="text-right" class="text-right">${{ $activos->local }}</td>
+					<td class="text-right" class="text-right">${{ number_format($activos->local,2) }}</td>
 				</tr>
 				<tr>
 					<td class="text-right" class="text-right">CÓNYUGE</td>
-					<td class="text-right" class="text-right">${{ $otrosIngresos->conyuge }}</td>
+					<td class="text-right" class="text-right">${{ number_format($otrosIngresos->conyuge,2) }}</td>
 					<td class="text-right" class="text-right">AUTO</td>
-					<td class="text-right" class="text-right">${{ $activos->auto }}</td>
+					<td class="text-right" class="text-right">${{ number_format($activos->auto,2) }}</td>
 				</tr>
 				<tr style="font-weight: 900;" class="text-right">
 					<td>Total</td>

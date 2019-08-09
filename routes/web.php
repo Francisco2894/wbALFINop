@@ -30,6 +30,7 @@ Route::get('informacion_socioeconomica/{cliente}','SocioeconomicoController@info
 Route::get('agenda/dataexcel/datos_renovacion','ExcelController@viewRenovacion')->name('datosrenovacion');
 Route::post('importExcel', 'ExcelController@importInfCreticia')->name('informacionCrediticia');
 Route::get('pdfrenovacion/{cliente}', 'PdfController@resultadosRenovacion')->name('pdfrenovacion');
+Route::post('calificar_ofera', 'SocioeconomicoController@calificarOferta')->name('califiaroferta');
 
 Route::post('agenda/agendadiaria','AgendaDiariaController@agendar');
 // PDF

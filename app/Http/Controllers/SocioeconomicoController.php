@@ -170,6 +170,11 @@ class SocioeconomicoController extends Controller
         'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','urlanterior'));
     }
 
+    public function calificarOferta()
+    {
+        return 'calificar';
+    }
+
     /**
      * Display the specified resource.
      *

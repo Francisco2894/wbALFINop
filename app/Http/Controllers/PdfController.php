@@ -23,6 +23,7 @@ use wbALFINop\ActivosFijos;
 use wbALFINop\Credito;
 use wbALFINop\Oferta;
 use wbALFINop\CatOferta;
+use wbALFINop\Sucursal;
 
 class PdfController extends Controller
 {
@@ -31,7 +32,7 @@ class PdfController extends Controller
         $this->middleware('auth');
     }
 
-    public function resultadosRenovacion(Cliente $cliente){
+    public function resultadosRenovacion(Request $request, Cliente $cliente){
         $actividad = Actividad::where('idcliente',$cliente->idcliente)->first();
         $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
         $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
@@ -48,6 +49,8 @@ class PdfController extends Controller
         $totala=0;
         $totalp=0;
         $totalpv=0;
+
+        $sucursal = Sucursal::where('idSucursal',$request->sucursal)->first();
 
         foreach ($transacionesVenta as $venta) {
             $totalv = $totalv + $venta->monto;
@@ -72,7 +75,8 @@ class PdfController extends Controller
         $totala = $activos->local + $activos->auto + $activos->maquinaria;
 
         $pdf = PDF::loadView('socioeconomico.pdfinfo', compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
-        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','totalp','totalpv','cliente'));
+        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','totalp',
+        'totalpv','cliente','sucursal'));
 
         return $pdf->stream('listado.pdf');
     }

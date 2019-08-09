@@ -25,6 +25,7 @@
           <th>Celular</th>
           <th>Socioeconomico</th>
           <th>&nbsp;</th>
+          <th>Cal. Oferta</th>
         </tr>
         </thead>
         @php
@@ -40,17 +41,29 @@
           <td>{{'$ '.number_format($vencimiento->montoInicial,2)}}</td>
           <td>{{$vencimiento->colonia}}</td>
           <td>{{$vencimiento->telefonoCelular}}</td>
-          <td>
+          <td class="text-center">
               @if (count($vencimiento->actividades) > 0)
               <a href="{{URL::action('SocioeconomicoController@edit',$vencimiento->idCredito)}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
               @else
               <a href="{{URL::action('SocioeconomicoController@create',['id'=>$vencimiento->idCredito])}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
               @endif 
           </td>
-          <td>
+          <td class="text-center">
               @foreach ($actividades as $actividad)
               @if ($vencimiento->idCliente == $actividad->idcliente)
-              <a href="{{ route('socioeconomico.show',$actividad->idact) }}"><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button></a>
+                {!!Form::open(array('url'=>'agenda/renovacion/','method'=>'GET','autocomplete'=>'off','role'=>'search'))!!}
+                  <a href="{{ route('socioeconomico.show',$actividad->idact) }}"><button class="btn btn-primary btn-simple tn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button></a>
+                {{Form::close()}}
+              @endif 
+            @endforeach
+          </td>
+          <td class="text-center">
+            @foreach ($actividades as $actividad)
+              @if ($vencimiento->idCliente == $actividad->idcliente)
+                {!!Form::open(['route'=>'califiaroferta','method'=>'POST'])!!}
+                  <input type="hidden" value="{{ $actividad->idcliente }}">
+                  <button class="btn btn-primary btn-xs" type="submit" name="btnSocioeconomico" rel="tooltip" title="¿Calificar?"><i class="material-icons">rate_review</i></button>
+                {{Form::close()}}
               @endif 
             @endforeach
           </td>
@@ -79,7 +92,7 @@
             <th>Celular</th>
             <th>Socioeconomico</th>
             <th>Oferta</th>
-            <th>&nbsp;</th>
+            <th>PDF</th>
           </tr>
           </thead>
          @foreach ($vencimientosOfertas as $vencimientoOferta)
@@ -95,14 +108,14 @@
                 <td>{{'$ '.number_format($vencimientoOferta->montoInicial,2)}}</td>
                 <td>{{$vencimientoOferta->colonia}}</td>
                 <td>{{$vencimientoOferta->telefonoCelular}}</td>
-                <td>
+                <td class="text-center">
                   <a href="{{ route('informacion',$vencimientoOferta->idCliente) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
                 </td>
-                <td>
+                <td class="text-center">
                   <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="ofertas({{ $vencimientoOferta->idCredito }});"><i class="material-icons">info</i></button>
                 </td>
-                <td>
-                  <a href="{{ route('pdfrenovacion',$vencimientoOferta->idCliente) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
+                <td class="text-center">
+                  <a href="{{ route('pdfrenovacion',['cliente'=>$vencimientoOferta->idCliente,'sucursal'=>$querys]) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
                 </td>
               </tr>
             @endif 
