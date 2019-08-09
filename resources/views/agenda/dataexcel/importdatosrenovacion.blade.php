@@ -9,89 +9,54 @@
           <div class="alert-icon">
             <i class="material-icons">check</i>
           </div>
-            Se importaron <strong>{{$records}}</strong> créditos nuevos
-        </div>
-        <div class="container-fluid">
-          <div class="alert-icon">
-            <i class="material-icons">check</i>
-          </div>
-            Se actualizaron <strong>{{$updaterecords}}</strong> créditos
+            Se importaron <strong>{{$records}}</strong>
         </div>
       </div>
     </div>
  @endif
- @if ($records2>0 || $updaterecords2>0)
-   <h2></h2>
-   <div class="row">
-     <div class="alert alert-success col-xs-6">
-      <strong> {{$proceso2}}</strong>
-       <div class="container-fluid">
-         <div class="alert-icon">
-           <i class="material-icons">check</i>
-         </div>
-           Se importaron <strong>{{$records2}}</strong> créditos nuevos
-       </div>
-       <div class="container-fluid">
-         <div class="alert-icon">
-           <i class="material-icons">check</i>
-         </div>
-           Se actualizaron <strong>{{$updaterecords2}}</strong> créditos
-       </div>
-     </div>
-   </div>
+@if ($errors->any())
+<div class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
-@if ($records3>0 || $updaterecords3>0)
-  <h2></h2>
-  <div class="row">
-    <div class="alert alert-success col-xs-6">
-     <strong> {{$proceso3}}</strong>
-      <div class="container-fluid">
-        <div class="alert-icon">
-          <i class="material-icons">check</i>
+
+  <form class="form-horizontal" method="POST" action="{{action('ExcelController@importBlackList')}}" enctype="multipart/form-data">
+    {{ csrf_field() }}
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="title">
+          <h3>Black List</h3>
         </div>
-          Se importaron <strong>{{$records3}}</strong> registros nuevos
-      </div>
-      <div class="container-fluid">
-        <div class="alert-icon">
-          <i class="material-icons">check</i>
+        <div class="card card-nav">
+          <div class="content">
+            <label for="scafile">Situacion de cartera</label>
+            <input class="btn btn-simple" type="file" name="blklst" accept=".csv" value="">
+            <button class="btn btn-primary btn-sm" type="submit"><i class="material-icons">save</i>  GUARDAR EN BD</button>
+          </div>
         </div>
-          Se actualizaron <strong>{{$updaterecords3}}</strong> registros
       </div>
     </div>
-  </div>
-@endif
-      <form class="form-horizontal" method="POST" action="{{action('ExcelController@importsca')}}" enctype="multipart/form-data">
-        {{ csrf_field() }}
-        <div class="row">
-          <div class="col-xs-6">
-            <div class="title">
-              <h3>Black List</h3>
-            </div>
-            <div class="card card-nav">
-              <div class="content">
-                <label for="scafile">Situacion de cartera</label>
-                <input class="btn btn-simple" type="file" name="scafile" accept=".csv" value="">
-                <button class="btn btn-primary btn-sm" type="submit"><i class="material-icons">save</i>  GUARDAR EN BD</button>
-              </div>
-            </div>
+  </form>
+  <form class="form-horizontal" method="POST" action="{{action('ExcelController@importInfoCred')}}" enctype="multipart/form-data">
+    {{ csrf_field() }}
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="title">
+          <h3>Informaci&oacute;n Crediticia</h3>
+        </div>
+        <div class="card card-nav">
+          <div class="content">
+            <label for="rptliqc">Reporte Liquidados y Cerrados</label>
+            <input class="btn btn-simple" type="file" name="infc" accept=".csv" value="">
+            <button class="btn btn-primary btn-sm" type="submit"><i class="material-icons">save</i>  GUARDAR EN BD</button>
           </div>
         </div>
-      </form>
-      <form class="form-horizontal" method="POST" action="{{action('ExcelController@importInfCreticia')}}" enctype="multipart/form-data">
-        {{ csrf_field() }}
-        <div class="row">
-          <div class="col-xs-6">
-            <div class="title">
-              <h3>Informaci&oacute;n Crediticia</h3>
-            </div>
-            <div class="card card-nav">
-              <div class="content">
-                <label for="rptliqc">Reporte Liquidados y Cerrados</label>
-                <input class="btn btn-simple" type="file" name="infc" accept=".csv" value="">
-                <button class="btn btn-primary btn-sm" type="submit"><i class="material-icons">save</i>  GUARDAR EN BD</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
+      </div>
+    </div>
+  </form>
 @endsection

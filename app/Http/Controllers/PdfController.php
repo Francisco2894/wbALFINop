@@ -73,12 +73,14 @@ class PdfController extends Controller
         $totalpv = $totalpv/count($productos);
         $totaloi = $otrosIngresos->otro_negocio + $otrosIngresos->conyuge + $otrosIngresos->empleo;
         $totala = $activos->local + $activos->auto + $activos->maquinaria;
+        $fecha = date('d_m_Y');
 
         $pdf = PDF::loadView('socioeconomico.pdfinfo', compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
         'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','totalp',
         'totalpv','cliente','sucursal'));
 
-        return $pdf->stream('listado.pdf');
+        //return $pdf->download("AIS-$cliente->idcliente-$fecha.pdf");
+        return $pdf->stream("AIS-$cliente->idcliente-$fecha.pdf");
     }
 
     public function getPdfagnd(request $request)

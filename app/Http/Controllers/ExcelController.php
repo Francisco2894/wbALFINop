@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Input;
+use wbALFINop\Http\Requests\InformacionCrediticiaRequest;
+use wbALFINop\Http\Requests\BlackListRequest;
 use Excel;
 use DB;
 use wbALFINop\Credito;
@@ -17,6 +19,8 @@ use wbALFINop\DomicilioCredito;
 use wbALFINop\CondicionCm;
 use wbALFINop\Pagos;
 use wbALFINop\Cliente;
+use wbALFINop\InformacionCrediticia;
+use wbALFINop\BlackList;
 
 ini_set('max_execution_time', 360);
 
@@ -59,57 +63,110 @@ class ExcelController extends Controller
     }
 
     public function viewRenovacion(){
+
       if (Auth::user()->idNivel<3) {
-        return view('agenda.dataexcel.importdatosrenovacion')
-        ->with(['records'=>0,'updaterecords'=>0,'records2'=>0,'updaterecords2'=>0,'records3'=>0,'updaterecords3'=>0]);
+        if (!is_null(session('records'))) {
+          return view('agenda.dataexcel.importdatosrenovacion')
+          ->with(['records'=>session('records'),'updaterecords'=>session('updaterecords'),'proceso'=>session('proceso')]);
+        }else{
+          return view('agenda.dataexcel.importdatosrenovacion')
+        ->with(['records'=>0,'updaterecords'=>0]);
+        }
       } else {
           return back()->withInput();
       }
     }
 
-    public function importInfCreticia(){
-      global $r, $u;
-        $r=0;
-        $u=0;
+    public function importInfoCred(InformacionCrediticiaRequest $request)
+    {
+      global $r,$u,$r2,$u2;
+      $r=0;
+      $u=0;
+      $r2=0;
+      $u2=0;
 
-        if (Input::hasFile('infc')) {
             $path = Input::file('infc')->getRealPath();
-
             $name = Input::file('infc')->getClientOriginalName();
             $ext = Input::file('infc')->getClientOriginalExtension();
-            List($pref,$date)=explode("-",trim($name));
+            //List($pref,$date)=explode("-",trim($name));
 
-            return $pref;
-            if ($pref=="RCE") {
+           //if ($pref=="SC") {
 
             Excel::filter('chunk')->load($path)->chunk(250, function ($reader) {
-              //Se crea archivo con detalle de salida
-             // $fr=fopen("result.txt","w");
-             global $r, $u;
+             global $r,$u,$r2,$u2;
+
                 if (!empty($reader) && $reader->count()) {
                     foreach ($reader as $fila) {
-                        $existId=Credito::where('idCredito', '=', $fila->id_credito)->first();
-                        if (count($existId)==1) {
-                            $existId->cveAseCol=$fila->clave_asesor;
-                            $existId->fechaEjercido=$this->getDateYmd($fila->fecha_ejercido);
-                            $existId->update();
-                            $u++;
-                        }
-                    }
-                }
-            });
-          }
-        } else {
-            return view('agenda.dataexcel.index')
-          ->with(['records'=>0,'updaterecords'=>0,'proceso'=>"Importación Fecha Ejercido ".$name])
-          ->with(['records2'=>0,'updaterecords2'=>0,'proceso2'=>"Importación Fecha Ejercido ".$name])
-          ->with(['records3'=>0,'updaterecords3'=>0,'proceso3'=>"Importación Fecha Ejercido ".$name]);
-        }
-        return view('agenda.dataexcel.index')
-        ->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación Fecha Ejercido ".$name])
-        ->with(['records2'=>0,'updaterecords2'=>0,'proceso2'=>"Importación Fecha Ejercido ".$name])
-        ->with(['records3'=>$r,'updaterecords3'=>$u,'proceso3'=>"Importación Fecha Ejercido ".$name]);
 
+                        $infCred = InformacionCrediticia::where('folio',$fila->folio)->first();
+                        if (is_null($infCred)) {
+                          $infCred = InformacionCrediticia::create([
+                            'folio'         => $fila->folio,
+                            'idsoc'         => $fila->idsoc,
+                            'idcliente'     => $fila->idcliente,
+                            'score'         => $fila->score,
+                            'fechaconsulta' => date("Y/m/d", strtotime($fila->date))
+                          ]);
+                          $r++;
+                        }
+                      }
+                    }
+                });
+          // }else {
+          //   return view('agenda.dataexcel.index')
+          //   ->with(['records'=>0,'updaterecords'=>0,'proceso'=>"Favor de revisar el nombre del archivo ".$name])
+          //   ->with(['records2'=>0,'updaterecords2'=>0,'proceso2'=>"Importación Situación de Creditos ".$name])
+          //   ->with(['records3'=>0,'updaterecords3'=>0,'proceso3'=>"Importación Fecha Ejercido ".$name]);
+          // }
+
+          
+        return redirect()->route('datosrenovacion')->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación de Créditos ".$name]);
+    }
+
+    public function importBlackList(BlackListRequest $request)
+    {
+      global $r,$u,$r2,$u2;
+      $r=0;
+      $u=0;
+      $r2=0;
+      $u2=0;
+
+            $path = Input::file('blklst')->getRealPath();
+            $name = Input::file('blklst')->getClientOriginalName();
+            $ext = Input::file('blklst')->getClientOriginalExtension();
+            //List($pref,$date)=explode("-",trim($name));
+
+           //if ($pref=="SC") {
+
+            Excel::filter('chunk')->load($path)->chunk(250, function ($reader) {
+             global $r,$u,$r2,$u2;
+
+                if (!empty($reader) && $reader->count()) {
+                    foreach ($reader as $fila) {
+
+                        $infCred = BlackList::where('idcredito',$fila->idcredito)->first();
+                        if (is_null($infCred)) {
+                          $infCred = BlackList::create([
+                            'idcredito'         => $fila->idcredito,
+                            'idcliente'         => $fila->idcliente,
+                            'montocred'         => $fila->montocred,
+                            'cveProducto'       => $fila->cveProducto,
+                            'producto'          => $fila->producto
+                          ]);
+                          $r++;
+                        }
+                      }
+                    }
+                });
+          // }else {
+          //   return view('agenda.dataexcel.index')
+          //   ->with(['records'=>0,'updaterecords'=>0,'proceso'=>"Favor de revisar el nombre del archivo ".$name])
+          //   ->with(['records2'=>0,'updaterecords2'=>0,'proceso2'=>"Importación Situación de Creditos ".$name])
+          //   ->with(['records3'=>0,'updaterecords3'=>0,'proceso3'=>"Importación Fecha Ejercido ".$name]);
+          // }
+
+          
+        return redirect()->route('datosrenovacion')->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación de Créditos ".$name]);
     }
 
     public function importsca()

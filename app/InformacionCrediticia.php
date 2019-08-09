@@ -8,12 +8,13 @@ class InformacionCrediticia extends Model
 {
     //
     protected $table='tblinfcrediticia';
-    protected $primaryKey='idnfc';
+    protected $primaryKey='folio';
+    public $keyType = 'string';
 
     public $timestamps=false;
 
     protected $fillable=[
-        'idsoc','score','fechaconsulta','idcliente'
+        'folio','idsoc','score','fechaconsulta','idcliente'
     ];
 
     protected $guarded=[ ];

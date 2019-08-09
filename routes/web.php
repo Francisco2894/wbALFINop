@@ -28,7 +28,8 @@ Route::get('ofertas/{idCliente}', 'SocioeconomicoController@ofertas')->name('ofe
 Route::get('inventario/{actividad}', 'SocioeconomicoController@inventario')->name('inventario');
 Route::get('informacion_socioeconomica/{cliente}','SocioeconomicoController@informacion')->name('informacion');
 Route::get('agenda/dataexcel/datos_renovacion','ExcelController@viewRenovacion')->name('datosrenovacion');
-Route::post('importExcel', 'ExcelController@importInfCreticia')->name('informacionCrediticia');
+Route::post('importarExcelInfoCred','ExcelController@importInfoCred');
+Route::post('importarExcelBlackList','ExcelController@importBlackList');
 Route::get('pdfrenovacion/{cliente}', 'PdfController@resultadosRenovacion')->name('pdfrenovacion');
 Route::post('calificar_ofera', 'SocioeconomicoController@calificarOferta')->name('califiaroferta');
 

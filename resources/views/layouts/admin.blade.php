@@ -170,6 +170,9 @@
 			@if (auth()->user()->idNivel=1 || auth()->user()->idNivel=6)
 				<li class="nav-item">
 					<a class="nav-link" href="{{route('renovacion.index')}}">Renovacion</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{route('datosrenovacion')}}">Datos de Renovacion</a>
 				</li>	
 				@endif
 					<li class="dropdown">
