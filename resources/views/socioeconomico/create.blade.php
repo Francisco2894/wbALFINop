@@ -704,7 +704,7 @@
             var porciento = 0;
             for(i=0;i<inventario.length;i++){
                 suma = suma + (inventario[i]['precio_compra'] * inventario[i]['cantidad']);
-                porciento = porciento + (Math.round(((inventario[i]['precio_venta'] - inventario[i]['precio_compra'])/inventario[i]['precio_compra'])*100))/inventario.length;
+                porciento = porciento + (Math.round(((inventario[i]['precio_venta'] - inventario[i]['precio_compra'])/inventario[i]['precio_venta'])*100))/inventario.length;
             }
             $('#totalInventario').text(suma);
             $('#totalInventarioPorcentaje').text(porciento+"%");
@@ -731,7 +731,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
                                 "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a3)*100)+"%</td>"+
+                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -764,7 +764,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
                                 "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a3)*100)+"%</td>"+
+                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -796,7 +796,7 @@
                 $('#cont').append("<tr>"+
                     "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
                                         "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                                    "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a3)*100)+"%</td>"+
+                                    "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                                 "</tr>"
                 );
 

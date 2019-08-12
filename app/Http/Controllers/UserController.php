@@ -5,6 +5,7 @@ namespace wbALFINop\Http\Controllers;
 use Illuminate\Http\Request;
 use wbALFINop\Http\Requests\CambiarPasswordRequest;
 use wbALFINop\User;
+use wbALFINop\Events\UserNewPassword;
 
 class UserController extends Controller
 {
@@ -74,8 +75,10 @@ class UserController extends Controller
     public function update(CambiarPasswordRequest $request,User $usuario)
     {
         //
-        //$request['password'] = bcrypt($request['password']);
+        $password = $request['password'];
+        //$request['password'] = bcrypt($password);
         //$usuario->update($request->all());
+        UserNewPassword::dispatch($usuario, $password);
         return redirect()->route('usuario.index')->with(['mensaje'=>"Password <strong>$usuario->name</strong> Actualizado con Exito"]);
     }
 

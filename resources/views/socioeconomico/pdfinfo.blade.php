@@ -82,7 +82,7 @@
 									<td class="text-right">{{ number_format($producto->precio_compra,2) }}</td>
 									<td class="text-right">{{ number_format($producto->precio_venta,2) }}</td>
 									<td class="text-right">{{ number_format($producto->precio_compra * $producto->cantidad,2) }}</td>
-									<td class="text-right">{{ round((($producto->precio_venta-$producto->precio_compra)/$producto->precio_compra)*100) }}%</td>
+									<td class="text-right">{{ round((($producto->precio_venta-$producto->precio_compra)/$producto->precio_venta)*100) }}%</td>
 								</tr>
 								@endforeach
 								<tr>

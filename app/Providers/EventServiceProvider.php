@@ -16,9 +16,13 @@ class EventServiceProvider extends ServiceProvider
       'Illuminate\Auth\Events\Login' => [
       'wbALFINop\Listeners\SuccessfullLogin',
         ],
-        'Illuminate\Auth\Events\Logout' => [
-        'wbALFINop\Listeners\SuccessfullLogout',
-          ],
+      'Illuminate\Auth\Events\Logout' => [
+      'wbALFINop\Listeners\SuccessfullLogout',
+        ],
+
+        'wbALFINop\Events\UserNewPassword' => [
+          'wbALFINop\Listeners\SendNewPassword',
+            ],
     ];
 
     /**
