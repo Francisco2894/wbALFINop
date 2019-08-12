@@ -34,6 +34,7 @@ Route::get('pdfrenovacion/{cliente}', 'PdfController@resultadosRenovacion')->nam
 Route::post('calificar_ofera', 'SocioeconomicoController@calificarOferta')->name('califiaroferta');
 Route::resource('cambiar_password','PasswordController');
 Route::resource('usuario','UserController');
+Route::get('agenda/resumen_avance','SocioeconomicoController@resumenAvance')->name('resumenAvance');
 
 Route::post('agenda/agendadiaria','AgendaDiariaController@agendar');
 // PDF

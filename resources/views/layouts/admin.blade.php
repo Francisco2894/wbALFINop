@@ -107,7 +107,7 @@
 							</a>
 					<ul class="dropdown-menu" role="menu">
 					    	<li>
-							<a href="{{ route('register') }}"><i class="material-icons">person_add</i>Admin Usuarios</a>
+							<a href="{{route('usuario.index')}}"><i class="material-icons">person_add</i>Admin Usuarios</a>
 						</li>
 						<li>
 							<a href="{{URL::action('ExcelController@index')}}"><i class="material-icons">import_export</i>Creditos</a>
@@ -167,18 +167,30 @@
 			</ul>
 			</li>
 			@endif
-			@if (auth()->user()->idNivel==1)
-				<li class="nav-item">
-					<a class="nav-link" href="{{route('usuario.index')}}">Usuarios</a>
-				</li>
-			@endif
 			@if (auth()->user()->idNivel=1 || auth()->user()->idNivel=6)
-				<li class="nav-item">
+				{{-- <li class="nav-item">
 					<a class="nav-link" href="{{route('renovacion.index')}}">Renovacion</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{route('datosrenovacion')}}">Datos de Renovacion</a>
-				</li>	
+				</li>	 --}}
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">account_box</i>
+						Renovaci&oacute;n<span class="caret"></span>
+					</a>
+
+					<ul class="dropdown-menu" role="menu">
+						<li class="nav-item">
+							<a class="nav-link" href="{{route('renovacion.index')}}"><i class="material-icons">attach_money</i> Socioeconomico</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{route('resumenAvance')}}"><i class="material-icons">timeline</i> Resumen de Avance</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{route('datosrenovacion')}}"><i class="material-icons">import_export</i> Datos de Renovacion</a>
+						</li>	
+					</ul>
+				</li>
 				@endif
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">account_box</i>
