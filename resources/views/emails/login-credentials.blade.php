@@ -1,18 +1,17 @@
 @component('mail::message')
-# Introduction
+Contraseña Restablecida
 
-The body of your message.
+Para acceder a tu cuenta ingresa con tu nueva contraseña:
 
 @component('mail::table')
-    |Usuario|Password|
-    |-------|--------|
-    |{{ $usuario->name }}|{{ $password }}|
+    |Usuario|Correo|Contraseña|
+    |-------|------|----------|
+    |{{ $usuario->name }}|{{ $usuario->email }}|{{ $password }}|
 @endcomponent
 
-@component('mail::button', ['url' => 'login'])
-Button Text
-@endcomponent
+No compartas esta información con nadie
 
-Thanks,<br>
+
+Gracias,<br>
 {{ config('app.name') }}
 @endcomponent

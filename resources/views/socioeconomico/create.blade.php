@@ -89,8 +89,8 @@
                         <tbody>
                             <tr>
                                 <td colspan="4" class="table-success">TOTAL</td>
-                                <td colspan="2" class="text-right" id="totalInventario">0</td>
-                                <td class="text-right" id="totalInventarioPorcentaje">0</td>
+                                <td colspan="2" class="text-right" style="font-weight: 900;" id="totalInventario">0</td>
+                                <td class="text-right" style="font-weight: 900;" id="totalInventarioPorcentaje">0</td>
                             </tr>
                         </tbody>
                     </table>
