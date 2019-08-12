@@ -20,7 +20,7 @@
     @endif
     <div class="col-sm-10">
       <div class="form-group label-floating">
-          <label class="control-label">Buscar...</label>
+          <label class="control-label">Nombre...</label>
           <input class="form-control" type="text" name="cliente" id="cliente">
       </div>
     </div>

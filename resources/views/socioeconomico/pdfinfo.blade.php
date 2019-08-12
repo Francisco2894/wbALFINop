@@ -35,26 +35,26 @@
 							<tbody>
 								<tr>
 									<td class="text-justify">
-										<strong>GIRO:</strong>
+										<strong>GIRO:</strong><br><br>
 										{{ $actividad->giro }}
 									</td>
 				
 								</tr>
 								<tr>
 									<td class="text-justify">
-										<strong>OBJETIVO DEL PR&Eacute;STAMO:</strong>
+										<strong>OBJETIVO DEL PR&Eacute;STAMO:</strong><br><br>
 										{{ $actividad->destinoprestamo }}
 									</td>
 								</tr>
 								<tr>
 									<td class="text-justify">
-										<strong>¿C&oacute;mo inici&oacute;con su negocio?</strong>
+										<strong>¿C&oacute;mo inici&oacute;con su negocio?</strong><br><br>
 										{{ $actividad->comoinicio }}
 									</td>
 								</tr>
 								<tr>
 									<td class="text-justify">
-										<strong>Describe brevemente el proceso de producci&oacute;n, venta o servicio:</strong>
+										<strong>Describe brevemente el proceso de producci&oacute;n, venta o servicio:</strong><br><br>
 										{{ $actividad->desc_negocio }}
 									</td>
 								</tr>

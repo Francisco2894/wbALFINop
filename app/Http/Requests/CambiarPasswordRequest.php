@@ -26,8 +26,8 @@ class CambiarPasswordRequest extends FormRequest
         return [
             //
 
-            'password'              =>'required|min:5|confirmed',
-            'current_password'      => 'required|min:5'
+            'password'              =>  'required|min:5|confirmed',
+            'password_confirmation'      =>  'required|min:5'
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace wbALFINop\Http\Controllers;
 
 use Illuminate\Http\Request;
 use wbALFINop\Http\Requests\CambiarPasswordRequest;
+use wbALFINop\User;
 
 class PasswordController extends Controller
 {
@@ -37,6 +38,10 @@ class PasswordController extends Controller
     public function store(CambiarPasswordRequest $request)
     {
         //
+        $request['password'] = bcrypt($request['password']);
+        $user = User::where('id',Auth()->user()->id)->first();
+        $user->update($request->all());
+        return redirect()->route('devengo.index')->with(['mensaje'=>'Password Actualizado con Exito']);
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace wbALFINop\Http\Controllers;
 
 use Illuminate\Http\Request;
+use wbALFINop\Http\Requests\CambiarPasswordRequest;
+use wbALFINop\User;
 
 class UserController extends Controller
 {
@@ -11,9 +13,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $users = User::orderBy('name','ASC')->where("name", "LIKE", "%{$request->get('name')}%")->paginate(15);
+        return view('usuario.index',compact('users'));
     }
 
     /**
@@ -54,9 +58,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $usuario)
     {
         //
+        return view('usuario.edit',compact('usuario'));
     }
 
     /**
@@ -66,9 +71,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CambiarPasswordRequest $request,User $usuario)
     {
         //
+        //$request['password'] = bcrypt($request['password']);
+        //$usuario->update($request->all());
+        return redirect()->route('usuario.index')->with(['mensaje'=>"Password <strong>$usuario->name</strong> Actualizado con Exito"]);
     }
 
     /**

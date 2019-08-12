@@ -167,6 +167,11 @@
 			</ul>
 			</li>
 			@endif
+			@if (auth()->user()->idNivel==1)
+				<li class="nav-item">
+					<a class="nav-link" href="{{route('usuario.index')}}">Usuarios</a>
+				</li>
+			@endif
 			@if (auth()->user()->idNivel=1 || auth()->user()->idNivel=6)
 				<li class="nav-item">
 					<a class="nav-link" href="{{route('renovacion.index')}}">Renovacion</a>
@@ -206,8 +211,10 @@
 			<div class="profile-content">
 				<div class="container">
 					<div class="row">
+						@include('layouts.notificacionCambioPassword')
+						@include('layouts.notificacionError')
     					@yield('contenido')
-          </div>
+          			</div>
 				</div>
 			</div>
 		</div>

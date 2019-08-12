@@ -14,17 +14,6 @@
       </div>
     </div>
  @endif
-@if ($errors->any())
-<div class="alert alert-danger">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-
   <form class="form-horizontal" method="POST" action="{{action('ExcelController@importBlackList')}}" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="row">

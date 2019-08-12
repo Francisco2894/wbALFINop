@@ -113,6 +113,6 @@ return [
         'infc'              => 'Información Crediticia',
         'blklst'            => 'Black List',
         'password'          => 'Contraseña',
-        'current_password'  => 'Confirmar Contraseña'
+        'password_confirmation'  => 'Confirmar Contraseña'
     ],
 ];
