@@ -5,6 +5,7 @@ namespace wbALFINop\Http\Controllers;
 use Illuminate\Http\Request;
 use wbALFINop\Http\Requests\CambiarPasswordRequest;
 use wbALFINop\User;
+use wbALFINop\Perfil;
 use wbALFINop\Events\UserNewPassword;
 
 class UserController extends Controller
@@ -19,6 +20,16 @@ class UserController extends Controller
         //
         $users = User::orderBy('name','ASC')->where("name", "LIKE", "%{$request->get('name')}%")->paginate(15);
         return view('usuario.index',compact('users'));
+    }
+
+    public function perfiles()
+    {
+        $perfiles = Perfil::join('catpersonas','catpersonas.idPersona','=','catperfiles.idPersona')
+        ->join('catsucursales','catsucursales.idSucursal','=','catperfiles.idSucursal')
+        ->select('catperfiles.*','catpersonas.nombre','catpersonas.paterno','catpersonas.materno','catsucursales.sucursal')
+        ->orderBy('catpersonas.nombre','ASC')
+        ->paginate(15);
+        return view('usuario.perfil',compact('perfiles'));
     }
 
     /**

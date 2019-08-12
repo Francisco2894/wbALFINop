@@ -35,6 +35,8 @@ Route::post('calificar_ofera', 'SocioeconomicoController@calificarOferta')->name
 Route::resource('cambiar_password','PasswordController');
 Route::resource('usuario','UserController');
 Route::get('agenda/resumen_avance','SocioeconomicoController@resumenAvance')->name('resumenAvance');
+Route::resource('perfil','PerfilesController');
+Route::get('perfil_usuario','UserController@perfiles')->name('listarPerfiles');
 
 Route::post('agenda/agendadiaria','AgendaDiariaController@agendar');
 // PDF

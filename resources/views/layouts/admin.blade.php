@@ -106,8 +106,14 @@
 								<span class="caret"></span>
 							</a>
 					<ul class="dropdown-menu" role="menu">
-					    	<li>
-							<a href="{{route('usuario.index')}}"><i class="material-icons">person_add</i>Admin Usuarios</a>
+					    <li>
+							<a href="{{route('usuario.index')}}"><i class="material-icons">enhanced_encryption</i>Admin. Contraseña</a>
+						</li>
+						<li>
+							<a href="{{route('listarPerfiles')}}"><i class="material-icons">person_add</i>Agregar Usuario</a>
+						</li>
+						<li>
+							<a href="{{route('perfil.create')}}"><i class="material-icons">toc</i>Agregar Perfiles</a>
 						</li>
 						<li>
 							<a href="{{URL::action('ExcelController@index')}}"><i class="material-icons">import_export</i>Creditos</a>
