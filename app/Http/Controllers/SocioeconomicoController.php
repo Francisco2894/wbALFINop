@@ -413,13 +413,40 @@ class SocioeconomicoController extends Controller
                 }
 
                 $disponible = $utilidadNeta + $porcentajeOtrosIngresos - $familiares;
-                $capacidadPago = $disponible * 0.3;
+                //$capacidadPago = $disponible * 0.3;
 
                 //proceso de filtrado
                 if ($fecha<=59) {
                     if ($informacion[0]->score > 500) {
                         if (is_null($listaNegra)) {
-                            return $capacidadPago;
+
+                            $disponible=10748;
+                            
+                            if ($informacion[0]->score > 500) {
+                                $capacidadPago = $disponible * 0.35;
+                            }else{
+                                $capacidadPago = $disponible * 0.3;
+                            }
+
+                            
+
+                            $plazos = [6,8,10];
+                            $incrementos = [0.30,0.20,0.10,0];
+                            $creditoAnterior = 15000; //$credito->montoInicial;
+                            $tasa = 0.041;
+                            
+                            for ($i=0; $i < count($incrementos) ; $i++) {
+                                for ($j=0; $j <count($plazos) ; $j++) { 
+                                    $monto = $creditoAnterior + ($creditoAnterior * $incrementos[$i]);
+                                    $ical = $monto * $tasa;
+                                    $kcal = $monto / $plazos[$j];
+                                    $amortizacion = $ical + $kcal;
+                                    //return $capacidadPago;
+                                    if ($amortizacion <= $capacidadPago) {
+                                        echo "$incrementos[$i] - $plazos[$j] - $amortizacion <br>";
+                                    }
+                                }
+                            }
                         }else{
                             return back()->withInput()->with(['error'=>'Esta Presente en Lista Negra']);
                             return 'esta en lista negra';
