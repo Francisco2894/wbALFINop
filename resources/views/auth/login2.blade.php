@@ -11,29 +11,31 @@
                   {{ csrf_field() }}
   								<div class="header header-primary text-center">
   									<h4>Inicio de sesión</h4>
-                  </div>
-                  @if (session('error'))
-                    <div class="alert alert-danger">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <ul>
-                        <li>{!! session('error') !!}</li>
-                        </ul>
-                    </div>
-                  @endif
+  								</div>
   								<p class="text-divider">Ingrese sus datos</p>
   								<div class="content">
 
-  									<div class="input-group" >
+  									<div class="input-group{{ $errors->has('email') ? ' has-error' : '' }}" >
   										<span class="input-group-addon">
   											<i class="material-icons">face</i>
   										</span>
   										<input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
+                        @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                         @endif
   									</div>
-  									<div class="input-group">
+  									<div class="input-group{{ $errors->has('password') ? ' has-error' : '' }}">
   										<span class="input-group-addon">
   											<i class="material-icons">lock_outline</i>
   										</span>
   										<input id="password" type="password" class="form-control" name="password" placeholder="Contraseña" required/>
+                      @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                      @endif
   									</div>
                     <div class="checkbox">
                         <label>

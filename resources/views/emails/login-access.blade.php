@@ -1,7 +1,7 @@
 @component('mail::message')
-Contraseña Restablecida
+Credenciales de Acceso
 
-Para acceder a tu cuenta ingresa con tu nueva contraseña:
+Para acceder a tu cuenta ingresa con tus credenciales de Acceso:
 
 @component('mail::table')
     |Usuario|Correo|Contraseña|
@@ -14,4 +14,4 @@ No compartas esta información con nadie.
 
 Gracias,<br>
 {{ config('app.name') }}
-@endcomponent
+@endcomponent 

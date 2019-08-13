@@ -99,7 +99,8 @@ class ExcelController extends Controller
                     foreach ($reader as $fila) {
 
                         $infCred = InformacionCrediticia::where('folio',$fila->folio)->first();
-                        if (is_null($infCred)) {
+                        $cliente = Cliente::where('idcliente',$fila->idcliente)->first();
+                        if (is_null($infCred) && !is_null($cliente)) {
                           //$fecha = implode("-",rsort($fila->date));
 
                           $fecha_es = explode("/",$fila->fechaconsulta);  

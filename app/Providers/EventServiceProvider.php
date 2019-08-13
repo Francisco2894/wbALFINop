@@ -20,9 +20,12 @@ class EventServiceProvider extends ServiceProvider
       'wbALFINop\Listeners\SuccessfullLogout',
         ],
 
-        'wbALFINop\Events\UserNewPassword' => [
-          'wbALFINop\Listeners\SendNewPassword',
-            ],
+      'wbALFINop\Events\UserNewPassword' => [
+        'wbALFINop\Listeners\SendNewPassword',
+          ],
+      'wbALFINop\Events\UserNew' => [
+        'wbALFINop\Listeners\SendNewUser',
+          ],
     ];
 
     /**

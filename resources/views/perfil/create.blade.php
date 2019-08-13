@@ -40,7 +40,11 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="">Sucursal</label>
-                    {!! Form::select('idSucursal', $sucursales, null, ['class'=>'form-control']) !!}
+                    <select name="idSucursal" class="form-control">
+                        @foreach ($sucursales as $sucursal)
+                            <option value="{{ $sucursal->idSucursal }}">{{ $sucursal->idSucursal }} - {{ $sucursal->sucursal }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-md-4 col-xs-offset-4">

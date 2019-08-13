@@ -19,9 +19,14 @@ class Perfil extends Model
     'idSucursal'
   ];
 
+  public function usuario()
+  {
+    return $this->belongsTo(User::class, 'idPerfil','idPerfil');
+  }
+
   public function persona()
   {
-      return $this->belongsTo(Persona::class, 'idPersona');
+    return $this->belongsTo(Persona::class, 'idPersona', 'idPersona');
   }
 
   protected $guarded=[ ];

@@ -28,7 +28,7 @@ class PerfilesController extends Controller
     public function create()
     {
         //
-        $sucursales = Sucursal::orderBy('idSucursal','ASC')->pluck('sucursal','idSucursal');
+        $sucursales = Sucursal::orderBy('idSucursal','ASC')->get();
         return view('perfil.create',compact('sucursales'));
     }
 

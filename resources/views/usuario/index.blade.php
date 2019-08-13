@@ -31,7 +31,7 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->perfil->descripcion }}</td>
