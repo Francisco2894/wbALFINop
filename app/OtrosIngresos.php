@@ -13,7 +13,7 @@ class OtrosIngresos extends Model
     public $timestamps=false;
 
     protected $fillable=[
-        'idact','otro_negocio','conyuge','empleo'
+        'idact','monto','tipo','descripcion'
     ];
 
     protected $guarded=[ ];

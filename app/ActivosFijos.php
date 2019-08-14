@@ -13,7 +13,7 @@ class ActivosFijos extends Model
     public $timestamps=false;
 
     protected $fillable=[
-        'idact','local','auto','maquinaria'
+        'idact','descripcion','tipo','monto'
     ];
 
     protected $guarded=[ ];

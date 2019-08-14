@@ -115,8 +115,20 @@ class SocioeconomicoController extends Controller
         }
 
         //agrego activos fijos
-        $activos = ActivosFijos::create($request->all());
-        $otrosIngresos = OtrosIngresos::create($request->all());
+        for ($i=1; $i <4 ; $i++) { 
+            $activos = ActivosFijos::create([
+                'idact'=> $actividad->idact,
+                'monto'=> $request["cantf$i"],
+                'tipo'=> $i,
+                'descripcion'=> $request["descf$i"]
+                ]);
+            $otrosIngresos = OtrosIngresos::create([
+                'idact'=> $actividad->idact,
+                'monto'=> $request["canti$i"],
+                'tipo'=> $i,
+                'descripcion'=> $request["desci$i"]
+                ]);
+        }
         //return back()->withInput();
         return redirect("$request->url");
         //return redirect()->route('socioeconomico.show',$actividad->idact);
@@ -551,8 +563,8 @@ class SocioeconomicoController extends Controller
             return redirect()->route('devengo.index');
         }
         $urlanterior = $_SERVER['HTTP_REFERER'];
-        $activos = ActivosFijos::where('idact',$socioeconomico->idact)->first();
-        $otrosIngresos = OtrosIngresos::where('idact',$socioeconomico->idact)->first();
+        return $activos = ActivosFijos::where('idact',$socioeconomico->idact)->get();
+        return $otrosIngresos = OtrosIngresos::where('idact',$socioeconomico->idact)->get();
         
         $productos = Inventario::where('idact',$socioeconomico->idact)->get();
         $transacionesVenta = TransaccionInventario::where('idact',$socioeconomico->idact)->where('idtipotransac','2')->get();
@@ -617,8 +629,8 @@ class SocioeconomicoController extends Controller
         $actividad = Actividad::where('idcliente',$socioeconomico->idCliente)->first();
         $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
         $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
-        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
-        $activos = ActivosFijos::where('idact',$actividad->idact)->first();
+        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->orderBy('tipo','ASC')->get();
+        $activos = ActivosFijos::where('idact',$actividad->idact)->orderBy('tipo','ASC')->get();
         $productos = Inventario::where('idact',$actividad->idact)->get();
         $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->orderBy('iddia','ASC')->get();
         $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->orderBy('iddia','ASC')->get();
@@ -641,9 +653,12 @@ class SocioeconomicoController extends Controller
         foreach($gastosFamiliares as $familiar){
             $totalf = $totalf + $familiar->monto;
         }
-        $totaloi = $otrosIngresos->otro_negocio + $otrosIngresos->conyuge + $otrosIngresos->empleo;
-        $totala = $activos->local + $activos->auto + $activos->maquinaria;
-
+        foreach ($otrosIngresos as $otros) {
+            $totaloi = $otros->monto;
+        }
+        foreach ($activos as $activo) {
+            $totala = $activo->monto;
+        }
 
         return view('socioeconomico.edit',compact('socioeconomico','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
         'productos','transacionesVenta','transacionesCompra','actividad','totalv','totalc','totalo','totalf','totaloi','totala','urlanterior'));
@@ -712,10 +727,20 @@ class SocioeconomicoController extends Controller
         }
 
         //actualizo activos fijos
-        $activo = ActivosFijos::where('idact',$actividad->idact)->first();
-        $activo->update($request->all());
-        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
-        $otrosIngresos->update($request->all());
+
+        for ($i=1; $i <4 ; $i++) { 
+            $activo = ActivosFijos::where('idact',$actividad->idact)->where('tipo',$i)->first();
+            $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->where('tipo',$i)->first();
+            $activo->update([
+                'monto'=> $request["cantf$i"],
+                'descripcion'=> $request["descf$i"]
+                ]);
+
+            $otrosIngresos->update([
+                'monto'=> $request["canti$i"],
+                'descripcion'=> $request["desci$i"]
+                ]);
+        }
         return redirect("$request->url");
         //return redirect()->route('socioeconomico.show',$actividad->idact);
     }

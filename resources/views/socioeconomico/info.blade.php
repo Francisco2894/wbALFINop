@@ -181,11 +181,11 @@
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL SEMANAL</td>
-                                    <td class="text-right" style="font-weight: 900;" id="totalSemanalCompras">{{ $totalc }}</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalSemanalCompras">${{ number_format($totalc,2) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL MENSUAL</td>
-                                    <td class="text-right" style="font-weight: 900;" id="totalMensualCompras">{{ $totalc*4 }}</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalMensualCompras">${{ number_format($totalc*4,2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -297,10 +297,10 @@
                                     </td>                                                                
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalSemanalVentas">{{ $totalv }}</td>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalSemanalVentas">${{ number_format($totalv,2) }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalMensualVentas">{{ $totalv*4 }}</td>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalMensualVentas">${{ number_format($totalv*4,2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -323,47 +323,47 @@
                             <tbody>
                                 <tr class="form-group">
                                     <td><br> <label for="">RENTA</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto1" value="${{ number_format($gastosOperacion[0]->monto,2)}}" id="op1"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto1" value="{{ number_format($gastosOperacion[0]->monto,2)}}" id="op1"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">LUZ</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto2" value="${{ number_format($gastosOperacion[1]->monto,2)}}" id="op2"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto2" value="{{ number_format($gastosOperacion[1]->monto,2)}}" id="op2"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">AGUA</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto3" value="${{ number_format($gastosOperacion[2]->monto,2)}}" id="op3"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto3" value="{{ number_format($gastosOperacion[2]->monto,2)}}" id="op3"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">GAS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto4" value="${{ number_format($gastosOperacion[3]->monto,2)}}" id="op4"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto4" value="{{ number_format($gastosOperacion[3]->monto,2)}}" id="op4"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">CELULAR</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto5" value="${{ number_format($gastosOperacion[4]->monto,2)}}" id="op5"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto5" value="{{ number_format($gastosOperacion[4]->monto,2)}}" id="op5"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">IMPUESTOS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto6"value="${{ number_format($gastosOperacion[5]->monto,2)}}" id="op6"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto6"value="{{ number_format($gastosOperacion[5]->monto,2)}}" id="op6"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TRANSPORTE</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto7" value="${{ number_format($gastosOperacion[6]->monto,2)}}" id="op7"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto7" value="{{ number_format($gastosOperacion[6]->monto,2)}}" id="op7"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">SALARIOS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto8" value="${{ number_format($gastosOperacion[7]->monto,2)}}" id="op8"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto8" value="{{ number_format($gastosOperacion[7]->monto,2)}}" id="op8"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">MANTENIMIENTO</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto9" value="${{ number_format($gastosOperacion[8]->monto,2)}}" id="op9"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto9" value="{{ number_format($gastosOperacion[8]->monto,2)}}" id="op9"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">PAGOS DEUDAS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto10" value="${{ number_format($gastosOperacion[9]->monto,2)}}" id="op10"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto10" value="{{ number_format($gastosOperacion[9]->monto,2)}}" id="op10"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">OTROS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto11" value="${{ number_format($gastosOperacion[10]->monto,2)}}" id="op11"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto11" value="{{ number_format($gastosOperacion[10]->monto,2)}}" id="op11"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (C)</td>
@@ -380,27 +380,27 @@
                             <tbody>
                                 <tr class="form-group">
                                     <td><br> <label for="">ALIMENTOS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto12" value="${{ number_format($gastosFamiliares[0]->monto,2)}}" id="op12"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto12" value="{{ number_format($gastosFamiliares[0]->monto,2)}}" id="op12"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">LUZ, AGUA</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto13" value="${{ number_format($gastosFamiliares[1]->monto,2)}}" id="op13"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto13" value="{{ number_format($gastosFamiliares[1]->monto,2)}}" id="op13"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">GAS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto14" value="${{ number_format($gastosFamiliares[2]->monto,2)}}" id="op14"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto14" value="{{ number_format($gastosFamiliares[2]->monto,2)}}" id="op14"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TEL&Eacute;FONO</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto15" value="${{ number_format($gastosFamiliares[3]->monto,2)}}" id="op15"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto15" value="{{ number_format($gastosFamiliares[3]->monto,2)}}" id="op15"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">RENTA</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto16" value="${{ number_format($gastosFamiliares[4]->monto,2)}}" id="op16"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto16" value="{{ number_format($gastosFamiliares[4]->monto,2)}}" id="op16"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">VESTIDO</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto17" value="${{ number_format($gastosFamiliares[5]->monto,2)}}" id="op17"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto17" value="{{ number_format($gastosFamiliares[5]->monto,2)}}" id="op17"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">SALUD</label></td>
@@ -408,19 +408,19 @@
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">ESCUELA</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto19" value="${{ number_format($gastosFamiliares[7]->monto,2)}}0" id="op19"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto19" value="{{ number_format($gastosFamiliares[7]->monto,2)}}0" id="op19"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">TRANSPORTE</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto20" value="${{ number_format($gastosFamiliares[8]->monto,2)}}" id="op20"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto20" value="{{ number_format($gastosFamiliares[8]->monto,2)}}" id="op20"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">PAGOS DEUDAS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto21" value="${{ number_format($gastosFamiliares[9]->monto,2)}}" id="op21"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto21" value="{{ number_format($gastosFamiliares[9]->monto,2)}}" id="op21"></td>
                                 </tr>
                                 <tr class="form-group">
                                     <td><br> <label for="">OTROS</label></td>
-                                    <td><input class="form-control" disabled type="text" name="gasto22" value="${{ number_format($gastosFamiliares[10]->monto,2)}}" id="op22"></td>
+                                    <td><input class="form-control" disabled type="text" name="gasto22" value="{{ number_format($gastosFamiliares[10]->monto,2)}}" id="op22"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (E)</td>
@@ -523,9 +523,7 @@
     </style>
 @endpush
 @push('scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="{{ asset('/js/hashtable.js') }}"></script>
-    <script src="{{ asset('/js/jquery.numberformatter.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
     <script>
         let s1,s2,s3 = 0;
         let v1,v2,v3,v4,v5 = 0;

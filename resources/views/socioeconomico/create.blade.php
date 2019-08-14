@@ -95,8 +95,8 @@
                         <tbody>
                             <tr>
                                 <td colspan="4" class="table-success">TOTAL</td>
-                                <td colspan="2" class="text-right" style="font-weight: 900;" id="totalInventario">0</td>
-                                <td class="text-right" style="font-weight: 900;" id="totalInventarioPorcentaje">0</td>
+                                <td colspan="2" class="text-right" style="font-weight: 900;" id="totalInventario">$0.00</td>
+                                <td class="text-right" style="font-weight: 900;" id="totalInventarioPorcentaje">0%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -216,11 +216,11 @@
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL SEMANAL</td>
-                                    <td class="text-right" style="font-weight: 900;" id="totalSemanalCompras">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalSemanalCompras">$0.00</td>
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL MENSUAL</td>
-                                    <td class="text-right" style="font-weight: 900;" id="totalMensualCompras">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalMensualCompras">$0.00</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -332,10 +332,10 @@
                                     </td>                                                                
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalSemanalVentas">0</td>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalSemanalVentas">$0.00</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalMensualVentas">0</td>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalMensualVentas">$0.00</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -402,7 +402,7 @@
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (C)</td>
-                                    <td id="totalOperacion" style="font-weight: 900;">0</td>
+                                    <td id="totalOperacion" style="font-weight: 900;">$0.00</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -459,7 +459,7 @@
                                 </tr>
                                 <tr>
                                     <td class="table-success">TOTAL (E)</td>
-                                    <td id="totalFamiliar" style="font-weight: 900;">0</td>
+                                    <td id="totalFamiliar" style="font-weight: 900;">$0.00</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -484,25 +484,55 @@
                                 </tr>
                             </thead>
                             <tbody >
-                                <tr class="form-group">
-                                    <td><br> <label for="">OTRO NEGOCIO</label></td>
-                                    <td><input type="number" class="form-control" name="otro_negocio" required id="ingreso1" value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">OTRO NEGOCIO</label>
+                                            <input class="form-control"  type="text" name="desci1">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input class="form-control" id="ingreso1" type="number" name="canti1">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><br> <label for="">EMPLEO</label></td>
-                                    <td><input type="number" class="form-control" name="empleo" required id="ingreso2" value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">EMPLEO</label>
+                                            <input class="form-control"  type="text" name="desci2">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input class="form-control" id="ingreso2" type="number" name="canti2">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><br> <label for="">CÓNYUGE</label></td>
-                                    <td><input type="number" class="form-control" name="conyuge" required id="ingreso3" value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">CÓNYUGE</label>
+                                            <input class="form-control"  type="text" name="desci3">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input class="form-control" id="ingreso3" type="number" name="canti3">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>TOTAL</td>
-                                    <td class="text-right" style="font-weight: 900;" id="totalIngresos">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalIngresos">$0.00</td>
                                 </tr>
                                 <tr>
                                     <td>DISPONIBLE DE OTROS INGRESOS (30%)</td>
-                                    <td class="text-right" style="font-weight: 900;" id="totalIngresosPorcentaje">0</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalIngresosPorcentaje">$0.00</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -517,20 +547,50 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="form-group">
-                                    <td><br> <label for="">MAQUINARIA, EQUIPO, HERRAMIENTAS</label></td>
-                                    <td><input type="number" class="form-control" required name="maquinaria" id="fijo1" value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br> <label for="">LOCAL</label></td>
-                                    <td><input type="number" class="form-control" required name="local" id="fijo2" value="0"></td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td><br> <label for="">AUTO</label></td>
-                                    <td><input type="number" class="form-control" required name="auto" id="fijo3" value="0"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">MAQUINARIA, EQUIPO, HERRAMIENTAS</label>
+                                            <input class="form-control"  type="text" name="descf1">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input class="form-control" id="fijo1" type="number" value="0" name="cantf1">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalFijos">0</td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">LOCAL</label>
+                                            <input class="form-control"  type="text" name="descf2">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input class="form-control" id="fijo2" type="number" value="0" name="cantf2">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">VEHICULO</label>
+                                            <input class="form-control"  type="text" name="descf3">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input class="form-control" id="fijo3" type="number" value="0" name="cantf3">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-weight: 900;" class="text-right" id="totalFijos">$0.00</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -626,7 +686,7 @@
                 f2 = parseFloat($('#fijo2').val());
                 f3 = parseFloat($('#fijo3').val());
                 total = f1+f2+f3;
-                $("#totalFijos").text(total);
+                $("#totalFijos").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total));
                 console.log(total);    
             });
 
@@ -635,8 +695,8 @@
                 i2 = parseFloat($('#ingreso2').val());
                 i3 = parseFloat($('#ingreso3').val());
                 total = i1+i2+i3;
-                $("#totalIngresos").text(total);
-                $("#totalIngresosPorcentaje").text(Math.round(total*0.3));
+                $("#totalIngresos").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total));
+                $("#totalIngresosPorcentaje").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total*0.3));
                 console.log(total);    
             });
 
@@ -649,8 +709,8 @@
                 v6 = parseFloat($('#vsabado1').val());
                 v7 = parseFloat($('#vdomingo1').val());
                 total = v4+v2+v3+v1+v5+v6+v7;
-                $("#totalSemanalCompras").text(total);
-                $("#totalMensualCompras").text(total*4);
+                $("#totalSemanalCompras").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total));
+                $("#totalMensualCompras").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total*4));
                 console.log(total);    
             });
 
@@ -664,8 +724,8 @@
                 v14 = parseFloat($('#vdomingo2').val());
 
                 total = v8+v9+v10+v11+v12+v13+v14;
-                $("#totalSemanalVentas").text(total);
-                $("#totalMensualVentas").text(total*4);
+                $("#totalSemanalVentas").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total));
+                $("#totalMensualVentas").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total*4));
                 console.log(total);    
             });
 
@@ -682,7 +742,7 @@
                 g10 = parseFloat($('#op10').val());
                 g11 = parseFloat($('#op11').val());
                 total = g1+g2+g3+g4+g5+g6+g7+g8+g9+g10+g11;
-                $("#totalOperacion").text(total);
+                $("#totalOperacion").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total));
                 console.log(total);  
             });
 
@@ -700,7 +760,7 @@
                 g22 = parseFloat($('#op22').val());
                 total = g12+g13+g14+g15+g16+g17+g18+g19+g20+g21+g22;
 
-                $("#totalFamiliar").text(total);
+                $("#totalFamiliar").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total));
                 console.log(total);    
             });
 		});
@@ -712,7 +772,7 @@
                 suma = suma + (inventario[i]['precio_compra'] * inventario[i]['cantidad']);
                 porciento = porciento + (Math.round(((inventario[i]['precio_venta'] - inventario[i]['precio_compra'])/inventario[i]['precio_venta'])*100))/inventario.length;
             }
-            $('#totalInventario').text(suma);
+            $('#totalInventario').text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(suma));
             $('#totalInventarioPorcentaje').text(porciento+"%");
         }
 
