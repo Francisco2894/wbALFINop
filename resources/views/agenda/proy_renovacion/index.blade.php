@@ -72,7 +72,6 @@
     {{$vencimientos->render()}}
   </div>
 </div>
-
 <div class="row">
     <div class="col-xs-12">
       <div class="table-responsive">
@@ -116,6 +115,7 @@
                   <a href="{{ route('pdfrenovacion',['cliente'=>$vencimientoOferta->idCliente,'sucursal'=>$querys]) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
                 </td>
               </tr>
+              @break
             @endif 
           @endforeach
         @endforeach
@@ -127,12 +127,9 @@
 
 <!-- Modal -->
 <div class="modal fade" id="ofertas" tabindex="-1" role="dialog" aria-labelledby="oferta" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body">
         <div class="panel panel-success">
@@ -140,17 +137,34 @@
           </div>
           <div class="panel-body">
             <div class="responsive">
+              <h4 class="title">Productivo</h4>
               <table class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
                       <th>Fecha</th>
                       <th>Plazo</th>
                       <th>Monto</th>
-                      <th>Parcialidad</th>
+                      <th>Cuota</th>
+                      <th>Frecuencia</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="tablaproductivo">
+                  </tbody>
+                </table>
+                <hr>
+                <h4 class="title">Vivienda</h4>
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Plazo</th>
+                      <th>Monto</th>
+                      <th>Cuota</th>
                       <th>Frecuencia</th>
                     </tr>
                   </thead>
-                  <tbody id="tabla">
+                  <tbody id="tablavivienda">
                   </tbody>
                 </table>
             </div>
@@ -170,7 +184,12 @@
     <script>
       let fechai, fechaf = "";
       let tipo, plazo = "";
-      let monto, parcialidad, frecuencia = 0;
+      let idOferta, monto, parcialidad, frecuencia = 0;
+      let texto;
+
+      function ofertaSeleccionada(id){
+        alert(id);
+      }
       function ofertas(id){
         $.ajax({
           url     :  "/ofertas/"+id,
@@ -178,19 +197,33 @@
           dataType:  'json',
           success :   function (response) {
                 if(response.length>0){
-                  console.log(response[0]['fechai']);
-                  $('#tabla').empty();
+                  console.log(response[0]['idto']);
+                  $('#tablaproductivo').empty();
+                  $('#tablavivienda').empty();
                   for(i=0;i<response.length;i++){
+                    idOferta    = response[i]['idoferta'];
                     fechai      = response[i]['fechai'];
                     fechaf      = response[i]['fechaf'];
                     plazo       = response[i]['plazo'];
                     monto       = response[i]['monto'];
-                    parcialidad    = response[i]['parcialidad'];
-                    frecuencia     = response[i]['frecuencia'];           
+                    parcialidad     = response[i]['cuota'];
+                    frecuencia      = response[i]['frecuencia'];
+                    tipo            = response[i]['idto'];
+                    if (frecuencia == 1) {
+                      texto = 'Mensual';
+                    }
 
-                    $('#tabla').append("<tr>"+
-                        "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>"+monto+"</td><td>"+parcialidad+"</td><td>"+frecuencia+" </td></tr>"
-                    );
+                    if (tipo == 1) {
+                      $('#tablaproductivo').append("<tr>"+
+                        "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                        "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>save_alt</i></button> </td></tr>"
+                      ); 
+                    } else {
+                      $('#tablavivienda').append("<tr>"+
+                        "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                        "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>save_alt</i></button></td></tr>"
+                      );
+                    }
                 }
               }
               $('#titulo').text("Oferta ID Cliente: "+response[0]['idcliente']);

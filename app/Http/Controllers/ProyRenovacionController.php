@@ -13,6 +13,7 @@ use wbALFINop\Credito;
 use wbALFINop\Cliente;
 use wbALFINop\BlackList;
 use wbALFINop\Producto;
+use wbALFINop\Perfil;
 
 class ProyRenovacionController extends Controller
 {
@@ -83,7 +84,8 @@ class ProyRenovacionController extends Controller
                 //     $month="0".$nummonth;
                 // }
     
-                $datei=date('Y')."/".$nummonth."/01";
+                //$datei=date('Y')."/".$nummonth."/01";
+                $datei = date('Y-m-d');
     
                 $nummonth=0;
     
@@ -99,46 +101,95 @@ class ProyRenovacionController extends Controller
                 }else {
                   $datef=date('Y')."/".$month."/31";
                 }
+                
+                $dateio = strtotime ('-5 day',strtotime ($datei)) ;
+                $dateio = date ('Y-m-j',$dateio);
+
+                $datefo = strtotime ('+5 day',strtotime ($datef)) ;
+                $datefo = date ('Y-m-j',$datefo);
 
                 $ofertas = Oferta::pluck('idcliente');
                 $blackList = BlackList::pluck('idcredito');
                 $blackListp = BlackList::pluck('idcliente');
+                
+                $per = Perfil::where('idPerfil',$query)->first();
+                
+                if ($query != 'T0ALL') {
+                    $vencimientos = Credito::
+                    leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
+                    ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
+                    ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
+                    ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
+                    ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
+                    ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'cp.idSucursal', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
+                    ->where('tblcreditos.idPerfil', '=', $query)
+                    ->where('s.estatus', '=', '1')
+                    ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
+                    ->whereNotIn('tblcreditos.idCliente',$ofertas) //que no este en ofertas
+                    ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
+                    ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
+                    ->where('s.maxDiasAtraso', "<", 31) //maximo dias atrazado es 16
+                    ->where('refinan_si',1) //refinan_si con valor en 1
+                    ->orderBy('tblcreditos.fechaFin', 'asc')
+                    ->orderBy('dc.colonia', 'desc')
+                    ->paginate(40);
 
-                $vencimientos = Credito::
-        leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
-        ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
-        ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
-        ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
-        ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
-        ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
-        ->where('tblcreditos.idPerfil', '=', $query)
-         ->where('s.estatus', '=', '1')
-        ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
-        ->whereNotIn('tblcreditos.idCliente',$ofertas) //que no este en ofertas
-        ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
-        ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
-        ->where('s.maxDiasAtraso', "<", 31) //maximo dias atrazado es 16
-        ->where('refinan_si',1) //refinan_si con valor en 1
-        ->orderBy('tblcreditos.fechaFin', 'asc')
-        ->orderBy('dc.colonia', 'desc')
-        ->paginate(40);
+                    $vencimientosOfertas = Credito::
+                    leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
+                    ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
+                    ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
+                    ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
+                    ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
+                    ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente','cp.idSucursal', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
+                    ->where('tblcreditos.idPerfil', '=', $query)
+                    ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
+                    ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
+                    ->whereRaw('fechaFin>="'.$dateio.'" and fechaFin<="'.$datefo.'"')//fecha de hoy al 31 del otro mes.
+                    ->where('s.maxDiasAtraso', "<", 30) //maximo dias atrazado es 16
+                    //->where('refinan_si',1) //refinan_si con valor en 1
+                    ->orderBy('tblcreditos.fechaFin', 'asc')
+                    ->orderBy('dc.colonia', 'desc')
+                    ->paginate(40);
+                }
+                else {
+                    $vencimientos = Credito::
+                    leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
+                    ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
+                    ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
+                    ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
+                    ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
+                    ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'cp.idSucursal', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
+                    ->where('idSucursal', '=', $querys)
+                    ->where('s.estatus', '=', '1')
+                    ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
+                    ->whereNotIn('tblcreditos.idCliente',$ofertas) //que no este en ofertas
+                    ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
+                    ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
+                    ->where('s.maxDiasAtraso', "<", 31) //maximo dias atrazado es 16
+                    ->where('refinan_si',1) //refinan_si con valor en 1
+                    ->orderBy('tblcreditos.fechaFin', 'asc')
+                    ->orderBy('dc.colonia', 'desc')
+                    ->paginate(40);
 
-        $vencimientosOfertas = Credito::
-        leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
-        ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
-        ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
-        ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
-        ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
-        ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
-        ->where('tblcreditos.idPerfil', '=', $query)
-        ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
-        ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
-        ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
-        ->where('s.maxDiasAtraso', "<", 30) //maximo dias atrazado es 16
-        //->where('refinan_si',1) //refinan_si con valor en 1
-        ->orderBy('tblcreditos.fechaFin', 'asc')
-        ->orderBy('dc.colonia', 'desc')
-        ->paginate(40);
+                    $vencimientosOfertas = Credito::
+                    leftjoin('tblrenovaciones as r', 'tblcreditos.idCredito', '=', 'r.idCredito')
+                    ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
+                    ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
+                    ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
+                    ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
+                    ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente','cp.idSucursal', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
+                    ->where('idSucursal', '=', $querys)
+                    ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
+                    ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
+                    ->whereRaw('fechaFin>="'.$dateio.'" and fechaFin<="'.$datefo.'"')//fecha de hoy al 31 del otro mes.
+                    ->where('s.maxDiasAtraso', "<", 30) //maximo dias atrazado es 16
+                    //->where('refinan_si',1) //refinan_si con valor en 1
+                    ->orderBy('tblcreditos.fechaFin', 'asc')
+                    ->orderBy('dc.colonia', 'desc')
+                    ->paginate(40);
+                }
+
+        
 
     
     
@@ -171,7 +222,7 @@ class ProyRenovacionController extends Controller
                 ->where('s.estatus', '=', '1')
                ->orderBy('p.nombre', 'desc')->distinct()->get();
     
-                $vendedores= array('0' => "Ninguno") + collect($catvendedores)
+                $vendedores= array('0' => "Ninguno",'T0ALL'=>'TODOS') + collect($catvendedores)
                ->pluck('nombre', 'idPerfil')
                ->toArray();
     

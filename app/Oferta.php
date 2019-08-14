@@ -13,7 +13,7 @@ class Oferta extends Model
     public $timestamps=false;
 
     protected $fillable=[
-        'idcliente','idto','idcredito','fechai', 'fechaf', 'plazo', 'monto', 'parcialidad', 'frecuencia'
+        'idcliente','idto','idcredito','fechai', 'fechaf', 'plazo', 'monto', 'cuota', 'frecuencia','status'
     ];
 
     public function cliente()

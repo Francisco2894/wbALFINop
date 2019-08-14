@@ -185,15 +185,8 @@ class SocioeconomicoController extends Controller
                     $querys= trim($request ->get('searchTxts'));
                 }
     
-                $nummonth=0;
-                $nummonth=date('m');
-                // if ($nummonth>9) {
-                //     $month=$nummonth;
-                // } else {
-                //     $month="0".$nummonth;
-                // }
-    
-                $datei=date('Y')."/".$nummonth."/01";
+                //$datei=date('Y')."/".$nummonth."/01";
+                $datei = date('Y-m-d');
     
                 $nummonth=0;
     
@@ -209,6 +202,12 @@ class SocioeconomicoController extends Controller
                 }else {
                   $datef=date('Y')."/".$month."/31";
                 }
+                
+                $dateio = strtotime ('-5 day',strtotime ('2019/08/01')) ;
+                $dateio = date ('Y-m-j',$dateio);
+
+                $datefo = strtotime ('+5 day',strtotime ($datef)) ;
+                $datefo = date ('Y-m-j',$datefo);
 
                 $ofertas = Oferta::pluck('idcliente');
                 $blackList = BlackList::pluck('idcredito');
@@ -224,7 +223,7 @@ class SocioeconomicoController extends Controller
                 ->where('tblcreditos.idPerfil', '=', $query)
                 ->where('s.estatus', '=', '1')
                 ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
-                ->whereNotIn('tblcreditos.idCliente',$ofertas) //que no este en ofertas
+                //->whereNotIn('tblcreditos.idCliente',$ofertas) //que no este en ofertas
                 ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
                 ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
                 ->where('s.maxDiasAtraso', "<", 31) //maximo dias atrazado es 16
@@ -243,7 +242,7 @@ class SocioeconomicoController extends Controller
                 ->where('tblcreditos.idPerfil', '=', $query)
                 ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
                 ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
-                ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
+                ->whereRaw('fechaFin>="'.$dateio.'" and fechaFin<="'.$datefo.'"')//fecha de hoy al 31 del otro mes.
                 ->where('s.maxDiasAtraso', "<", 30) //maximo dias atrazado es 16
                 //->where('refinan_si',1) //refinan_si con valor en 1
                 ->orderBy('tblcreditos.fechaFin', 'asc')
@@ -303,11 +302,14 @@ class SocioeconomicoController extends Controller
                         foreach ($actividades as $actividad){
                             if ($vencimiento->idCliente == $actividad->idcliente){
                                 $recopilados ++;
-                                $porRecopilar--;
+                                $porRecopilar --;
+                                $ofertasDesignadas = Oferta::where('idcliente',$actividad->idcliente)->get();
+                                if (count($ofertasDesignadas)>0) {
+                                    $calificados ++;
+                                }
                             } 
                         }
                     }
-                    $calificados = 0;
                 }
 
 
@@ -420,33 +422,102 @@ class SocioeconomicoController extends Controller
                     if ($informacion[0]->score > 500) {
                         if (is_null($listaNegra)) {
 
-                            $disponible=10748;
+                            //$disponible=10748;
+                            //return $capacidadPago;
+                            $plazosProductivo = [6,7,8,9,10,11,12];
+                            $plazosVivienda = [13,14,15,16,17,18,19];
+                            $incremento = 0.30;
+                            $creditoAnterior = $credito->montoInicial;
+                            $tasa = 0.041;
                             
-                            if ($informacion[0]->score > 500) {
-                                $capacidadPago = $disponible * 0.35;
+                            if ($informacion[0]->score > 600) {
+                                $capacidadPago = $disponible * 0.5;
                             }else{
                                 $capacidadPago = $disponible * 0.3;
                             }
 
+                            //prueba
+                            $creditoAnterior =  15000;
+                            $capacidadPago =  5374;
                             
-
-                            $plazos = [6,8,10];
-                            $incrementos = [0.30,0.20,0.10,0];
-                            $creditoAnterior = 15000; //$credito->montoInicial;
-                            $tasa = 0.041;
+                            //fecha fin
+                            $fechaFin = $credito->fechaFin;
+                            $nuevaFecha = strtotime ('+5 day',strtotime ($fechaFin)) ;
+                            $nuevaFecha = date ('Y-m-j',$nuevaFecha);
                             
-                            for ($i=0; $i < count($incrementos) ; $i++) {
-                                for ($j=0; $j <count($plazos) ; $j++) { 
-                                    $monto = $creditoAnterior + ($creditoAnterior * $incrementos[$i]);
-                                    $ical = $monto * $tasa;
-                                    $kcal = $monto / $plazos[$j];
-                                    $amortizacion = $ical + $kcal;
-                                    //return $capacidadPago;
-                                    if ($amortizacion <= $capacidadPago) {
-                                        echo "$incrementos[$i] - $plazos[$j] - $amortizacion <br>";
-                                    }
+                            //oferta Productivo
+                            for ($j=0; $j <count($plazosProductivo) ; $j++) { 
+                                
+                                $monto = $creditoAnterior + ($creditoAnterior * $incremento);
+                                $ical = $monto * $tasa;
+                                $kcal = $monto / $plazosProductivo[$j];
+                                $cuota = $ical + $kcal;
+                                //return $capacidadPago;
+                                if ($cuota <= $capacidadPago) {
+                                    echo "$incremento - $plazosProductivo[$j] - $cuota <br>";
+                                    $oferta = Oferta::create([
+                                        'idcliente'     =>  $credito->idCliente,
+                                        'idto'          =>  1,
+                                        'idcredito'     =>  $credito->idCredito,
+                                        'fechai'        =>  date('Y-m-d'),
+                                        'fechaf'        =>  $nuevaFecha,
+                                        'plazo'         =>  $plazosProductivo[$j],
+                                        'monto'         =>  $monto,
+                                        'cuota'         =>  $cuota,
+                                        'frecuencia'    =>  1,
+                                        'status'        =>  1
+                                    ]);
                                 }
                             }
+
+                            $monto = $creditoAnterior;
+                            $ical = $monto * $tasa;
+                            $kcal = $monto / 6;
+                            $cuota = $ical + $kcal;
+                            //return $capacidadPago;
+                            if ($cuota <= $capacidadPago) {
+                                echo "$incremento - 6 - $cuota <br>";
+                                $oferta = Oferta::create([
+                                    'idcliente'     =>  $credito->idCliente,
+                                    'idto'          =>  1,
+                                    'idcredito'     =>  $credito->idCredito,
+                                    'fechai'        =>  date('Y-m-d'),
+                                    'fechaf'        =>  $nuevaFecha,
+                                    'plazo'         =>  6,
+                                    'monto'         =>  $monto,
+                                    'cuota'         =>  $cuota,
+                                    'frecuencia'    =>  1,
+                                    'status'        =>  1
+                                ]);
+                            }
+
+                            //oferta Vivienda
+                            for ($j=0; $j <count($plazosVivienda) ; $j++) {
+                                
+                                $monto = $creditoAnterior + ($creditoAnterior * $incremento);
+                                $ical = $monto * $tasa;
+                                $kcal = $monto / $plazosVivienda[$j];
+                                $cuota = $ical + $kcal;
+                                //return $capacidadPago;
+                                if ($cuota <= $capacidadPago) {
+                                    echo "$incremento - $plazosVivienda[$j] - $cuota <br>";
+                                    $oferta = Oferta::create([
+                                        'idcliente'     =>  $credito->idCliente,
+                                        'idto'          =>  2,
+                                        'idcredito'     =>  $credito->idCredito,
+                                        'fechai'        =>  date('Y-m-d'),
+                                        'fechaf'        =>  $nuevaFecha,
+                                        'plazo'         =>  $plazosVivienda[$j],
+                                        'monto'         =>  $monto,
+                                        'cuota'         =>  $cuota,
+                                        'frecuencia'    =>  1,
+                                        'status'        =>  2
+                                    ]);
+                                }
+                            }
+                            return '';
+                            //return redirect()->route('renovacion.index')->with(['mensaje'=>"Calificado con &Eacute;xito"]);
+                            return back()->withInput()->with(['mensaje'=>"Calificado con &Eacute;xito"]);
                         }else{
                             return back()->withInput()->with(['error'=>'Esta Presente en Lista Negra']);
                             return 'esta en lista negra';

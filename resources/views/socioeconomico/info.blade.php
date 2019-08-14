@@ -22,13 +22,19 @@
             </div>
             <h5 class="text-center" style="margin: 0px;">ANTECEDENTES</h5>
             <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group">
+                        <label for="">Antiguedad del Negocio</label>
+                        <input type="number" disabled name="comoinicio" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->antiguedad_negocio}}">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-5">
                     <div class="form-group">
                         <label for="">&iquest;C&oacute;mo inici&oacute; con su negocio?</label>
                         <input type="text" disabled name="comoinicio" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->comoinicio}}">
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-5">
                     <div class="form-group">
                         <label for="">Describe brevemente el proceso de producci&oacute;n, venta o servicio:</label >
                         <input type="text" disabled name="desc_negocio" class="form-control" placeholder="" required value="{{$cliente->actividades[0]->desc_negocio}}">
@@ -501,7 +507,7 @@
     <div id="inputs">
         
     </div>
-    <div class="col-md-4 col-xs-offset-4">
+    <div class="col-md-4 col-md-offset-4">
         <a href="{{ url("$urlanterior")}}" class="btn btn-block btn-primary text-center">Regresar</a>
     </div>
 @endsection
@@ -518,6 +524,8 @@
 @endpush
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ asset('/js/hashtable.js') }}"></script>
+    <script src="{{ asset('/js/jquery.numberformatter.js') }}"></script>
     <script>
         let s1,s2,s3 = 0;
         let v1,v2,v3,v4,v5 = 0;
@@ -664,7 +672,8 @@
                 suma = suma + (inventario[i]['precio_compra'] * inventario[i]['cantidad']);
                 porciento = porciento + (Math.round(((inventario[i]['precio_venta'] - inventario[i]['precio_compra'])/inventario[i]['precio_venta'])*100))/inventario.length;
             }
-            $('#totalInventario').text('$'+suma);
+            
+            $('#totalInventario').text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(suma));
             $('#totalInventarioPorcentaje').text(porciento+"%");
         }
 
@@ -688,7 +697,7 @@
                             inventario.push(registro);
                             
 
-                            $('#cont').append("<tr> <td>"+a1+"</td> <td>"+a2+"</td><td>$"+a3+"</td><td>$"+a4+"</td><td>$"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
+                            $('#cont').append("<tr> <td>"+a1+"</td> <td>"+a2+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                             "</tr>"
                             );
                             cont = cont + 1;

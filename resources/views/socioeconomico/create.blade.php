@@ -23,13 +23,19 @@
             </div>
             <h5 class="text-center" style="margin: 0px;">ANTECEDENTES</h5>
             <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group">
+                        <label for="">Antiguedad del Negocio</label>
+                        <input type="number" step="any" name="antiguedad_negocio" class="form-control" placeholder="" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-5">
                     <div class="form-group">
                         <label for="">&iquest;C&oacute;mo inici&oacute; con su negocio?</label>
                         <input type="text" name="comoinicio" class="form-control" placeholder="" required>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-5">
                     <div class="form-group">
                         <label for="">Describe brevemente el proceso de producci&oacute;n, venta o servicio:</label>
                         <input type="text" name="desc_negocio" class="form-control" placeholder="" required>
@@ -538,7 +544,7 @@
     </div>
     <input type="hidden" value="{{$clienteRenovacion->idcliente}}" name="cliente">
     <input type="hidden" value="{{$urlanterior}}" name="url">
-    <div class="col-md-4 col-xs-offset-4">
+    <div class="col-md-4 col-md-offset-4">
         <button type="submit" class="btn btn-block btn-primary text-center" onclick="inputs()">Guardar</button>
     </div>
     {{Form::close()}}
@@ -731,7 +737,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
                                 "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
+                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -764,7 +770,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
                                 "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
+                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -796,7 +802,7 @@
                 $('#cont').append("<tr>"+
                     "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
                                         "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                                    "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+a3+"</td><td>"+a4+"</td><td>"+(a2*a3)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
+                                    "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                                 "</tr>"
                 );
 

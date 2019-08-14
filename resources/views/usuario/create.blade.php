@@ -36,7 +36,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4 col-xs-offset-4">
+                <div class="col-md-4 col-md-offset-4">
                     <button type="submit" class="btn btn-block btn-primary text-center" onclick="inputs()">Guardar</button>
                 </div>
                 {!! Form::close() !!}
