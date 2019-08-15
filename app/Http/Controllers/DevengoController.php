@@ -43,13 +43,14 @@ class DevengoController extends Controller
             $devengos=DB::table('tblcreditos as c')
            ->join('tblsituacioncredito as s', 'c.idCredito', '=', 's.idCredito')
            ->join('tbldevengos as d', 'c.idCredito', '=', 'd.idCredito')
+           ->leftjoin('tblrecupdev as r', 'd.idDevengo', '=', 'r.idDevengo') //relacion con tabla de recuperados
            ->leftjoin('tblacuerdos as a', 'd.idDevengo', '=', 'a.idDevengo')
            ->join('tbldomicilioscredito as dc', 'c.idCredito', '=', 'dc.idCredito')
            ->join('catperfiles as cp', 'c.idPerfil', '=', 'cp.idPerfil')
-           ->select('d.idDevengo as estatus', 'd.idDevengo', 'c.idCredito', 'c.nomCliente', 'd.fechaDevengo', 'd.cuota', 'd.saldo', 'dc.colonia', 'dc.telefonoCelular','a.fechaAcuerdo', 'a.montoAcuerdo')
+           ->select('d.idDevengo as estatus', 'd.idDevengo', 'c.idCredito', 'c.nomCliente', 'd.fechaDevengo', 'd.cuota','r.monto as montor','r.recuperado', 'd.saldo', 'dc.colonia', 'dc.telefonoCelular','a.fechaAcuerdo', 'a.montoAcuerdo')
            ->where('d.fechaDevengo', '>=', DB::raw('curdate()'))
            ->where('d.fechaDevengo', '<', DB::raw('curdate() + 4'))
-           ->where('d.cuota', '>', '0') // para los pagos diarios que tienen cuota 0 en los primeros devengos
+           ->where('d.cuota', '>', '0') // para los pagos diarios y agricolas que tienen cuota 0 en los primeros devengos
            //->WhereNULL('ad.fecha')
            ->where('s.diasAtraso', '<=', '0')
            ->where('s.estatus', '=', '1')

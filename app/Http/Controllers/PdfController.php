@@ -9,78 +9,12 @@ use PDF;
 use DB;
 use wbALFINop\AgendaDiaria;
 use wbALFINop\Devengo;
-use wbALFINop\Actividad;
-use wbALFINop\Cliente;
-use wbALFINop\Dia;
-use wbALFINop\TipoTransaccion;
-use wbALFINop\TransaccionInventario;
-use wbALFINop\Inventario;
-use wbALFINop\CatGasto;
-use wbALFINop\Gastos;
-use wbALFINop\TipoGasto;
-use wbALFINop\OtrosIngresos;
-use wbALFINop\ActivosFijos;
-use wbALFINop\Credito;
-use wbALFINop\Oferta;
-use wbALFINop\CatOferta;
-use wbALFINop\Sucursal;
 
 class PdfController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-    }
-
-    public function resultadosRenovacion(Request $request, Cliente $cliente){
-        $actividad = Actividad::where('idcliente',$cliente->idcliente)->first();
-        $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
-        $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
-        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
-        $activos = ActivosFijos::where('idact',$actividad->idact)->first();
-        $productos = Inventario::where('idact',$actividad->idact)->get();
-        $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->orderBy('iddia','ASC')->get();
-        $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->orderBy('iddia','ASC')->get();
-        $totalc=0;
-        $totalv=0;
-        $totalo=0;
-        $totalf=0;
-        $totaloi=0;
-        $totala=0;
-        $totalp=0;
-        $totalpv=0;
-
-        $sucursal = Sucursal::where('idSucursal',$request->sucursal)->first();
-
-        foreach ($transacionesVenta as $venta) {
-            $totalv = $totalv + $venta->monto;
-        }
-        foreach ($transacionesCompra as $compra) {
-            $totalc = $totalc + $compra->monto;
-        }
-        foreach($gastosOperacion as $operacion){
-            $totalo = $totalo + $operacion->monto;
-        }
-        foreach($gastosFamiliares as $familiar){
-            $totalf = $totalf + $familiar->monto;
-        }
-        foreach ($productos as $producto) {
-            $totalp = $totalp + ($producto->cantidad * $producto->precio_compra);
-        }
-        foreach ($productos as $producto) {
-            $totalpv = $totalpv + round((($producto->precio_venta - $producto->precio_compra)/$producto->precio_compra)*100);
-        }
-        $totalpv = $totalpv/count($productos);
-        $totaloi = $otrosIngresos->otro_negocio + $otrosIngresos->conyuge + $otrosIngresos->empleo;
-        $totala = $activos->local + $activos->auto + $activos->maquinaria;
-        $fecha = date('d_m_Y');
-
-        $pdf = PDF::loadView('socioeconomico.pdfinfo', compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
-        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','totalp',
-        'totalpv','cliente','sucursal'));
-
-        //return $pdf->download("AIS-$cliente->idcliente-$fecha.pdf");
-        return $pdf->stream("AIS-$cliente->idcliente-$fecha.pdf");
     }
 
     public function getPdfagnd(request $request)
@@ -145,13 +79,14 @@ class PdfController extends Controller
      });
 
 
-            $devengos=DB::table('tblcreditos as c')
+     $devengos=DB::table('tblcreditos as c')
      ->join('tblsituacioncredito as s', 'c.idCredito', '=', 's.idCredito')
      ->join('tbldevengos as d', 'c.idCredito', '=', 'd.idCredito')
+     ->leftjoin('tblrecupdev as r', 'd.idDevengo', '=', 'r.idDevengo') //relacion con tabla de recuperados
      ->leftjoin('tblacuerdos as a', 'd.idDevengo', '=', 'a.idDevengo')
      ->join('tbldomicilioscredito as dc', 'c.idCredito', '=', 'dc.idCredito')
      ->join('catperfiles as cp', 'c.idPerfil', '=', 'cp.idPerfil')
-     ->select('d.idDevengo as estatus', 'd.idDevengo', 'c.idCredito', 'c.nomCliente', 'd.fechaDevengo', 'd.cuota', 'd.saldo', 'dc.colonia', 'dc.telefonoCelular','a.fechaAcuerdo','a.montoAcuerdo')
+     ->select('d.idDevengo as estatus', 'd.idDevengo', 'c.idCredito', 'c.nomCliente', 'd.fechaDevengo', 'd.cuota','r.monto as montor','r.recuperado', 'd.saldo', 'dc.colonia', 'dc.telefonoCelular','a.fechaAcuerdo','a.montoAcuerdo')
      ->where('d.fechaDevengo', '>=', DB::raw('curdate()'))
      ->where('d.fechaDevengo', '<', DB::raw('curdate() + 4'))
      ->where('s.diasAtraso', '<=', '0')
@@ -659,7 +594,7 @@ class PdfController extends Controller
            ->with(['date'=>$date])
            ->with(['vendedor'=>$this->getAsesoresp($query)])
            ->with(['devengos'=>$devengos])
-           ->with(['devengos'=>$devengosV])
+           ->with(['devengosV'=>$devengosV])
            ->with(['devengos1_90'=>$devengos1_90])
            ->with(['devengosV1_90'=>$devengosV1_90])
            ->with(['devengos_mas90'=>$devengos_mas90])

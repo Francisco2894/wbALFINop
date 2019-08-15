@@ -57,6 +57,7 @@
 				<th>Nombre del Cliente</th>
 				<th>ProxDevengo</th>
 				<th>Cuota a pagar</th>
+				<th>CuotaRecup</th>
 				<th>Saldo a pagar</th>
 				<th>Dom. Colonia</th>
 				<th>Celular</th>
@@ -66,15 +67,21 @@
 			</thead>
 			<tbody>
 				@php $cont=0; @endphp
-				@foreach ($devengos as $devengo)
+						
+					@foreach ($devengos as $devengo)
 					@if ($devengo->estatus > 0)
-						@php $cont=$cont+1 @endphp
-						<tr>
+					@php $cont=$cont+1 @endphp
+						@if ($devengo->recuperado>0)
+                    <tr class="success">
+                    @else
+                     <tr>
+                    @endif
 							<td class="text-center">{{$cont}}</td>
 							<td class="text-center">{{$devengo->idCredito}}</td>
 							<td>{{$devengo->nomCliente}}</td>
 							<td class="text-center">{{date_format(date_create($devengo->fechaDevengo),'d/m/Y')}}</td>
 							<td class="text-rigth">{{'$ '.number_format($devengo->cuota,2)}}</td>
+							<td class="text-rigth">{{'$ '.number_format($devengo->montor,2)}}</td>
 							<td class="text-rigth">{{'$ '.number_format($devengo->saldo,2)}}</td>
 							<td>{{$devengo->colonia}}</td>
 							<td>{{$devengo->telefonoCelular}}</td>

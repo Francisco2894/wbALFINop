@@ -449,17 +449,47 @@
                                 </tr>
                             </thead>
                             <tbody >
-                                <tr class="form-group">
-                                    <td><br> <label for="">OTRO NEGOCIO</label></td>
-                                    <td><input type="text" disabled class="form-control" name="otro_negocio" id="ingreso1" value="${{ number_format($otrosIngresos->otro_negocio,2) }}"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">OTRO NEGOCIO</label>
+                                            <input disabled class="form-control" value="{{ $otrosIngresos[0]->descripcion }}" type="text" name="desci1">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input disabled class="form-control" id="ingreso1" value="{{ $otrosIngresos[0]->monto }}" type="number" name="canti1">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><br> <label for="">EMPLEO</label></td>
-                                    <td><input type="text" disabled class="form-control" name="empleo" id="ingreso2" value="${{ number_format($otrosIngresos->empleo,2) }}"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">EMPLEO</label>
+                                            <input disabled class="form-control" value="{{ $otrosIngresos[1]->descripcion }}"  type="text" name="desci2">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input disabled class="form-control" id="ingreso2" value="{{ $otrosIngresos[1]->monto }}" type="number" name="canti2">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><br> <label for="">CÓNYUGE</label></td>
-                                    <td><input type="text" disabled class="form-control" name="conyuge" id="ingreso3" value="${{ number_format($otrosIngresos->conyuge,2) }}"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">CÓNYUGE</label>
+                                            <input disabled class="form-control"  value="{{ $otrosIngresos[2]->descripcion }}" type="text" name="desci3">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input disabled class="form-control" id="ingreso3" value="{{ $otrosIngresos[2]->monto }}" type="number" name="canti3">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>TOTAL</td>
@@ -467,7 +497,7 @@
                                 </tr>
                                 <tr>
                                     <td>DISPONIBLE DE OTROS INGRESOS (30%)</td>
-                                    <td class="text-right" style="font-weight: 900;" id="totalIngresosPorcentaje">${{ number_format(round($totaloi*0.3),2) }}</td>
+                                    <td class="text-right" style="font-weight: 900;" id="totalIngresosPorcentaje">${{ number_format($totaloi*0.3,2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -482,17 +512,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="form-group">
-                                    <td><br> <label for="">MAQUINARIA, EQUIPO, HERRAMIENTAS</label></td>
-                                    <td><input type="text" disabled class="form-control" name="maquinaria" id="fijo1" value="${{ number_format($activos->maquinaria,2) }}"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">MAQUINARIA, EQUIPO, HERRAMIENTAS</label>
+                                            <input disabled class="form-control" value="{{ $activos[0]->descripcion }}" type="text" name="descf1">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input disabled class="form-control" id="fijo1" value="{{ $activos[0]->monto }}" type="number" value="0" name="cantf1">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><br> <label for="">LOCAL</label></td>
-                                    <td><input type="text" disabled class="form-control" name="local" id="fijo2" value="${{ number_format( $activos->local,2) }}"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">LOCAL</label>
+                                            <input disabled class="form-control" value="{{ $activos[1]->descripcion }}" type="text" name="descf2">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input disabled class="form-control" id="fijo2" value="{{ $activos[1]->monto }}" type="number" value="0" name="cantf2">
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="form-group">
-                                    <td><br> <label for="">AUTO</label></td>
-                                    <td><input type="text" disabled class="form-control" name="auto" id="fijo3" value="${{ number_format( $activos->auto,2) }}"></td>
+                                <tr>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">VEHICULO</label>
+                                            <input disabled class="form-control" value="{{ $activos[2]->descripcion }}" type="text" name="descf3">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Catidad</label>
+                                            <input disabled class="form-control" id="fijo3" value="{{ $activos[2]->monto }}" type="number" value="0" name="cantf3">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="font-weight: 900;" class="text-right" id="totalFijos">${{ number_format($totala,2) }}</td>
@@ -504,6 +564,41 @@
             </div>			
         </div> 
     </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Garantias <button class="btn btn-primary btn-simple" type="button" name="btnRenovacion" rel="tooltip" title="Desplegar" id="btns5"><i class="material-icons">format_line_spacing</i></button>
+        </div>
+        <div class="panel-body" id="seccionCinco">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th colspan="4" class="text-center">GARANTÍA PRENDARIA</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4">
+                                <div class="form-group" style="margin: 0%">
+                                    <textarea class="form-control" name="garantia" disabled id="exampleFormControlTextarea1" rows="3">{{ $garantia->garantia }}</textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>VALOR ESTIMADO DE LA GARANTÍA:</td>
+                            <td style="width: 200px;">
+                                <div class="form-group">
+                                    <input type="number" disabled name="valorEstimado" id="valorEstimado" value="{{ $garantia->valorEstimado }}" class="form-control">
+                                </div>
+                            </td>
+                            <td>COBERTURA DE LA GARANTÍA <br> (EN REFERENCIA AL MONTO DE CRÉDITO ANTERIOR OTORGADO):</td>
+                            <td style="width: 200px; font-weight: 900;" id="cobertura">{{ round($totalco*100) }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div id="inputs">
         
     </div>
@@ -525,7 +620,7 @@
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
     <script>
-        let s1,s2,s3 = 0;
+        let s1,s2,s3,s4,s5 = 0;
         let v1,v2,v3,v4,v5 = 0;
         let v6,v7,v8,v9,v10 = 0;
         let total = 0;
@@ -575,12 +670,22 @@
 			});
 
             $("#btns4").click(function(){
-				if(s3==0){
+				if(s4==0){
 					$('#seccionCuatro').show();
-					s3=1;
+					s4=1;
 				}else{
 					$('#seccionCuatro').hide();
-					s3=0;
+					s4=0;
+				}
+			});
+
+            $("#btns5").click(function(){
+				if(s5==0){
+					$('#seccionCinco').show();
+					s5=1;
+				}else{
+					$('#seccionCinco').hide();
+					s5=0;
 				}
 			});
 

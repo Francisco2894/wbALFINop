@@ -599,6 +599,41 @@
             </div>			
         </div> 
     </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Garantias <button class="btn btn-primary btn-simple" type="button" name="btnRenovacion" rel="tooltip" title="Desplegar" id="btns5"><i class="material-icons">format_line_spacing</i></button>
+        </div>
+        <div class="panel-body" id="seccionCinco">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th colspan="4" class="text-center">GARANTÍA PRENDARIA</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4">
+                                <div class="form-group" style="margin: 0%">
+                                    <textarea class="form-control" name="garantia" required id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>VALOR ESTIMADO DE LA GARANTÍA:</td>
+                            <td style="width: 200px;">
+                                <div class="form-group">
+                                    <input type="number" required name="valorEstimado" id="valorEstimado" class="form-control">
+                                </div>
+                            </td>
+                            <td>COBERTURA DE LA GARANTÍA <br> (EN REFERENCIA AL MONTO DE CRÉDITO ANTERIOR OTORGADO):</td>
+                            <td style="width: 200px; font-weight: 900;" id="cobertura">0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div id="inputs">
         
     </div>
@@ -623,7 +658,7 @@
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-        let s1,s2,s3 = 0;
+        let s1,s2,s3,s4,s5 = 0;
         let v1,v2,v3,v4,v5 = 0;
         let v6,v7,v8,v9,v10,v11,v12,v13,v14 = 0;
         let total = 0;
@@ -631,9 +666,12 @@
         let g12,g13,g14,g15,g16,g17,g18,g19,g20,g21,g22 = 0;
         let a1,a2,a3,a4 = "";
         let formulario = false;
+        
 
         let i1,i2,i3 = 0;
         let f1,f2,f3 = 0;
+        let valorEstimado,cobertura = 0;
+        let montoPrestado = {{ $cliente->montoInicial }}
 
         let inventario = new Array();
         let registros = new Object();
@@ -672,12 +710,22 @@
 			});
 
             $("#btns4").click(function(){
-				if(s3==0){
+				if(s4==0){
 					$('#seccionCuatro').show();
-					s3=1;
+					s4=1;
 				}else{
 					$('#seccionCuatro').hide();
-					s3=0;
+					s4=0;
+				}
+			});
+
+            $("#btns5").click(function(){
+				if(s5==0){
+					$('#seccionCinco').show();
+					s5=1;
+				}else{
+					$('#seccionCinco').hide();
+					s5=0;
 				}
 			});
 
@@ -763,6 +811,12 @@
                 $("#totalFamiliar").text('$'+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(total));
                 console.log(total);    
             });
+
+            $("#valorEstimado").on("keyup", function() {
+                valorEstimado = parseFloat($('#valorEstimado').val())
+                total = valorEstimado / (montoPrestado+(montoPrestado*0.3));
+                $("#cobertura").text(Math.round((total*100))+'%');
+            });
 		});
 
         function resultadoTotal() {
@@ -797,7 +851,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
                                 "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
+                                "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3*a2)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -830,7 +884,7 @@
                         $('#cont').append("<tr>"+
                             "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
                                 "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                            "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
+                                "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3*a2)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
                         "</tr>"
                         );
                         cont = cont + 1;
@@ -861,9 +915,9 @@
 
                 $('#cont').append("<tr>"+
                     "<td> <button class='btn btn-default btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Modificar?' onclick='modificar("+cont+")' id='actualizar'><i class='material-icons'>edit</i></button>"+
-                                        "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
-                                    "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
-                                "</tr>"
+                        "<button class='btn btn-danger btn-simple btn-xs' type='button' name='btnRenovacion' rel='tooltip' title='¿Eliminar?' onclick='borrar("+cont+")' id='eliminar'><i class='material-icons'>delete</i></button>"+
+                        "</td> <td>"+a1+"</td> <td>"+a2+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a4)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(a3*a2)+"</td><td>"+Math.round(((a4-a3)/a4)*100)+"%</td>"+
+                "</tr>"
                 );
 
                 $('#producto').val("");

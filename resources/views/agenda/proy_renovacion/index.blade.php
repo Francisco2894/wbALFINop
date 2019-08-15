@@ -51,7 +51,7 @@
           <td class="text-center">
             @foreach ($actividades as $actividad)
               @if ($vencimiento->idCliente == $actividad->idcliente)
-                <a href="{{ route('socioeconomico.show',$actividad->idact) }}"><button class="btn btn-primary btn-simple tn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button></a>
+                <a href="{{ route('socioeconomico.show',$vencimiento->idCredito) }}"><button class="btn btn-primary btn-simple tn-xs" name="btnSocioeconomico" rel="tooltip" title="Registrado"><i class="material-icons">done</i></button></a>
               @endif 
             @endforeach
           </td>
@@ -106,13 +106,13 @@
                 <td>{{$vencimientoOferta->colonia}}</td>
                 <td>{{$vencimientoOferta->telefonoCelular}}</td>
                 <td class="text-center">
-                  <a href="{{ route('informacion',$vencimientoOferta->idCliente) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
+                  <a href="{{ route('informacion',$vencimientoOferta->idCredito) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
                 </td>
                 <td class="text-center">
                   <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="ofertas({{ $vencimientoOferta->idCredito }});"><i class="material-icons">info</i></button>
                 </td>
                 <td class="text-center">
-                  <a href="{{ route('pdfrenovacion',['cliente'=>$vencimientoOferta->idCliente,'sucursal'=>$querys]) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
+                  <a href="{{ route('pdfrenovacion',['cliente'=>$vencimientoOferta->idCredito,'sucursal'=>$querys]) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
                 </td>
               </tr>
               @break
@@ -162,6 +162,7 @@
                       <th>Monto</th>
                       <th>Cuota</th>
                       <th>Frecuencia</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody id="tablavivienda">

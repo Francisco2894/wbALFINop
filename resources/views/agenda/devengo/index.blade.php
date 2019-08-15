@@ -20,7 +20,8 @@
           <th>Nombre del Cliente</th>
           <th>Fecha prox devengo</th>
           <th>Cuota devengo</th>
-          <th>Saldo a pagar</th>
+          <th>Cuota Recuperada</th>
+          <th>Saldo K a pagar</th>
           <th>Colonia</th>
           <th>Celular</th>
           <th>F Acuerdo</th>
@@ -30,12 +31,17 @@
         </thead>
         @foreach ($devengos as $devengo)
           @if ($devengo->cuota>0)
-          <tr>
+           @if ($devengo->recuperado>0)
+             <tr class="success">
+               @else
+                 <tr>
+           @endif
             <td><input type="checkbox" data-id={{$devengo->idDevengo}} class="sub_chk" @if ($devengo->estatus > 0) {{ 'checked' }} @endif></td>
             <td>{{$devengo->idCredito}}</td>
             <td>{{$devengo->nomCliente}}</td>
             <td>{{date_format(date_create($devengo->fechaDevengo),'d/m/Y')}}</td>
             <td>{{'$ '.number_format($devengo->cuota,2)}}</td>
+            <td>{{'$ '.number_format($devengo->montor,2)}}</td>
             <td>{{'$ '.number_format($devengo->saldo,2)}}</td>
             <td>{{$devengo->colonia}}</td>
             <td>{{$devengo->telefonoCelular}}</td>
