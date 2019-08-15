@@ -93,8 +93,8 @@
           </tr>
           </thead>
          @foreach ($vencimientosOfertas as $vencimientoOferta)
-          @foreach ($ofertas as $oferta)
-            @if ($oferta->idcliente == $vencimientoOferta->idCliente)
+
+            @if (count($vencimientoOferta->ofertas) > 0)
               <tr>
                 {{-- <td>{{$liquidado->idCliente}}</td>v --}}
                 <td>{{ $vencimientoOferta->idCredito }}</td>
@@ -109,15 +109,15 @@
                   <a href="{{ route('informacion',$vencimientoOferta->idCredito) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
                 </td>
                 <td class="text-center">
-                  <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="ofertas({{ $vencimientoOferta->idCredito }});"><i class="material-icons">info</i></button>
+                  <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="verificarOferta({{ $vencimientoOferta->idCredito }});"><i class="material-icons">info</i></button>
                 </td>
                 <td class="text-center">
-                  <a href="{{ route('pdfrenovacion',['cliente'=>$vencimientoOferta->idCredito,'sucursal'=>$querys]) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
+                  <a href="{{ route('pdfrenovacion',['cliente'=>$vencimientoOferta->idCredito,'sucursal'=>$querys]) }}" style="{{ count($vencimientoOferta->oferta)==1?'':'display: none;' }}" id="pdf{{ $vencimientoOferta->idCredito }}"><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
                 </td>
               </tr>
               @break
             @endif 
-          @endforeach
+          
         @endforeach
         </table>
       </div>
@@ -146,7 +146,7 @@
                       <th>Monto</th>
                       <th>Cuota</th>
                       <th>Frecuencia</th>
-                      <th></th>
+                      <th style="width: 8%"></th>
                     </tr>
                   </thead>
                   <tbody id="tablaproductivo">
@@ -162,7 +162,7 @@
                       <th>Monto</th>
                       <th>Cuota</th>
                       <th>Frecuencia</th>
-                      <th></th>
+                      <th style="width: 8%"></th>
                     </tr>
                   </thead>
                   <tbody id="tablavivienda">
@@ -187,9 +187,148 @@
       let tipo, plazo = "";
       let idOferta, monto, parcialidad, frecuencia = 0;
       let texto;
+      let status = 0;
+
+      function verificarOferta(id)
+      {
+        $.ajax({
+          url     :  "/verificar_oferta/"+id,
+          type    :  'get',
+          dataType:  'json',
+          success :   function (response) {
+            console.log(response['status']);
+                if(response['status'] == 1){
+                  listarOferta(id)
+                }else{
+                  ofertas(id);
+                }
+          },
+          error   :   function() {
+              alert('error');
+          }
+        });
+      }
+      
+      function listarOferta(id){
+        $.ajax({
+          url     :  "/ofertas/"+id,
+          type    :  'get',
+          dataType:  'json',
+          success :   function (response) {
+                if(response.length>0){
+                  console.log(response[0]['idto']);
+                  $('#tablaproductivo').empty();
+                  $('#tablavivienda').empty();
+                  for(i=0;i<response.length;i++){
+                    idOferta    = response[i]['idoferta'];
+                    fechai      = response[i]['fechai'];
+                    fechaf      = response[i]['fechaf'];
+                    plazo       = response[i]['plazo'];
+                    monto       = response[i]['monto'];
+                    parcialidad     = response[i]['cuota'];
+                    frecuencia      = response[i]['frecuencia'];
+                    tipo            = response[i]['idto'];
+                    status          = response[i]['status']
+                    if (frecuencia == 1) {
+                      texto = 'Mensual';
+                    }
+
+                    if (tipo == 1) {
+                      if (status == 1) {
+                        $('#tablaproductivo').append("<tr class='success'>"+
+                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<i class='material-icons'>check_circle_outline</i></td></tr>"
+                        );
+                      } else {
+                        $('#tablaproductivo').append("<tr>"+
+                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<i class='material-icons'>cancel</i></td></tr>"
+                        );
+                      } 
+                    } else {
+                      if (status == 1) {
+                        $('#tablavivienda').append("<tr class='success'>"+
+                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<i class='material-icons'>check_circle_outline</i></td></tr>"
+                        );
+                      } else {
+                        $('#tablavivienda').append("<tr>"+
+                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<i class='material-icons'>cancel</i></td></tr>"
+                        ); 
+                      }
+                    }
+                }
+              }
+              $('#titulo').text("Oferta ID Cliente: "+response[0]['idcliente']);
+              //$("#miModal").modal("show");
+          },
+          error   :   function() {
+              alert('error');
+          }
+        });
+      }
 
       function ofertaSeleccionada(id){
-        alert(id);
+        $.ajax({
+          url     :  "/oferta_aceptada/"+id,
+          type    :  'get',
+          dataType:  'json',
+          success :   function (response) {
+            console.log(response);
+                if(response.length>0){
+                  console.log(response[0]['idto']);
+                  $('#tablaproductivo').empty();
+                  $('#tablavivienda').empty();
+                  for(i=0;i<response.length;i++){
+                    idOferta    = response[i]['idoferta'];
+                    fechai      = response[i]['fechai'];
+                    fechaf      = response[i]['fechaf'];
+                    plazo       = response[i]['plazo'];
+                    monto       = response[i]['monto'];
+                    parcialidad     = response[i]['cuota'];
+                    frecuencia      = response[i]['frecuencia'];
+                    tipo            = response[i]['idto'];
+                    status          = response[i]['status'];
+                    if (frecuencia == 1) {
+                      texto = 'Mensual';
+                    }
+
+                    if (tipo == 1) {
+                      if (status == 1) {
+                        $('#tablaproductivo').append("<tr class='success'>"+
+                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<i class='material-icons'>check_circle_outline</i></td></tr>"
+                        );
+                      } else {
+                        $('#tablaproductivo').append("<tr>"+
+                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<i class='material-icons'>cancel</i></td></tr>"
+                        );
+                      } 
+                    } else {
+                      if (status == 1) {
+                        $('#tablavivienda').append("<tr class='success'>"+
+                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<i class='material-icons'>check_circle_outline</i></td></tr>"
+                        );
+                      } else {
+                        $('#tablavivienda').append("<tr>"+
+                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<i class='material-icons'>cancel</i></td></tr>"
+                        ); 
+                      }
+                    }
+                }
+              }
+              $('#titulo').text("Oferta ID Cliente: "+response[0]['idcliente']);
+              $("#miModal").modal("show");
+              $('pdf'+id).show();//aqui quede
+          },
+          error   :   function() {
+              alert('error');
+          }
+        });
       }
       function ofertas(id){
         $.ajax({
@@ -217,12 +356,12 @@
                     if (tipo == 1) {
                       $('#tablaproductivo').append("<tr>"+
                         "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
-                        "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>save_alt</i></button> </td></tr>"
+                        "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button> </td></tr>"
                       ); 
                     } else {
                       $('#tablavivienda').append("<tr>"+
                         "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
-                        "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>save_alt</i></button></td></tr>"
+                        "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
                       );
                     }
                 }

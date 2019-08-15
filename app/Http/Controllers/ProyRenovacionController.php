@@ -232,6 +232,7 @@ class ProyRenovacionController extends Controller
 
                 $actividades = Actividad::all();
                 $ofertas = Oferta::all();
+                //return $vencimientosOfertas[1]->oferta;
                 return view('agenda.proy_renovacion.index',compact('actividades','ofertas','vencimientosOfertas','querys'))
          -> with(['vencimientos'=>$vencimientos,"searchTxt"=>$query])
          ->with(['vendedores'=>$vendedores,"searchTxts"=>$querys])

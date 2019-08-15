@@ -28,7 +28,6 @@ Route::group(['middleware' => 'admin'], function () {
     //proy_renovacion
     Route::resource('socioeconomico', 'SocioeconomicoController');
     Route::resource('agenda/renovacion', 'ProyRenovacionController');
-    Route::get('ofertas/{idCliente}', 'SocioeconomicoController@ofertas')->name('ofertas');
     Route::get('inventario/{actividad}', 'SocioeconomicoController@inventario')->name('inventario');
     Route::get('informacion_socioeconomica/{cliente}','SocioeconomicoController@informacion')->name('informacion');
     Route::get('agenda/dataexcel/datos_renovacion','ExcelController@viewRenovacion')->name('datosrenovacion');
@@ -41,6 +40,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('agenda/resumen_avance','SocioeconomicoController@resumenAvance')->name('resumenAvance');
     Route::resource('perfil','PerfilesController');
     Route::get('perfil_usuario','UserController@perfiles')->name('listarPerfiles');
+    Route::get('ofertas/{idCliente}', 'SocioeconomicoController@ofertas')->name('ofertas');
+    Route::get('oferta_aceptada/{oferta}','SocioeconomicoController@ofertaAceptada')->name('ofertaAceptada');
+    Route::get('verificar_oferta/{cliente}','SocioeconomicoController@verificarOferta')->name('verificarOferta');
+
     //Route::post('cerrar_sesion', 'LoginController@logout')->name('cerrarSesion');
 
     Route::post('agenda/agendadiaria','AgendaDiariaController@agendar');

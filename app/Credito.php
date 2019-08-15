@@ -34,7 +34,17 @@ class Credito extends Model
 
   public function informacionCrediticia()
   {
-      return $this->hasMany(informacionCrediticia::class, 'idcliente', 'idCliente');
+      return $this->hasMany(InformacionCrediticia::class, 'idcliente', 'idCliente');
+  }
+
+  public function ofertas()
+  {
+      return $this->hasMany(Oferta::class, 'idcliente', 'idCliente');
+  }
+
+  public function oferta()
+  {
+      return $this->hasMany(Oferta::class, 'idcliente', 'idCliente')->where('status','1');
   }
   
   protected $guarded=[ ];
