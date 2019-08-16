@@ -46,6 +46,11 @@ class Credito extends Model
   {
       return $this->hasMany(Oferta::class, 'idcliente', 'idCliente')->where('status','1');
   }
+
+  public function product()
+  {
+      return $this->belongsTo(Producto::class, 'cveproducto');
+  }
   
   protected $guarded=[ ];
 }

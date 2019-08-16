@@ -522,6 +522,7 @@ class SocioeconomicoController extends Controller
 
                             //$disponible=10748;
                             //return $capacidadPago;
+                            return $credito->product->negocio_op;// aqui quede hacer comparacion
                             $plazosProductivo = [6,7,8,9,10,11,12];
                             $plazosVivienda = [13,14,15,16,17,18,19];
                             $incremento = 0.30;

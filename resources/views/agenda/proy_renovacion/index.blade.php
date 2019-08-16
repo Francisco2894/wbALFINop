@@ -211,7 +211,7 @@
       
       function listarOferta(id){
         $.ajax({
-          url     :  "/ofertas/"+id,
+          url     :  "/./ofertas/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -274,7 +274,7 @@
         $('#tablaproductivo').empty();
         $('#tablavivienda').empty();
         $.ajax({
-          url     :  "/oferta_aceptada/"+id,
+          url     :  "/./oferta_aceptada/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -337,7 +337,7 @@
       }
       function ofertas(id){
         $.ajax({
-          url     :  "/ofertas/"+id,
+          url     :  "/./ofertas/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
