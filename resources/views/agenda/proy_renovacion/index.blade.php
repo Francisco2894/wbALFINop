@@ -270,6 +270,7 @@
       }
 
       function ofertaSeleccionada(id){
+        console.log(id);
         $.ajax({
           url     :  "/oferta_aceptada/"+id,
           type    :  'get',
@@ -290,6 +291,7 @@
                     frecuencia      = response[i]['frecuencia'];
                     tipo            = response[i]['idto'];
                     status          = response[i]['status'];
+                    idCredito       = response[i]['idcredito'];
                     if (frecuencia == 1) {
                       texto = 'Mensual';
                     }
@@ -323,7 +325,8 @@
               }
               $('#titulo').text("Oferta ID Cliente: "+response[0]['idcliente']);
               $("#miModal").modal("show");
-              $('pdf'+id).show();//aqui quede
+              console.log('#pdf'+idCredito)
+              $('#pdf'+idCredito).show();
           },
           error   :   function() {
               alert('error');

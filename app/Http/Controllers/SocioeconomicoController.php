@@ -178,7 +178,14 @@ class SocioeconomicoController extends Controller
         $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->orderBy('iddia','ASC')->get();
 
         $garantia = GarantiaPrendaria::where('idact',$actividad->idact)->first();
-        $totalco = $garantia->valorEstimado / ($cliente->montoInicial+($cliente->montoInicial*0.3));
+        $oferta = Oferta::where('idcredito',$cliente->idCredito)->where('status',1)->first();
+
+        if (!is_null($oferta)) {
+            $totalco = $garantia->valorEstimado / $oferta->monto;
+        } else {
+            $totalco = $garantia->valorEstimado / ($cliente->montoInicial+($cliente->montoInicial*0.3));
+        }
+
 
         $totalc=0;
         $totalv=0;
@@ -208,7 +215,7 @@ class SocioeconomicoController extends Controller
 
         return view('socioeconomico.info',compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
         'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','urlanterior',
-        'garantia','totalco'));
+        'garantia','totalco','oferta'));
     }
 
     /**

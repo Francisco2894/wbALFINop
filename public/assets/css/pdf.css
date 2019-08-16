@@ -126,7 +126,12 @@ div {
 			padding: 2px 1px;
 			background-color: #009688;
 			color: #ffffff;
-		}
+    }
+    
+    .fondo{
+			background-color: #009688;
+			color: #ffffff;
+    }
 
 h1 {
     color: #5D6975;

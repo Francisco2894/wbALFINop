@@ -8,13 +8,83 @@ use PDF;
 
 use DB;
 use wbALFINop\AgendaDiaria;
-use wbALFINop\Devengo;
+use wbALFINop\Actividad;
+use wbALFINop\Gastos;
+use wbALFINop\ActivosFijos;
+use wbALFINop\Inventario;
+use wbALFINop\TransaccionInventario;
+use wbALFINop\OtrosIngresos;
+use wbALFINop\Cliente;
+use wbALFINop\Credito;
+use wbALFINop\Sucursal;
+use wbALFINop\Oferta;
+use wbALFINop\GarantiaPrendaria;
+
 
 class PdfController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function resultadosRenovacion(Request $request, Credito $cliente){
+        $actividad = Actividad::where('idcliente',$cliente->idCliente)->first();
+        $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
+        $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
+        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->orderBy('tipo','ASC')->get();
+        $activos = ActivosFijos::where('idact',$actividad->idact)->orderBy('tipo','ASC')->get();
+        $productos = Inventario::where('idact',$actividad->idact)->get();
+        $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->orderBy('iddia','ASC')->get();
+        $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->orderBy('iddia','ASC')->get();
+        $garantia = GarantiaPrendaria::where('idact',$actividad->idact)->first();
+        $oferta = Oferta::where('idcredito',$cliente->idCredito)->where('status',1)->first();
+        $totalc=0;
+        $totalv=0;
+        $totalo=0;
+        $totalf=0;
+        $totaloi=0;
+        $totala=0;
+        $totalp=0;
+        $totalpv=0;
+        $totaloi=0;
+        $totala=0;
+        $sucursal = Sucursal::where('idSucursal',$request->sucursal)->first();
+        foreach ($transacionesVenta as $venta) {
+            $totalv = $totalv + $venta->monto;
+        }
+        foreach ($transacionesCompra as $compra) {
+            $totalc = $totalc + $compra->monto;
+        }
+        foreach($gastosOperacion as $operacion){
+            $totalo = $totalo + $operacion->monto;
+        }
+        foreach($gastosFamiliares as $familiar){
+            $totalf = $totalf + $familiar->monto;
+        }
+        foreach ($productos as $producto) {
+            $totalp = $totalp + ($producto->cantidad * $producto->precio_compra);
+        }
+        foreach ($productos as $producto) {
+            $totalpv = $totalpv + round((($producto->precio_venta - $producto->precio_compra)/$producto->precio_compra)*100);
+        }
+        $totalpv = $totalpv/count($productos);
+
+        foreach ($otrosIngresos as $oi) {
+            $totaloi = $totaloi + $oi->monto;
+        }
+        foreach ($activos as $act) {
+            $totala = $totala + $act->monto;
+        }
+
+        $coberturaGarantia = ($garantia->valorEstimado / $oferta->monto)*100;
+        $pagoMensual = ($oferta->monto/$oferta->plazo) + ($oferta->monto*0.041);
+        $fecha = date('d_m_Y');
+        $pdf = PDF::loadView('socioeconomico.pdfinfo', compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
+        'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','totalp',
+        'totalpv','cliente','sucursal','garantia','oferta','coberturaGarantia','pagoMensual'));
+        //return $pdf->download("AIS-$cliente->idcliente-$fecha.pdf");
+        return $pdf->stream("AIS-$cliente->idcliente-$fecha.pdf");
     }
 
     public function getPdfagnd(request $request)

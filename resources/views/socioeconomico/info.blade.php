@@ -590,7 +590,7 @@
                                     <input type="number" disabled name="valorEstimado" id="valorEstimado" value="{{ $garantia->valorEstimado }}" class="form-control">
                                 </div>
                             </td>
-                            <td>COBERTURA DE LA GARANTÍA <br> (EN REFERENCIA AL MONTO DE CRÉDITO ANTERIOR OTORGADO):</td>
+                            <td>COBERTURA DE LA GARANTÍA <br> (EN REFERENCIA AL MONTO DE CRÉDITO {{ !is_null($oferta)?'':'ANTERIOR' }} OTORGADO):</td>
                             <td style="width: 200px; font-weight: 900;" id="cobertura">{{ round($totalco*100) }}%</td>
                         </tr>
                     </tbody>

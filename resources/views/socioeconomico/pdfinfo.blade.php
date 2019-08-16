@@ -15,16 +15,38 @@
 	</head>
 	<body>
 		<header>
-				<figure>
+			<figure>
 				<img class="logo" src="assets/img/logo.png" alt="">
 			</figure>
 		</header>
     <main>
-		<h2 class="clearfix">An&aacute;lisis de Solvencia Crediticia</h2>
-		<div class="details">
-			SUCURSAL: {{ $sucursal->sucursal }}
-		</div>		
-		<table style="width: 98%;">
+		<h2 class="clearfix">An&aacute;lisis de Solvencia Econ&oacute;mica</h2>
+		<div class="details" style="margin: 0px;">
+			<table class="details" style="width: 100%; margin: 0px;">
+				<tbody>
+					<tr class="fondo">
+						<td style="border-bottom: 0.5px solid #009688;" class="fondo" colspan="3">Nombre del Cliente: {{ $cliente->nomCliente }}</td>
+						<td style="border-bottom: 0.7px solid wheat;" class="fondo">ID Soliciud:</td>
+						<td style="border-bottom: 0.5px solid #009688; width: 17%" class="fondo">Fecha: {{ date('d/m/Y') }}</td>
+					</tr>
+					<tr class="fondo">
+						<td style="border-bottom: 0.7px solid wheat; padding: 0%;" class="fondo" colspan="2">Nombre del Asesor:</td>
+						<td style="border-bottom: 0.7px solid wheat;" class="fondo">Zona:</td>
+						<td style="border-bottom: 0.5px solid #009688;" class="fondo">Sucursal: {{ $sucursal->sucursal }}</td>
+						<td style="border-bottom: 0.5px solid #009688;" class="fondo">Cr&eacute;dito     N ( &nbsp;&nbsp;)      R ( &nbsp;&nbsp; )</td>
+					</tr>
+					<tr class="fondo">
+						<td style="border-bottom: 0.5px solid #009688;" class="fondo">Monto Sol: ${{ number_format($oferta->monto,2) }}</td>
+						<td style="border-bottom: 1px solid wheat;" class="fondo">Plazo Sol:</td>
+						<td style="border-bottom: 1px solid wheat;" class="fondo">Pago Sol:</td>
+						<td style="border-bottom: 1px solid wheat;" class="fondo">Frecuencia:</td>
+						<td style="border-bottom: 0.5px solid #009688;" class="fondo">Pago Mensual: ${{ number_format($pagoMensual,2) }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<table style="width: 98%; margin: 0px;">
 			<tbody>
 				<tr>
 					<td style="vertical-align:top;">
@@ -79,9 +101,9 @@
 								<tr>
 									<td class="text-right">{{ $producto->producto }}</td>
 									<td class="text-right">{{ $producto->cantidad }}</td>
-									<td class="text-right">{{ number_format($producto->precio_compra,2) }}</td>
-									<td class="text-right">{{ number_format($producto->precio_venta,2) }}</td>
-									<td class="text-right">{{ number_format($producto->precio_compra * $producto->cantidad,2) }}</td>
+									<td class="text-right">${{ number_format($producto->precio_compra,2) }}</td>
+									<td class="text-right">${{ number_format($producto->precio_venta,2) }}</td>
+									<td class="text-right">${{ number_format($producto->precio_compra * $producto->cantidad,2) }}</td>
 									<td class="text-right">{{ round((($producto->precio_venta-$producto->precio_compra)/$producto->precio_venta)*100) }}%</td>
 								</tr>
 								@endforeach
@@ -96,7 +118,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<table style="width: 98%;">
+		<table style="width: 98%; margin: 0px;">
 			<tbody>
 				<td style="vertical-align:top;">
 					<table>
@@ -157,306 +179,101 @@
 				</td>
 			</tbody>
 		</table>
-		<table>
-			<thead>
-				<tr><th colspan="4">Otros Ingresos</th></tr>
-				<tr>
-					<th colspan="2">OTROS INGRESOS</th>
-					<th colspan="2">ACTIVOS FIJOS DEL NEGOCIO</th>
-				</tr>
-			</thead>
+		<table style="margin: 0px; width: 98%;">
 			<tbody>
-				<tr>
-					<td class="text-right" class="text-right">OTRO NEGOCIO</td>
-					<td class="text-right" class="text-right">${{ number_format($otrosIngresos->otro_negocio,2) }}</td>
-					<td class="text-right" class="text-right">MAQUINARIA, EQUIPO, HERRAMIENTAS</td>
-					<td class="text-right" class="text-right">${{ number_format($activos->maquinaria,2) }}</td>
-				</tr>
-				<tr>
-					<td class="text-right" class="text-right">EMPLEO</td>
-					<td class="text-right" class="text-right">${{ number_format($otrosIngresos->empleo,2) }}</td>
-					<td class="text-right" class="text-right">LOCAL</td>
-					<td class="text-right" class="text-right">${{ number_format($activos->local,2) }}</td>
-				</tr>
-				<tr>
-					<td class="text-right" class="text-right">CÓNYUGE</td>
-					<td class="text-right" class="text-right">${{ number_format($otrosIngresos->conyuge,2) }}</td>
-					<td class="text-right" class="text-right">AUTO</td>
-					<td class="text-right" class="text-right">${{ number_format($activos->auto,2) }}</td>
-				</tr>
-				<tr style="font-weight: 900;" class="text-right">
-					<td>Total</td>
-					<td colspan="" class="text-right">${{ number_format($totaloi,2) }}</td>
-					<td colspan="2" class="text-right">${{ number_format($totala,2) }}</td>
-				</tr>
-				<tr style="font-weight: 900;" class="text-right">
-					<td>DISPONIBLE DE OTROS INGRESOS (30%)</td>
-					<td colspan="" class="text-right">${{ number_format(round($totaloi*0.3),2) }}</td>
-				</tr>
+				<td style="vertical-align:top;">
+					<table>
+						<thead>
+							<tr><th colspan="4">Otros Ingresos</th></tr>
+							<tr>
+								<th colspan="2">OTROS INGRESOS</th>
+								<th colspan="2">ACTIVOS FIJOS DEL NEGOCIO</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-justify">
+									OTRO NEGOCIO <br>
+									<strong>{{ $otrosIngresos[0]->descripcion }}</strong>
+								</td>
+								<td class="text-right">${{ number_format($otrosIngresos[0]->monto,2) }}</td>
+								<td class="text-justify" style="padding-left: 5%;">
+									MAQUINARIA, EQUIPO, HERRAMIENTAS <br>
+									<strong>{{ $activos[0]->descripcion }}</strong>
+								</td>
+								<td class="text-right">${{ number_format($activos[0]->monto,2) }}</td>
+							</tr>
+							<tr>
+								<td class="text-justify">
+									EMPLEO <br>
+									<strong>{{ $otrosIngresos[1]->descripcion }}</strong>
+								</td>
+								<td class="text-right">${{ number_format($otrosIngresos[1]->monto,2) }}</td>
+								<td class="text-justify" style="padding-left: 5%;">
+									LOCAL <br>
+									<strong>{{ $activos[1]->descripcion }}</strong>
+								</td>
+								<td class="text-right">${{ number_format($activos[1]->monto,2) }}</td>
+							</tr>
+							<tr>
+								<td class="text-justify">
+									CÓNYUGE <br>
+									<strong>{{ $otrosIngresos[2]->descripcion }}</strong>
+								</td>
+								<td class="text-right">${{ number_format($otrosIngresos[2]->monto,2) }}</td>
+								<td class="text-justify" style="padding-left: 5%;">
+									VEHICULO <br>
+									<strong>{{ $activos[2]->descripcion }}</strong>
+								</td>
+								<td class="text-right">${{ number_format($activos[2]->monto,2) }}</td>
+							</tr>
+							<tr style="font-weight: 900;" class="text-right">
+								<td>Total</td>
+								<td colspan="" class="text-right">${{ number_format($totaloi,2) }}</td>
+								<td colspan="2" class="text-right">${{ number_format($totala,2) }}</td>
+							</tr>
+							<tr style="font-weight: 900;" class="text-right">
+								<td>DISPONIBLE DE OTROS INGRESOS (30%)</td>
+								<td colspan="" class="text-right">${{ number_format(round($totaloi*0.3),2) }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td style="vertical-align:top;">
+					<table>
+						<thead>
+							<tr><th colspan="4">Garantias</th></tr>
+							<tr><th colspan="4">GARANTÍA PRENDARIA</th></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-justify" colspan="4">
+									GARANTIA <br>
+									<Strong>{!! $garantia->garantia !!}</Strong>
+								</td>
+							</tr>
+							<tr>
+								<td>VALOR ESTIMADO DE LA GARANTÍA:</td>
+								<td><strong>${{ number_format($garantia->valorEstimado,2) }}</strong></td>
+								<td>COBERTURA DE LA GARANTÍA <br> (EN REFERENCIA AL MONTO DE CRÉDITO OTORGADO):</td>
+								<td><strong>{{ round($coberturaGarantia )}}%</strong></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+
 			</tbody>
 		</table>
-
-		<table style="position: absolute; bottom: 10%;" class="text-center">
+		<table style="position: absolute; bottom: 7%; margin: 0px;" class="text-center">
 			<tbody>
 				<tr>
 					<td class="text-center">
 						_____________________________________<br>
-						{{ $cliente->nombre }}
+						{{ $cliente->nomCliente }}
 					</td>
 				</tr>
 			</tbody>
 		</table>
-			{{-- <h2  class="clearfix"><small><span>{{$date}}</span></small> AGENDA DE ACTIVIDADES DEL GESTOR</h2>
-			<div class="details">
-			@if (isset($vendedor))<h3  class="clearfix"><small><span>=>
-				{{$vendedor->sucursal}}</span></small>  {{$vendedor->idPerfil}}  =>  {{$vendedor->nombre}}  </h3>
-				@endif
-			</div>
-			<!--Solo se imprime una vez -->
-			<table>
-		 <thead>
-			 <tr>
-			 <th class="resum">Total Clientes</th>
-			 <th class="resum">Saldo Cartera</th>
-			 <th class="resum">Al corriente</th>
-			 <th class="resum">Saldo al Corriente</th>
-			 <th class="resum">En atraso</th>
-			 <th class="resum">saldo en Riesgo</th>
-			 <th class="resum">Capital Vigente</th>
-			 <th class="resum">Capital Vencido</th>
-			 <th class="resum">Normalidad</th>
-			 </tr>
-		 </thead>
-		 <tbody>
-			 @foreach ($resumen as $res)
-					 <tr class="resum">
-						 <td class="text-center">{{$res->cuenta}}</td>
-						 <td class="text-center">{{'$ '.number_format($res->saldo,2)}}</td>
-						 <td class="text-center">{{$res->corriente}}</td>
-						 <td class="text-center">{{'$ '.number_format($res->saldocorriente,2)}}</td>
-						 <td class="text-center">{{$res->riesgo}}</td>
-						 <td class="text-center">{{'$ '.number_format($res->saldoriesgo,2)}}</td>
-						 <td class="text-center">{{'$ '.number_format($res->capitalVigente,2)}}</td>
-						 <td class="text-center">{{'$ '.number_format($res->capitalVencido,2)}}</td>
-						 <td class="text-center">{{number_format($res->normalidad,2).' %'}}</td>
-					 </tr>
-			 @endforeach
-		 </tbody>
-			</table>
-      <table>
-				<caption class="text-center">Créditos que pagan en los sig. 3 días</caption>
-			<thead>
-				<tr>
-				<th>Crédito</th>
-				<th>Nombre del Cliente</th>
-				<th>ProxDevengo</th>
-				<th>Cuota</th>
-				<th>Saldo a pagar</th>
-				<th>Dom. Colonia</th>
-				<th>Celular</th>
-				<th>F Acuerdo</th>
-				<th>Acuerdo</th>
-				<th>Sucursal</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach ($devengos as $devengo)
-					@if ($devengo->estatus > 0)
-						<tr>
-							<td class="text-center">{{$devengo->idCredito}}</td>
-							<td>{{$devengo->nomCliente}}</td>
-							<td class="text-center">{{date_format(date_create($devengo->fechaDevengo),'d/m/Y')}}</td>
-							<td class="text-rigth">{{'$ '.number_format($devengo->cuota,2)}}</td>
-							<td class="text-rigth">{{'$ '.number_format($devengo->saldo,2)}}</td>
-							<td>{{$devengo->colonia}}</td>
-							<td>{{$devengo->telefonoCelular}}</td>
-							@if (is_null($devengo->fechaAcuerdo))
-		            <td></td>
-		          @else
-		            <td>{{date_format(date_create($devengo->fechaAcuerdo),'d/m/Y')}}</td>
-		          @endif
-							@if ($devengo->montoAcuerdo<>0)
-								<td class="text-rigth">{{'$ '.number_format($devengo->montoAcuerdo,2)}}</td>
-								@else
-									<td class="text-rigth"></td>
-							@endif
-							 <td>{{$devengo->sucursal}}</td>
-						</tr>
-					@endif
-				@endforeach
-				@foreach ($devengosV as $devengo)
-					@if ($devengo->estatus > 0)
-						<tr class="danger">
-							<td class="text-center">{{$devengo->idCredito}}</td>
-							<td>{{$devengo->nomCliente}}</td>
-							<td class="text-center">{{date_format(date_create($devengo->fechaDevengo),'d/m/Y')}}</td>
-							<td class="text-rigth">{{'$ '.number_format($devengo->cuota,2)}}</td>
-							<td class="text-rigth">{{'$ '.number_format($devengo->saldo,2)}}</td>
-							<td>{{$devengo->colonia}}</td>
-							<td>{{$devengo->telefonoCelular}}</td>
-							@if (is_null($devengo->fechaAcuerdo))
-		            <td></td>
-		          @else
-		            <td>{{date_format(date_create($devengo->fechaAcuerdo),'d/m/Y')}}</td>
-		          @endif
-							@if ($devengo->montoAcuerdo<>0)
-								<td class="text-rigth">{{'$ '.number_format($devengo->montoAcuerdo,2)}}</td>
-								@else
-									<td class="text-rigth"></td>
-							@endif
-							 <td>{{$devengo->sucursal}}</td>
-						</tr>
-					@endif
-				@endforeach
-			</tbody>
-      </table>
-			<table>
-			 <caption class="text-center">Créditos de 1 a 90 días de atraso</caption>
-		 <thead>
-			 <tr>
-			 <th>Crédito</th>
-			 <th>Nombre del Cliente</th>
-			 <th>FechaDevengo</th>
-			 <th>Atraso</th>
-			 <th>MontoRiesgo</th>
-			 <th>Cuota</th>
-			 <th>MontoExigible</th>
-			 <th>Dom. Colonia</th>
-			 <th>Celular</th>
-			 <th>F Acuerdo</th>
-			 <th>AcuerdoPago</th>
-			 <th>Sucursal</th>
-			 </tr>
-		 </thead>
-		 <tbody>
-			 @foreach ($devengos1_90 as $devengo)
-				 @if ($devengo->estatus > 0)
-					 <tr>
-						 <td class="text-center">{{$devengo->idCredito}}</td>
-						 <td>{{$devengo->nomCliente}}</td>
-						 <td class="text-center">{{date_format(date_create($devengo->fechaDevengo),'d/m/Y')}}</td>
-						 <td class="text-center">{{$devengo->diasAtraso}}</td>
-						 <td class="text-rigth">{{'$ '.number_format($devengo->montoRiesgo,2)}}</td>
-						 <td class="text-rigth">{{'$ '.number_format($devengo->cuota,2)}}</td>
-						 <td class="text-rigth">{{'$ '.number_format($devengo->montoExigible,2)}}</td>
-						 <td>{{$devengo->colonia}}</td>
-						 <td>{{$devengo->telefonoCelular}}</td>
-						 @if (is_null($devengo->fechaAcuerdo))
-							 <td></td>
-						 @else
-							 <td>{{date_format(date_create($devengo->fechaAcuerdo),'d/m/Y')}}</td>
-						 @endif
-						 @if ($devengo->montoAcuerdo<>0)
-							 <td class="text-rigth">{{'$ '.number_format($devengo->montoAcuerdo,2)}}</td>
-							 @else
-								 <td class="text-rigth"></td>
-						 @endif
-						  <td>{{$devengo->sucursal}}</td>
-					 </tr>
-				 @endif
-			 @endforeach
-			 @foreach ($devengosV1_90 as $devengo)
-				 @if ($devengo->estatus > 0)
-					 <tr class="danger">
- 					<td class="text-center">{{$devengo->idCredito}}</td>
- 					<td>{{$devengo->nomCliente}}</td>
- 					<td class="text-center">{{date_format(date_create($devengo->fechaDevengo),'d/m/Y')}}</td>
- 					<td class="text-center">{{$devengo->diasAtraso}}</td>
- 					<td class="text-rigth">{{'$ '.number_format($devengo->montoRiesgo,2)}}</td>
- 					<td class="text-rigth">{{'$ '.number_format($devengo->cuota,2)}}</td>
- 					<td class="text-rigth">{{'$ '.number_format($devengo->saldoExigible,2)}}</td>
- 					<td>{{$devengo->colonia}}</td>
- 					<td>{{$devengo->telefonoCelular}}</td>
-					@if (is_null($devengo->fechaAcuerdo))
-						<td></td>
-					@else
-						<td>{{date_format(date_create($devengo->fechaAcuerdo),'d/m/Y')}}</td>
-					@endif
- 					@if ($devengo->montoAcuerdo<>0)
- 						<td class="text-rigth">{{'$ '.number_format($devengo->montoAcuerdo,2)}}</td>
- 						@else
- 							<td class="text-rigth"></td>
- 					@endif
-					 <td>{{$devengo->sucursal}}</td>
- 				</tr>
-				 @endif
-			@endforeach
-		 </tbody>
-			</table>
-			<table>
-			 <caption class="text-center">Créditos de más de 90 días de atraso</caption>
-		 <thead>
-			 <tr>
-				 <th>Crédito</th>
-  			 <th>Nombre del Cliente</th>
-				 <th>Fecha Devengo</th>
-				 <th>Atraso</th>
-				<th>MontoRiesgo</th>
-  			 <th>Cuota</th>
-  			 <th>MontoExigible</th>
-  			 <th>Dom. Colonia</th>
-  			 <th>Celular</th>
-				 <th>F Acuerdo</th>
-  			 <th>AcuerdoPago</th>
-				 <th>Sucursal</th>
-			 </tr>
-		 </thead>
-		 <tbody>
-			 @foreach ($devengos_mas90 as $devengo)
-				 @if ($devengo->estatus > 0)
-					 <tr>
-						 <td class="text-center">{{$devengo->idCredito}}</td>
-	  				 <td>{{$devengo->nomCliente}}</td>
-						 <td class="text-center">{{date_format(date_create($devengo->fechaDevengo),'d/m/Y')}}</td>
-	  				 <td class="text-center">{{$devengo->diasAtraso}}</td>
-	  				 <td class="text-rigth">{{'$ '.number_format($devengo->montoRiesgo,2)}}</td>
-	  				 <td class="text-rigth">{{'$ '.number_format($devengo->cuota,2)}}</td>
-	  				 <td class="text-rigth">{{'$ '.number_format($devengo->montoExigible,2)}}</td>
-						 <td>{{$devengo->colonia}}</td>
-						 <td>{{$devengo->telefonoCelular}}</td>
-						 @if (is_null($devengo->fechaAcuerdo))
-							 <td></td>
-						 @else
-							 <td>{{date_format(date_create($devengo->fechaAcuerdo),'d/m/Y')}}</td>
-						 @endif
-						 @if ($devengo->montoAcuerdo<>0)
-							 <td class="text-rigth">{{'$ '.number_format($devengo->montoAcuerdo,2)}}</td>
-							 @else
-								 <td class="text-rigth"></td>
-						 @endif
-						  <td>{{$devengo->sucursal}}</td>
-					 </tr>
-				 @endif
-			 @endforeach
-			 @foreach ($devengosV_mas90 as $devengo)
-				 @if ($devengo->estatus > 0)
-					 <tr class="danger">
- 					<td class="text-center">{{$devengo->idCredito}}</td>
- 	 				 <td>{{$devengo->nomCliente}}</td>
- 					 <td class="text-center">{{date_format(date_create($devengo->fechaDevengo),'d/m/Y')}}</td>
- 	 				 <td class="text-center">{{$devengo->diasAtraso}}</td>
- 	 				 <td class="text-rigth">{{'$ '.number_format($devengo->montoRiesgo,2)}}</td>
- 	 				 <td class="text-rigth">{{'$ '.number_format($devengo->cuota,2)}}</td>
- 	 				 <td class="text-rigth">{{'$ '.number_format($devengo->saldoExigible,2)}}</td>
- 						<td>{{$devengo->colonia}}</td>
- 						<td>{{$devengo->telefonoCelular}}</td>
-						@if (is_null($devengo->fechaAcuerdo))
-							<td></td>
-						@else
-							<td>{{date_format(date_create($devengo->fechaAcuerdo),'d/m/Y')}}</td>
-						@endif
- 						@if ($devengo->montoAcuerdo<>0)
- 							<td class="text-rigth">{{'$ '.number_format($devengo->montoAcuerdo,2)}}</td>
- 							@else
- 								<td class="text-rigth"></td>
- 						@endif
-						 <td>{{$devengo->sucursal}}</td>
- 					</tr>
-				 @endif
-			@endforeach
-		 </tbody>
-			</table> --}}
-
     </main>
     <footer>
       ALFIN-Servicios Financieros
