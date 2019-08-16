@@ -23,6 +23,7 @@ use wbALFINop\BlackList;
 use wbALFINop\Producto;
 use wbALFINop\GarantiaPrendaria;
 use wbALFINop\Perfil;
+use wbALFINop\Events\SendOffer;
 use DB;
 use Response;
 
@@ -117,7 +118,14 @@ class SocioeconomicoController extends Controller
         }
 
         //agrego activos fijos
-        for ($i=1; $i <4 ; $i++) { 
+        for ($i=1; $i <4 ; $i++) {
+            if (is_null($request["desci$i"])) {
+                $request["desci$i"] = 'ninguno';
+            }
+            if (is_null($request["descf$i"])) {
+                $request["descf$i"] = 'ninguno';
+            }
+
             $activos = ActivosFijos::create([
                 'idact'=> $actividad->idact,
                 'monto'=> $request["cantf$i"],
@@ -148,9 +156,13 @@ class SocioeconomicoController extends Controller
     }
     public function ofertaAceptada(Oferta $oferta)
     {
-        $oferta->update(['status'=>1]);
-        $ofertas = Oferta::where('idcliente',$oferta->idcliente)->get();
-        return Response::json($ofertas);
+        $ofertas = Oferta::where('idcredito',$oferta->idcredito)->where('status',1)->get();
+        if (count($ofertas) == 0) {
+            $oferta->update(['status'=>1]);
+            $ofertas = Oferta::where('idcredito',$oferta->idcredito)->get();
+            SendOffer::dispatch($oferta);
+            return Response::json($ofertas);   
+        }
     }
     public function verificarOferta(Credito $cliente)
     {

@@ -115,9 +115,7 @@
                   <a href="{{ route('pdfrenovacion',['cliente'=>$vencimientoOferta->idCredito,'sucursal'=>$querys]) }}" style="{{ count($vencimientoOferta->oferta)==1?'':'display: none;' }}" id="pdf{{ $vencimientoOferta->idCredito }}"><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
                 </td>
               </tr>
-              @break
             @endif 
-          
         @endforeach
         </table>
       </div>
@@ -191,6 +189,8 @@
 
       function verificarOferta(id)
       {
+        $('#tablaproductivo').empty();
+        $('#tablavivienda').empty();
         $.ajax({
           url     :  "/verificar_oferta/"+id,
           type    :  'get',
@@ -271,6 +271,8 @@
 
       function ofertaSeleccionada(id){
         console.log(id);
+        $('#tablaproductivo').empty();
+        $('#tablavivienda').empty();
         $.ajax({
           url     :  "/oferta_aceptada/"+id,
           type    :  'get',

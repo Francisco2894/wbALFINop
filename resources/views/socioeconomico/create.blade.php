@@ -494,7 +494,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="ingreso1" type="number" name="canti1">
+                                            <input class="form-control" id="ingreso1" type="number" value="0" required name="canti1">
                                         </div>
                                     </td>
                                 </tr>
@@ -508,7 +508,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="ingreso2" type="number" name="canti2">
+                                            <input class="form-control" id="ingreso2" type="number" value="0" required name="canti2">
                                         </div>
                                     </td>
                                 </tr>
@@ -522,7 +522,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="ingreso3" type="number" name="canti3">
+                                            <input class="form-control" id="ingreso3" type="number" value="0" required name="canti3">
                                         </div>
                                     </td>
                                 </tr>
@@ -557,7 +557,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="fijo1" type="number" value="0" name="cantf1">
+                                            <input class="form-control" id="fijo1" type="number" value="0" required name="cantf1">
                                         </div>
                                     </td>
                                 </tr>
@@ -571,7 +571,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="fijo2" type="number" value="0" name="cantf2">
+                                            <input class="form-control" id="fijo2" type="number" value="0" required name="cantf2">
                                         </div>
                                     </td>
                                 </tr>
@@ -585,7 +585,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="fijo3" type="number" value="0" name="cantf3">
+                                            <input class="form-control" id="fijo3" type="number" value="0" required name="cantf3">
                                         </div>
                                     </td>
                                 </tr>

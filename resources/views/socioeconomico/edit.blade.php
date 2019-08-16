@@ -489,13 +489,13 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">OTRO NEGOCIO</label>
-                                            <input class="form-control" value="{{ $otrosIngresos[0]->descripcion }}" type="text" name="desci1">
+                                            <input class="form-control" required value="{{ $otrosIngresos[0]->descripcion }}" type="text" name="desci1">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="ingreso1" value="{{ $otrosIngresos[0]->monto }}" type="number" name="canti1">
+                                            <input class="form-control" required id="ingreso1" value="{{ $otrosIngresos[0]->monto }}" type="number" name="canti1">
                                         </div>
                                     </td>
                                 </tr>
@@ -503,13 +503,13 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">EMPLEO</label>
-                                            <input class="form-control" value="{{ $otrosIngresos[1]->descripcion }}"  type="text" name="desci2">
+                                            <input class="form-control" required value="{{ $otrosIngresos[1]->descripcion }}"  type="text" name="desci2">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="ingreso2" value="{{ $otrosIngresos[1]->monto }}" type="number" name="canti2">
+                                            <input class="form-control" required id="ingreso2" value="{{ $otrosIngresos[1]->monto }}" type="number" name="canti2">
                                         </div>
                                     </td>
                                 </tr>
@@ -517,13 +517,13 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">CÓNYUGE</label>
-                                            <input class="form-control"  value="{{ $otrosIngresos[2]->descripcion }}" type="text" name="desci3">
+                                            <input class="form-control" required  value="{{ $otrosIngresos[2]->descripcion }}" type="text" name="desci3">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="ingreso3" value="{{ $otrosIngresos[2]->monto }}" type="number" name="canti3">
+                                            <input class="form-control" required id="ingreso3" value="{{ $otrosIngresos[2]->monto }}" type="number" name="canti3">
                                         </div>
                                     </td>
                                 </tr>
@@ -558,7 +558,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="fijo1" value="{{ $activos[0]->monto }}" type="number" value="0" name="cantf1">
+                                            <input class="form-control" required id="fijo1" value="{{ $activos[0]->monto }}" type="number" value="0" name="cantf1">
                                         </div>
                                     </td>
                                 </tr>
@@ -572,7 +572,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="fijo2" value="{{ $activos[1]->monto }}" type="number" value="0" name="cantf2">
+                                            <input class="form-control" required id="fijo2" value="{{ $activos[1]->monto }}" type="number" value="0" name="cantf2">
                                         </div>
                                     </td>
                                 </tr>
@@ -586,7 +586,7 @@
                                     <td>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Catidad</label>
-                                            <input class="form-control" id="fijo3" value="{{ $activos[2]->monto }}" type="number" value="0" name="cantf3">
+                                            <input class="form-control" required id="fijo3" value="{{ $activos[2]->monto }}" type="number" value="0" name="cantf3">
                                         </div>
                                     </td>
                                 </tr>

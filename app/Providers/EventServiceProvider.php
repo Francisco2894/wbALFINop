@@ -26,9 +26,9 @@ class EventServiceProvider extends ServiceProvider
       'wbALFINop\Events\UserNew' => [
         'wbALFINop\Listeners\SendNewUser',
           ],
-      // 'wbALFINop\Events\UserNew' => [
-      //   'wbALFINop\Listeners\SendNewUser',
-      //     ],
+      'wbALFINop\Events\SendOffer' => [
+        'wbALFINop\Listeners\SendMessage',
+          ],
     ];
 
     /**
