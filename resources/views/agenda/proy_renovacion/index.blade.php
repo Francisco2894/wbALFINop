@@ -58,9 +58,9 @@
           <td class="text-center">
             @foreach ($actividades as $actividad)
               @if ($vencimiento->idCliente == $actividad->idcliente)
-                {!!Form::open(['route'=>'califiaroferta','method'=>'POST'])!!}
+                {!!Form::open(['route'=>'califiaroferta','method'=>'POST', 'id'=>"calificar$vencimiento->idCredito"])!!}
                   <input type="hidden" value="{{ $vencimiento->idCredito }}" name="idCredito">
-                  <button class="btn btn-primary btn-simple btn-xs" type="submit" name="btnSocioeconomico" rel="tooltip" title="¿Calificar?"><i class="material-icons">playlist_add_check</i></button>
+                  <button class="btn btn-primary btn-simple btn-xs" type="button" onclick="calificar({{ $vencimiento->idCredito }});" name="btnSocioeconomico" rel="tooltip" title="¿Calificar?"><i class="material-icons">playlist_add_check</i></button>
                 {{Form::close()}}
               @endif 
             @endforeach
@@ -139,11 +139,11 @@
               <table class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th>Fecha</th>
+                      <th>Fecha de Vigencia</th>
                       <th>Plazo</th>
+                      <th>Frecuencia</th>
                       <th>Monto</th>
                       <th>Cuota</th>
-                      <th>Frecuencia</th>
                       <th style="width: 8%"></th>
                     </tr>
                   </thead>
@@ -180,6 +180,7 @@
 
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/./assets/js/moment.js"></script>
     <script>
       let fechai, fechaf = "";
       let tipo, plazo = "";
@@ -192,7 +193,7 @@
         $('#tablaproductivo').empty();
         $('#tablavivienda').empty();
         $.ajax({
-          url     :  "/verificar_oferta/"+id,
+          url     :  "/./verificar_oferta/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -209,26 +210,34 @@
         });
       }
       
+      function calificar(credito){
+        var calificar = confirm('Solo podra Calificar esta Oferta 1 vez, ¿Esta seguro de Calificarla Ahora?')
+        if (calificar == true) {
+          $('#calificar'+credito).submit(); 
+        }
+      }
+
       function listarOferta(id){
         $.ajax({
           url     :  "/./ofertas/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
-                if(response.length>0){
-                  console.log(response[0]['idto']);
+                if(response.ofertas.length>0){
+                  console.log(response.ofertas[0]['idto']);
                   $('#tablaproductivo').empty();
                   $('#tablavivienda').empty();
-                  for(i=0;i<response.length;i++){
-                    idOferta    = response[i]['idoferta'];
-                    fechai      = response[i]['fechai'];
-                    fechaf      = response[i]['fechaf'];
-                    plazo       = response[i]['plazo'];
-                    monto       = response[i]['monto'];
-                    parcialidad     = response[i]['cuota'];
-                    frecuencia      = response[i]['frecuencia'];
-                    tipo            = response[i]['idto'];
-                    status          = response[i]['status']
+                  console.log(response)
+                  for(i=0;i<response.ofertas.length;i++){
+                    idOferta    = response.ofertas[i]['idoferta'];
+                    fechai      = response.ofertas[i]['fechai'];
+                    fechaf      = response.ofertas[i]['fechaf'];
+                    plazo       = response.ofertas[i]['plazo'];
+                    frecuencia      = response.ofertas[i]['frecuencia'];
+                    monto           = response.ofertas[i]['monto'];
+                    parcialidad     = response.ofertas[i]['cuota'];
+                    tipo            = response.ofertas[i]['idto'];
+                    status          = response.ofertas[i]['status'];
                     if (frecuencia == 1) {
                       texto = 'Mensual';
                     }
@@ -236,31 +245,31 @@
                     if (tipo == 1) {
                       if (status == 1) {
                         $('#tablaproductivo').append("<tr class='success'>"+
-                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                           "<i class='material-icons'>check_circle_outline</i></td></tr>"
                         );
                       } else {
                         $('#tablaproductivo').append("<tr>"+
-                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                           "<i class='material-icons'>cancel</i></td></tr>"
                         );
                       } 
                     } else {
                       if (status == 1) {
                         $('#tablavivienda').append("<tr class='success'>"+
-                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                           "<i class='material-icons'>check_circle_outline</i></td></tr>"
                         );
                       } else {
                         $('#tablavivienda').append("<tr>"+
-                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                           "<i class='material-icons'>cancel</i></td></tr>"
                         ); 
                       }
                     }
                 }
               }
-              $('#titulo').text("Oferta ID Cliente: "+response[0]['idcliente']);
+              $('#titulo').text("Oferta ID Cliente: "+response.ofertas[0]['idcliente']+' Nombre del Cliente: '+response.nombre);
               //$("#miModal").modal("show");
           },
           error   :   function() {
@@ -271,69 +280,73 @@
 
       function ofertaSeleccionada(id){
         console.log(id);
-        $('#tablaproductivo').empty();
-        $('#tablavivienda').empty();
-        $.ajax({
-          url     :  "/./oferta_aceptada/"+id,
-          type    :  'get',
-          dataType:  'json',
-          success :   function (response) {
-            console.log(response);
-                if(response.length>0){
-                  console.log(response[0]['idto']);
-                  $('#tablaproductivo').empty();
-                  $('#tablavivienda').empty();
-                  for(i=0;i<response.length;i++){
-                    idOferta    = response[i]['idoferta'];
-                    fechai      = response[i]['fechai'];
-                    fechaf      = response[i]['fechaf'];
-                    plazo       = response[i]['plazo'];
-                    monto       = response[i]['monto'];
-                    parcialidad     = response[i]['cuota'];
-                    frecuencia      = response[i]['frecuencia'];
-                    tipo            = response[i]['idto'];
-                    status          = response[i]['status'];
-                    idCredito       = response[i]['idcredito'];
-                    if (frecuencia == 1) {
-                      texto = 'Mensual';
-                    }
-
-                    if (tipo == 1) {
-                      if (status == 1) {
-                        $('#tablaproductivo').append("<tr class='success'>"+
-                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
-                          "<i class='material-icons'>check_circle_outline</i></td></tr>"
-                        );
-                      } else {
-                        $('#tablaproductivo').append("<tr>"+
-                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
-                          "<i class='material-icons'>cancel</i></td></tr>"
-                        );
-                      } 
-                    } else {
-                      if (status == 1) {
-                        $('#tablavivienda').append("<tr class='success'>"+
-                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
-                          "<i class='material-icons'>check_circle_outline</i></td></tr>"
-                        );
-                      } else {
-                        $('#tablavivienda').append("<tr>"+
-                          "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
-                          "<i class='material-icons'>cancel</i></td></tr>"
-                        ); 
+        var confirmacion;
+        confirmacion = confirm('Solo podra seleccionar una unica Oferta, ¿Esta seguro de selecionar esta?')
+        if (confirmacion == true) {
+          $('#tablaproductivo').empty();
+          $('#tablavivienda').empty();
+          $.ajax({
+            url     :  "/./oferta_aceptada/"+id,
+            type    :  'get',
+            dataType:  'json',
+            success :   function (response) {
+              console.log(response);
+                  if(response.ofertas.length>0){
+                    console.log(response.ofertas[0]['idto']);
+                    $('#tablaproductivo').empty();
+                    $('#tablavivienda').empty();
+                    for(i=0;i<response.ofertas.length;i++){
+                      idOferta    = response.ofertas[i]['idoferta'];
+                      fechai      = response.ofertas[i]['fechai'];
+                      fechaf      = response.ofertas[i]['fechaf'];
+                      plazo       = response.ofertas[i]['plazo'];
+                      frecuencia      = response.ofertas[i]['frecuencia'];
+                      monto       = response.ofertas[i]['monto'];
+                      parcialidad     = response.ofertas[i]['cuota'];
+                      tipo            = response.ofertas[i]['idto'];
+                      status          = response.ofertas[i]['status'];
+                      idCredito       = response.ofertas[i]['idcredito'];
+                      if (frecuencia == 1) {
+                        texto = 'Mensual';
                       }
-                    }
+
+                      if (tipo == 1) {
+                        if (status == 1) {
+                          $('#tablaproductivo').append("<tr class='success'>"+
+                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                            "<i class='material-icons'>check_circle_outline</i></td></tr>"
+                          );
+                        } else {
+                          $('#tablaproductivo').append("<tr>"+
+                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                            "<i class='material-icons'>cancel</i></td></tr>"
+                          );
+                        } 
+                      } else {
+                        if (status == 1) {
+                          $('#tablavivienda').append("<tr class='success'>"+
+                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                            "<i class='material-icons'>check_circle_outline</i></td></tr>"
+                          );
+                        } else {
+                          $('#tablavivienda').append("<tr>"+
+                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                            "<i class='material-icons'>cancel</i></td></tr>"
+                          ); 
+                        }
+                      }
+                  }
                 }
-              }
-              $('#titulo').text("Oferta ID Cliente: "+response[0]['idcliente']);
-              $("#miModal").modal("show");
-              console.log('#pdf'+idCredito)
-              $('#pdf'+idCredito).show();
-          },
-          error   :   function() {
-              alert('error');
-          }
-        });
+                $('#titulo').text("Oferta ID Cliente: "+response.ofertas[0]['idcliente']+' Nombre del Cliente: '+response.nombre);
+                $("#miModal").modal("show");
+                console.log('#pdf'+idCredito)
+                $('#pdf'+idCredito).show();
+            },
+            error   :   function() {
+                alert('error');
+            }
+          }); 
+        }
       }
       function ofertas(id){
         $.ajax({
@@ -341,37 +354,37 @@
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
-                if(response.length>0){
-                  console.log(response[0]['idto']);
+                if(response.ofertas.length>0){
+                  console.log(response);
                   $('#tablaproductivo').empty();
                   $('#tablavivienda').empty();
-                  for(i=0;i<response.length;i++){
-                    idOferta    = response[i]['idoferta'];
-                    fechai      = response[i]['fechai'];
-                    fechaf      = response[i]['fechaf'];
-                    plazo       = response[i]['plazo'];
-                    monto       = response[i]['monto'];
-                    parcialidad     = response[i]['cuota'];
-                    frecuencia      = response[i]['frecuencia'];
-                    tipo            = response[i]['idto'];
+                  for(i=0;i<response.ofertas.length;i++){
+                    idOferta    = response.ofertas[i]['idoferta'];
+                    fechai      = response.ofertas[i]['fechai'];
+                    fechaf      = response.ofertas[i]['fechaf'];
+                    plazo       = response.ofertas[i]['plazo'];
+                    frecuencia      = response.ofertas[i]['frecuencia'];
+                    monto       = response.ofertas[i]['monto'];
+                    parcialidad     = response.ofertas[i]['cuota'];
+                    tipo            = response.ofertas[i]['idto'];
                     if (frecuencia == 1) {
                       texto = 'Mensual';
                     }
 
                     if (tipo == 1) {
                       $('#tablaproductivo').append("<tr>"+
-                        "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                        "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                         "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button> </td></tr>"
                       ); 
                     } else {
                       $('#tablavivienda').append("<tr>"+
-                        "<td>"+fechai.substr(0,10)+" - "+fechaf.substr(0,10)+"</td><td>"+plazo+"</td><td>$"+monto+"</td><td>$"+parcialidad+"</td><td>"+texto+"</td><td>"+
+                        "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                         "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
                       );
                     }
                 }
               }
-              $('#titulo').text("Oferta ID Cliente: "+response[0]['idcliente']);
+              $('#titulo').text("Oferta ID Cliente: "+response.ofertas[0]['idcliente']+' Nombre del Cliente: '+response.nombre);
               //$("#miModal").modal("show");
           },
           error   :   function() {

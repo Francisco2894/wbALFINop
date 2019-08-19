@@ -197,8 +197,12 @@
                                 <td><strong>${{ number_format($disponible,2) }}</strong></td>
                             </tr>
                             <tr class="form-group">
-                                <td>($) CAPACIDAD MÁXIMA DE PAGO</td>
+                                <td>($) CAPACIDAD MÁXIMA DE PAGO 30%</td>
                                 <td><strong>${{ number_format($capacidadPago,2) }}</strong></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td>($) CAPACIDAD MÁXIMA DE PAGO 50%</td>
+                                <td><strong>${{ number_format($capacidadPago50,2) }}</strong></td>
                             </tr>
                         </tbody>
                     </table>

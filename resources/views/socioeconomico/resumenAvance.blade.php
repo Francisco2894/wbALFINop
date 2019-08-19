@@ -23,30 +23,40 @@
     @endif
 {{Form::close()}}
 
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h1 class="panel-title">Vencimientos Por Recopilar</h1>
+                <h1 class="panel-title">Vencimientos Totales</h1>
+            </div>
+            <div class="panel-body">
+                <h1 class="text-center">{{ $cantidadVencimientos }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Vencimientos Pendientes</h1>
             </div>
             <div class="panel-body">
                 <h1 class="text-center">{{ $porRecopilar }}</h1>
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h1 class="panel-title">Vencimientos Recopilados</h1>
+                <h1 class="panel-title">Vencimientos Capturados</h1>
             </div>
             <div class="panel-body">
                 <h1 class="text-center">{{ $recopilados }}</h1>
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h1 class="panel-title">Vencimentos Calificados</h1>
+                <h1 class="panel-title">Vencimentos con Ofertas</h1>
             </div>
             <div class="panel-body">
                 <h1 class="text-center">{{ $calificados }}</h1>
