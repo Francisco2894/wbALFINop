@@ -13,16 +13,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class SendOffer
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $oferta;
+    public $oferta, $credito;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($oferta)
+    public function __construct($oferta, $credito)
     {
         //
         $this->oferta = $oferta;
+        $this->credito = $credito;
     }
 }

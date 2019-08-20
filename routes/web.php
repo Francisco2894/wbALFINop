@@ -34,7 +34,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('importarExcelInfoCred','ExcelController@importInfoCred');
     Route::post('importarExcelBlackList','ExcelController@importBlackList');
     Route::get('pdfrenovacion/{cliente}', 'PdfController@resultadosRenovacion')->name('pdfrenovacion');
-    Route::post('calificar_ofera', 'SocioeconomicoController@calificarOferta')->name('califiaroferta');
+    Route::post('calificar_oferta', 'SocioeconomicoController@calificarOferta')->name('califiaroferta');
+    Route::get('calificar', 'SocioeconomicoController@calificarOfertaDos')->name('califiarofertados');
     Route::resource('cambiar_password','PasswordController');
     Route::resource('usuario','UserController');
     Route::get('agenda/resumen_avance','SocioeconomicoController@resumenAvance')->name('resumenAvance');

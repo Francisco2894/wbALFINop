@@ -7,10 +7,18 @@
 		<style>
 			.text-justify{
 				text-align: justify;
-			 }
-			 .text-right{
-				 text-align: right;
-			 }
+			}
+			.text-right{
+				text-align: right;
+			},
+			 .page-break {
+				page-break-after: always;
+				border: 1px solid white;
+			},
+			.bg-danger{
+				background-color: #d9534f;
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
@@ -262,6 +270,112 @@
 					</table>
 				</td>
 
+			</tbody>
+		</table>
+		<div class="page-break"></div>
+		<table>
+			<thead></thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align:top;">
+						<table>
+							<thead>
+								<tr>
+									<th class="text-center" colspan="4">BALANCE GENERAL</th>
+								</tr>
+							</thead>
+							<tbody >
+								<tr class="form-group">
+									<td class="bg-danger">CAJA/EFECTIVO/BANCOS</td>
+									<td class="bg-danger"></td>
+									<td class="bg-danger">PASIVO CORTO PLAZO</td>
+									<td class="bg-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								</tr>
+								<tr class="form-group">
+									<td class="bg-danger">CUENTAS POR COBRAR</td>
+									<td class="bg-danger"></td>
+									<td class="bg-danger">PASIVO LARGO PLAZO</td>
+									<td class="bg-danger">&nbsp;</td>
+								</tr>
+								<tr class="form-group">
+									<td>INVENTARIO</td>
+									<td><strong>${{ number_format($totalp,2) }}</strong></td>
+									<td class="bg-danger">TOTAL PASIVO</td>
+									<td class="bg-danger">&nbsp;</td>
+								</tr>
+								<tr class="form-group">
+									<td class="bg-danger">TOTAL ACTIVO CIRCULANTE</td>
+									<td class="bg-danger"></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr class="form-group">
+									<td>TOTAL ACTIVO FIJO</td>
+									<td><strong>${{ number_format($totala,2) }}</strong></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr class="form-group">
+									<td class="bg-danger">TOTAL ACTIVOS</td>
+									<td class="bg-danger"></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+					<td style="vertical-align:top; width: 50%;">
+						<table>
+							<thead>
+								<tr>
+									<th colspan="2">ESTADO DE RESULTADOS</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="form-group">
+									<td>(+) VENTAS (A)</td>
+									<td><strong>${{ number_format($ventasMensuales,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>(-) COSTO DE VENTAS (B)</td>
+									<td><strong>${{ number_format($compraMensuales,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>(=) UTILIDAD BRUTA</td>
+									<td><strong>${{ number_format($utilidadBruta,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>(-) GASTOS DE OPERACIÓN ( C )</td>
+									<td><strong>${{ number_format($totalo,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>(=) UTILIDAD NETA</td>
+									<td><strong>${{ number_format($utilidadNeta,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>(+) OTROS INGRESOS (D)</td>
+									<td><strong>${{ number_format($porcentajeOtrosIngresos,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>(-) GASTOS FAMILIARES ( E )</td>
+									<td><strong>${{ number_format($totalf,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>(=) DISPONIBLE</td>
+									<td><strong>${{ number_format($disponible,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>($) CAPACIDAD MÁXIMA DE PAGO 30%</td>
+									<td><strong>${{ number_format($capacidadPago,2) }}</strong></td>
+								</tr>
+								<tr class="form-group">
+									<td>($) CAPACIDAD MÁXIMA DE PAGO 50%</td>
+									<td><strong>${{ number_format($capacidadPago50,2) }}</strong></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 		<table style="position: absolute; bottom: 7%; margin: 0px;" class="text-center">

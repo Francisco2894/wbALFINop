@@ -24,6 +24,7 @@ use wbALFINop\Producto;
 use wbALFINop\GarantiaPrendaria;
 use wbALFINop\Perfil;
 use wbALFINop\Events\SendOffer;
+use wbALFINop\OfertaDos;
 use DB;
 use Response;
 
@@ -161,7 +162,7 @@ class SocioeconomicoController extends Controller
             $oferta->update(['status'=>1]);
             $ofertas = Oferta::where('idcredito',$oferta->idcredito)->get();
             $credito = Credito::where('idCredito',$oferta->idcredito)->first();
-            //SendOffer::dispatch($oferta);
+            SendOffer::dispatch($oferta,$credito);
             return Response::json(['ofertas'=>$ofertas, 'nombre'=>$credito->nomCliente]);   
         }
     }
@@ -226,9 +227,57 @@ class SocioeconomicoController extends Controller
             $totala = $totala + $activo->monto;
         }
 
+        $inventario = 0;
+        $venta = 0;
+        $compra = 0;
+        $operacion = 0;
+        $familiares = 0;
+        $totalOtrosIngresos = 0;
+        $totalActivoFijo = 0;
+        $totalco = $garantia->valorEstimado / ($cliente->montoInicial+($cliente->montoInicial*0.3));
+
+        foreach ($otrosIngresos as $otros) {
+            $totalOtrosIngresos = $totalOtrosIngresos + $otros->monto;
+        }
+        foreach ($activos as $activo) {
+            $totalActivoFijo = $totalActivoFijo + $activo->monto;
+        }
+
+        $porcentajeOtrosIngresos = ($totalOtrosIngresos) * 0.3;
+
+        foreach ($productos as $producto) {
+            $inventario = $inventario + ($producto->cantidad * $producto->precio_compra); 
+        }
+
+        foreach ($transacionesVenta as $trans) {
+            $venta = $venta + $trans->monto;
+        }
+        $ventasMensuales = $venta * 4;
+
+        foreach ($transacionesCompra as $trans) {
+            $compra = $compra + $trans->monto;
+        }
+        $compraMensuales = $compra * 4;
+        $utilidadBruta = $ventasMensuales - $compraMensuales;
+
+        foreach ($gastosOperacion as $trans) {
+            $operacion = $operacion + $trans->monto;
+        }
+
+        $utilidadNeta = $utilidadBruta - $operacion;
+
+        foreach ($gastosFamiliares as $trans) {
+            $familiares = $familiares + $trans->monto;
+        }
+
+        $disponible = $utilidadNeta + $porcentajeOtrosIngresos - $familiares;
+        $capacidadPago = $disponible * 0.3;
+        $capacidadPago50 = $disponible * 0.5;
+
         return view('socioeconomico.info',compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
         'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','urlanterior',
-        'garantia','totalco','oferta'));
+        'garantia','totalco','oferta','totalOtrosIngresos','totalActivoFijo','inventario','ventasMensuales','compraMensuales','utilidadBruta',
+        'operacion','utilidadNeta','porcentajeOtrosIngresos','familiares','disponible','capacidadPago','capacidadPago50'));
     }
 
     /**
@@ -737,6 +786,266 @@ class SocioeconomicoController extends Controller
         }else{
             return back()->withInput()->with(['error'=>'No tiene Información Crediticia']);   
         }
+    }
+
+    public function calificarOfertaDos(Request $request)
+    {   
+        $creditos = Credito::all();
+        $ofertasHechas = 0 ;
+        foreach ($creditos as $key => $credito) {
+            $cliente = Cliente::where('idcliente',$credito->idCliente)->first();
+            if (!is_null($cliente)) {
+                //$credito = Credito::where('idCredito',$request->idCredito)->first();
+                $informacion = InformacionCrediticia::where('idcliente',$credito->idCliente)->orderBy('fechaconsulta',' DESC')->get();//buscamos la informacion crediticia
+                if (count($informacion)>0) {
+                    $fecha_actual = date("Y-m-d");
+                    $fecha = round((strtotime($fecha_actual)-strtotime($informacion[0]->fechaconsulta))/86400);//calcular los dias si es menor al dia de hoy
+                    $listaNegra = BlackList::where('idcliente',$credito->idCliente)->where('idcredito',$credito->idCredito)->first();// verifica si el cliente con el credito seleccionado estan en la black list
+                    
+                    //analisis de solvencia
+                    $actividad = Actividad::where('idcliente',$credito->idCliente)->first();
+                    if (!is_null($actividad)) {
+                        $activos = ActivosFijos::where('idact',$actividad->idact)->first();
+                        $otrosIngresos = OtrosIngresos::where('idact',$actividad->idact)->first();
+                        
+                        $productos = Inventario::where('idact',$actividad->idact)->get();
+                        $transacionesVenta = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','2')->get();
+                        $transacionesCompra = TransaccionInventario::where('idact',$actividad->idact)->where('idtipotransac','1')->get();
+                        $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->get();
+                        $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->get();
+                        
+                        $inventario = 0;
+                        $venta = 0;
+                        $compra = 0;
+                        $operacion = 0;
+                        $familiares = 0;
+                        $totalActivoFijo = $activos->auto + $activos->local + $activos->maquinaria;
+                        $totalOtrosIngresos = $otrosIngresos->conyuge + $otrosIngresos->empleo + $otrosIngresos->otro_negocio;
+                        $porcentajeOtrosIngresos = ($otrosIngresos->conyuge + $otrosIngresos->empleo + $otrosIngresos->otro_negocio) * 0.3;
+
+                        foreach ($productos as $producto) {
+                            $inventario = $inventario + ($producto->cantidad * $producto->precio_compra); 
+                        }
+
+                        foreach ($transacionesVenta as $trans) {
+                            $venta = $venta + $trans->monto;
+                        }
+                        $ventasMensuales = $venta * 4;
+
+                        foreach ($transacionesCompra as $trans) {
+                            $compra = $compra + $trans->monto;
+                        }
+                        $compraMensuales = $compra * 4;
+                        $utilidadBruta = $ventasMensuales - $compraMensuales;
+
+                        foreach ($gastosOperacion as $trans) {
+                            $operacion = $operacion + $trans->monto;
+                        }
+
+                        $utilidadNeta = $utilidadBruta - $operacion;
+
+                        foreach ($gastosFamiliares as $trans) {
+                            $familiares = $familiares + $trans->monto;
+                        }
+
+                        $disponible = $utilidadNeta + $porcentajeOtrosIngresos - $familiares;
+                        //$capacidadPago = $disponible * 0.3;
+
+                        //proceso de filtrado
+                        if ($fecha<=59) {
+                            if ($informacion[0]->score >= 500) {
+                                if (is_null($listaNegra)) {
+                                    $ofertasHechas++;
+                                    //$disponible=10748;
+                                    //return $credito->product->negocio_op;
+                                    //return $credito->frecuenciaPago;
+                                    //return $credito->plazo;// aqui quede hacer comparacion
+
+                                    //verifico la frecuencia de pago
+                                    $plazo = $credito->plazo;
+                                    if ($credito->frecuenciaPago == 'Quincenal') {
+                                        $plazo = floor($plazo / 2);
+                                    }elseif ($credito->frecuenciaPago == 'Semanal') {
+                                        $plazo = floor($plazo / 4.345);
+                                    }
+                                    
+                                    $incremento = 0.30;
+                                    $creditoAnterior = $credito->montoInicial;
+                                    $tasa = 0.041;
+                                    $capacidadPago50 = $disponible * 0.5;
+                                    $capacidadPago35 = $disponible * 0.35;
+                                    
+                                    //fecha fin
+                                    $fechaFin = $credito->fechaFin;
+                                    $nuevaFecha = strtotime ('+5 day',strtotime ($fechaFin)) ;
+                                    $nuevaFecha = date ('Y-m-j',$nuevaFecha);
+                                    //return  $credito->product->negocio_op;
+                                    if ($credito->product->negocio_op == 'VIVIENDA') {
+
+                                        //ofertas Vivienda 30%
+                                        for ($i=$plazo; $i <= 19; $i++) { 
+                                            $monto = $creditoAnterior + ($creditoAnterior * $incremento);
+                                            $ical = $monto * $tasa;
+                                            $kcal = $monto / $i;
+                                            $cuota = $ical + $kcal;
+                                            if ($cuota <= $capacidadPago35) {
+                                                $oferta = OfertaDos::create([
+                                                    'idcliente'     =>  $credito->idCliente,
+                                                    'idto'          =>  2,
+                                                    'idcredito'     =>  $credito->idCredito,
+                                                    'fechai'        =>  date('Y-m-d'),
+                                                    'fechaf'        =>  $nuevaFecha,
+                                                    'plazo'         =>  $i,
+                                                    'monto'         =>  $monto,
+                                                    'cuota'         =>  $cuota,
+                                                    'frecuencia'    =>  1,
+                                                    'status'        =>  0
+                                                ]);
+                                            }
+                                        }
+
+                                        //oferta Vivieda 0%
+                                        $monto = $creditoAnterior;
+                                        $ical = $monto * $tasa;
+                                        $kcal = $monto / 13;
+                                        $cuota = $ical + $kcal;
+                                        if ($cuota <= $capacidadPago35) {
+                                            $oferta = OfertaDos::create([
+                                                'idcliente'     =>  $credito->idCliente,
+                                                'idto'          =>  2,
+                                                'idcredito'     =>  $credito->idCredito,
+                                                'fechai'        =>  date('Y-m-d'),
+                                                'fechaf'        =>  $nuevaFecha,
+                                                'plazo'         =>  13,
+                                                'monto'         =>  $monto,
+                                                'cuota'         =>  $cuota,
+                                                'frecuencia'    =>  1,
+                                                'status'        =>  0
+                                            ]);
+                                        }
+
+                                        //ofertas productivo 0%
+                                        for ($i=6; $i <=12 ; $i++) { 
+                                            $monto = $creditoAnterior;
+                                            $ical = $monto * $tasa;
+                                            $kcal = $monto / $i;
+                                            $cuota = $ical + $kcal;
+                                            if ($cuota <= $capacidadPago50) {
+                                                $oferta = OfertaDos::create([
+                                                    'idcliente'     =>  $credito->idCliente,
+                                                    'idto'          =>  1,
+                                                    'idcredito'     =>  $credito->idCredito,
+                                                    'fechai'        =>  date('Y-m-d'),
+                                                    'fechaf'        =>  $nuevaFecha,
+                                                    'plazo'         =>  $i,
+                                                    'monto'         =>  $monto,
+                                                    'cuota'         =>  $cuota,
+                                                    'frecuencia'    =>  1,
+                                                    'status'        =>  0
+                                                ]);
+                                            }
+                                        }
+
+                                    }
+                                    elseif($credito->product->negocio_op == 'PRODUCTIVO'){
+
+                                        //ofertas productivo 30%
+                                        for ($i=$plazo; $i <=12 ; $i++) { 
+                                            $monto = $creditoAnterior + ($creditoAnterior * $incremento);
+                                            $ical = $monto * $tasa;
+                                            $kcal = $monto / $i;
+                                            $cuota = $ical + $kcal;
+                                            if ($cuota <= $capacidadPago50) {
+                                                $oferta = OfertaDos::create([
+                                                    'idcliente'     =>  $credito->idCliente,
+                                                    'idto'          =>  1,
+                                                    'idcredito'     =>  $credito->idCredito,
+                                                    'fechai'        =>  date('Y-m-d'),
+                                                    'fechaf'        =>  $nuevaFecha,
+                                                    'plazo'         =>  $i,
+                                                    'monto'         =>  $monto,
+                                                    'cuota'         =>  $cuota,
+                                                    'frecuencia'    =>  1,
+                                                    'status'        =>  0
+                                                ]);
+                                            }
+                                        }
+
+                                        //oferta productivo 0%
+                                        $monto = $creditoAnterior;
+                                        $ical = $monto * $tasa;
+                                        $kcal = $monto / 6;
+                                        $cuota = $ical + $kcal;
+                                        if ($cuota <= $capacidadPago50) {
+                                            $oferta = OfertaDos::create([
+                                                'idcliente'     =>  $credito->idCliente,
+                                                'idto'          =>  1,
+                                                'idcredito'     =>  $credito->idCredito,
+                                                'fechai'        =>  date('Y-m-d'),
+                                                'fechaf'        =>  $nuevaFecha,
+                                                'plazo'         =>  6,
+                                                'monto'         =>  $monto,
+                                                'cuota'         =>  $cuota,
+                                                'frecuencia'    =>  1,
+                                                'status'        =>  0
+                                            ]);
+                                        }
+                                        
+                                        //ofertas Vivienda 30%
+                                        for ($j=13; $j <=19 ; $j++) {
+                                        
+                                            $monto = $creditoAnterior + ($creditoAnterior * $incremento);
+                                            $ical = $monto * $tasa;
+                                            $kcal = $monto / $j;
+                                            $cuota = $ical + $kcal;
+                                            if ($cuota <= $capacidadPago35) {
+                                                $oferta = OfertaDos::create([
+                                                    'idcliente'     =>  $credito->idCliente,
+                                                    'idto'          =>  2,
+                                                    'idcredito'     =>  $credito->idCredito,
+                                                    'fechai'        =>  date('Y-m-d'),
+                                                    'fechaf'        =>  $nuevaFecha,
+                                                    'plazo'         =>  $j,
+                                                    'monto'         =>  $monto,
+                                                    'cuota'         =>  $cuota,
+                                                    'frecuencia'    =>  1,
+                                                    'status'        =>  0
+                                                ]);
+                                            }
+                                        }
+
+                                        //oferta Vivienda 0%
+                                        $monto = $creditoAnterior;
+                                        $ical = $monto * $tasa;
+                                        $kcal = $monto / 13;
+                                        $cuota = $ical + $kcal;
+                                        //return $capacidadPago;
+                                        if ($cuota <= $capacidadPago35) {
+                                            $oferta = OfertaDos::create([
+                                                'idcliente'     =>  $credito->idCliente,
+                                                'idto'          =>  2,
+                                                'idcredito'     =>  $credito->idCredito,
+                                                'fechai'        =>  date('Y-m-d'),
+                                                'fechaf'        =>  $nuevaFecha,
+                                                'plazo'         =>  13,
+                                                'monto'         =>  $monto,
+                                                'cuota'         =>  $cuota,
+                                                'frecuencia'    =>  1,
+                                                'status'        =>  0
+                                            ]);
+                                        }
+                                    }
+
+                                    //return redirect()->route('renovacion.index')->with(['mensaje'=>"Calificado con &Eacute;xito"]);
+                                    //return back()->withInput()->with(['mensaje'=>"Calificado con &Eacute;xito"]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }   
+        }
+        return $ofertasHechas;
     }
 
     public function resumenAvance(Request $request){

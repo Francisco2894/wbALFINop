@@ -49,6 +49,7 @@ class PdfController extends Controller
         $totalpv=0;
         $totaloi=0;
         $totala=0;
+        $venta=0;
         $sucursal = Sucursal::where('idSucursal',$request->sucursal)->first();
         foreach ($transacionesVenta as $venta) {
             $totalv = $totalv + $venta->monto;
@@ -74,15 +75,25 @@ class PdfController extends Controller
             $totaloi = $totaloi + $oi->monto;
         }
         foreach ($activos as $act) {
-            $totala = $totala + $act->monto;
+            $totala = $totalv + $act->monto;
         }
+
+        $ventasMensuales = $totalv * 4;
+        $compraMensuales = $totalc * 4;
+        $utilidadBruta = $ventasMensuales - $compraMensuales;
+        $utilidadNeta = $utilidadBruta - $totalo;
+        $porcentajeOtrosIngresos = ($totaloi) * 0.3;
+        $disponible = $utilidadNeta + $porcentajeOtrosIngresos - $totalf;
+        $capacidadPago = $disponible * 0.3;
+        $capacidadPago50 = $disponible * 0.5;
 
         $coberturaGarantia = ($garantia->valorEstimado / $oferta->monto)*100;
         $pagoMensual = ($oferta->monto/$oferta->plazo) + ($oferta->monto*0.041);
         $fecha = date('d_m_Y');
         $pdf = PDF::loadView('socioeconomico.pdfinfo', compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
         'productos','transacionesVenta','transacionesCompra','actividad','totalc','totalv','totalo','totalf','totaloi','totala','totalp',
-        'totalpv','cliente','sucursal','garantia','oferta','coberturaGarantia','pagoMensual'));
+        'totalpv','cliente','sucursal','garantia','oferta','coberturaGarantia','pagoMensual','ventasMensuales','compraMensuales','utilidadBruta',
+        'utilidadNeta','porcentajeOtrosIngresos','disponible','capacidadPago','capacidadPago50'));
         //return $pdf->download("AIS-$cliente->idcliente-$fecha.pdf");
         return $pdf->stream("AIS-$cliente->idcliente-$fecha.pdf");
     }

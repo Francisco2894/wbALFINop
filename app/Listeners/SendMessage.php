@@ -20,9 +20,9 @@ class SendMessage
     public function handle(SendOffer $event)
     {
         //
-        //Mail::to($event->usuario)->queue(
+        //Mail::to(['maría.sanchez@alfin.mx','soporte.alfin2.0@gmail.com'])->queue( tiene acento maria
         Mail::to(['coordinador.soporteinf@alfin.mx','soporte.alfin2.0@gmail.com'])->queue(
-            new OfferMessage($event->oferta)
+            new OfferMessage($event->oferta, $event->credito)
         );
     }
 }

@@ -51,6 +51,11 @@ class Credito extends Model
   {
       return $this->belongsTo(Producto::class, 'cveproducto');
   }
+
+  public function devengo()
+  {
+      return $this->belongsTo(Devengo::class, 'idCredito', 'idCredito');
+  }
   
   protected $guarded=[ ];
 }

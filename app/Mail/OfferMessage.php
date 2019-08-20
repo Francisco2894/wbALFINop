@@ -10,17 +10,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class OfferMessage extends Mailable
 {
     use Queueable, SerializesModels;
-    public $oferta;
+    public $oferta, $credito;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($oferta)
+    public function __construct($oferta, $credito)
     {
         //
         $this->oferta = $oferta;
+        $this->credito = $credito;
     }
 
     /**
