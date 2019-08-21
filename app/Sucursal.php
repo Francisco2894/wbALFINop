@@ -8,6 +8,8 @@ class Sucursal extends Model
 {
   protected $table='catsucursales';
   protected $primaryKey='idSucursal';
+  public $keyType = 'string';
+
 
   public $timestamps=false;
 

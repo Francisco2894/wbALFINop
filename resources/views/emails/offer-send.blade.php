@@ -82,11 +82,16 @@
 </style>
 
 @component('mail::message')
-<h2 style="text-align: center; background-color: #428bca;">Precalificación de refinanciamiento</h2>
+
+<p><strong>ID Cliente:</strong> {{ $credito->idCliente }}</p>
+<p><strong>Nombre del Cliente:</strong> {{ $credito->nomCliente }}</p>
+<p><strong>Vigencia de la Oferta:</strong> {{ date('d-m-Y', strtotime($oferta->fechai)) }} - {{ date('d-m-Y', strtotime($oferta->fechaf)) }}</p>
+
+<h2 style="text-align: center; background-color: #428bca; color: white;">Precalificación de refinanciamiento</h2>
 
 <table>
     <thead>
-        <tr><th colspan="6" style="background-color: #5bc0de;"><h3 style="text-align: center;">Condiciones de Credito Anterior</h3></th></tr>
+        <tr><th colspan="6" style="background-color: #5bc0de;"><h3 style="text-align: center; color: white;">Condiciones de Credito Anterior</h3></th></tr>
         <tr>
             <th>Producto</th>
             <th>Plazo</th>
@@ -112,7 +117,7 @@
 <table>
     <thead>
         <tr>
-            <th colspan="6" style="background-color: #5bc0de;"><h3 style="text-align: center;">Oferta Aceptada (Producto oferta)</h3></th>
+            <th colspan="6" style="background-color: #5bc0de;"><h3 style="text-align: center; color: white;">Oferta Aceptada (Producto oferta)</h3></th>
         </tr>
         <tr>
             <th>Incremento</th>
@@ -120,7 +125,7 @@
             <th>Frecuencia</th>
             <th>Monto</th>
             <th>Amortizaci&oacute;n</th>
-            <th>Saldo Capital</th>
+            <th>Vigencia de la Oferta</th>
         </tr>
     </thead>
     <tbody>
