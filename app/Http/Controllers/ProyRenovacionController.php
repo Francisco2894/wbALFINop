@@ -109,6 +109,7 @@ class ProyRenovacionController extends Controller
                 $datefo = date ('Y-m-j',$datefo);
 
                 $ofertas = Oferta::pluck('idcliente');
+                $ofertasCredito = Oferta::pluck('idcredito');
                 $blackList = BlackList::pluck('idcredito');
                 $blackListp = BlackList::pluck('idcliente');
                 
@@ -142,6 +143,8 @@ class ProyRenovacionController extends Controller
                     ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
                     ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente','cp.idSucursal', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
                     ->where('tblcreditos.idPerfil', '=', $query)
+                    ->where('s.estatus', '=', '1')
+                    ->whereIn('tblcreditos.idCredito', $ofertasCredito)
                     ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
                     ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
                     ->whereRaw('fechaFin>="'.$dateio.'" and fechaFin<="'.$datefo.'"')//fecha de hoy al 31 del otro mes.
@@ -179,6 +182,8 @@ class ProyRenovacionController extends Controller
                     ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
                     ->select('tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente','cp.idSucursal', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular', DB::raw('IF(r.renueva=0,"No",IF(r.renueva=1,"Si","")) as renueva'), 'r.montoRenovacion','catp.refinan_si')
                     ->where('idSucursal', '=', $querys)
+                    ->where('s.estatus', '=', '1')
+                    ->whereIn('tblcreditos.idCredito', $ofertasCredito)
                     ->where("nomCliente", "LIKE", "%{$request->get('cliente')}%") //busqueda de nombre
                     ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
                     ->whereRaw('fechaFin>="'.$dateio.'" and fechaFin<="'.$datefo.'"')//fecha de hoy al 31 del otro mes.

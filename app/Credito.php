@@ -49,7 +49,7 @@ class Credito extends Model
 
   public function product()
   {
-      return $this->belongsTo(Producto::class, 'cveproducto');
+      return $this->belongsTo(Producto::class, 'cveproducto','cveproducto');
   }
 
   public function devengo()
