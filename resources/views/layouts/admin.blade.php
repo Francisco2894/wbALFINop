@@ -141,6 +141,12 @@
 				<li>
 					<a href="{{URL::action('RptbiController@rptSesion')}}"><i class="material-icons">list</i>Sesiones</a>
 				</li>
+				<li>
+					<a href="{{ route('renovaciones_totales') }}"><i class="material-icons">show_chart</i>Renovaciones</a>
+				</li>
+				<li>
+					<a href="{{ route('ofertas_totales') }}"><i class="material-icons">show_chart</i>Ofertas</a>
+				</li>
 			</ul>
 			</li>
 				@if (Auth::user()->idNivel<>6 || Auth::user()->idNivel<>5)

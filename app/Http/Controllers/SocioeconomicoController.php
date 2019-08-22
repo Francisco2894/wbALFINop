@@ -613,7 +613,16 @@ class SocioeconomicoController extends Controller
                             //fecha fin
                             $fechaFin = $credito->fechaFin;
                             $nuevaFecha = strtotime ('-5 day',strtotime ($fechaFin)) ;
-                            $nuevaFecha = date ('Y-m-j',$nuevaFecha);
+                            $nuevaFecha = date ('Y-m-d',$nuevaFecha);
+
+                            $fechainicio = date('Y-m-d');
+                            $fechafin = strtotime($nuevaFecha);
+
+                            if ($fechafin < $fechainicio) {
+                                $fechainicio = $nuevaFecha;
+                            }else{
+                                $fechainicio = date('Y-m-d');
+                            }
                             //return  $credito->product->negocio_op;
                             if ($credito->product->negocio_op == 'VIVIENDA') {
                                 if ($plazo < 13) {
@@ -631,7 +640,7 @@ class SocioeconomicoController extends Controller
                                             'idcliente'     =>  $credito->idCliente,
                                             'idto'          =>  2,
                                             'idcredito'     =>  $credito->idCredito,
-                                            'fechai'        =>  date('Y-m-d'),
+                                            'fechai'        =>  $fechainicio,
                                             'fechaf'        =>  $nuevaFecha,
                                             'plazo'         =>  $i,
                                             'monto'         =>  $monto,
@@ -652,7 +661,7 @@ class SocioeconomicoController extends Controller
                                         'idcliente'     =>  $credito->idCliente,
                                         'idto'          =>  2,
                                         'idcredito'     =>  $credito->idCredito,
-                                        'fechai'        =>  date('Y-m-d'),
+                                        'fechai'        =>  $fechainicio,
                                         'fechaf'        =>  $nuevaFecha,
                                         'plazo'         =>  13,
                                         'monto'         =>  $monto,
@@ -673,7 +682,7 @@ class SocioeconomicoController extends Controller
                                             'idcliente'     =>  $credito->idCliente,
                                             'idto'          =>  1,
                                             'idcredito'     =>  $credito->idCredito,
-                                            'fechai'        =>  date('Y-m-d'),
+                                            'fechai'        =>  $fechainicio,
                                             'fechaf'        =>  $nuevaFecha,
                                             'plazo'         =>  $i,
                                             'monto'         =>  $monto,
@@ -701,7 +710,7 @@ class SocioeconomicoController extends Controller
                                             'idcliente'     =>  $credito->idCliente,
                                             'idto'          =>  1,
                                             'idcredito'     =>  $credito->idCredito,
-                                            'fechai'        =>  date('Y-m-d'),
+                                            'fechai'        =>  $fechainicio,
                                             'fechaf'        =>  $nuevaFecha,
                                             'plazo'         =>  $i,
                                             'monto'         =>  $monto,
@@ -722,7 +731,7 @@ class SocioeconomicoController extends Controller
                                         'idcliente'     =>  $credito->idCliente,
                                         'idto'          =>  1,
                                         'idcredito'     =>  $credito->idCredito,
-                                        'fechai'        =>  date('Y-m-d'),
+                                        'fechai'        =>  $fechainicio,
                                         'fechaf'        =>  $nuevaFecha,
                                         'plazo'         =>  6,
                                         'monto'         =>  $monto,
@@ -744,7 +753,7 @@ class SocioeconomicoController extends Controller
                                             'idcliente'     =>  $credito->idCliente,
                                             'idto'          =>  2,
                                             'idcredito'     =>  $credito->idCredito,
-                                            'fechai'        =>  date('Y-m-d'),
+                                            'fechai'        =>  $fechainicio,
                                             'fechaf'        =>  $nuevaFecha,
                                             'plazo'         =>  $j,
                                             'monto'         =>  $monto,
@@ -767,7 +776,7 @@ class SocioeconomicoController extends Controller
                                         'idcliente'     =>  $credito->idCliente,
                                         'idto'          =>  2,
                                         'idcredito'     =>  $credito->idCredito,
-                                        'fechai'        =>  date('Y-m-d'),
+                                        'fechai'        =>  $fechainicio,
                                         'fechaf'        =>  $nuevaFecha,
                                         'plazo'         =>  13,
                                         'monto'         =>  $monto,
@@ -802,7 +811,54 @@ class SocioeconomicoController extends Controller
 
     public function calificarOfertaDos(Request $request)
     {   
-        $creditos = Credito::all();
+        $datei = date('Y-m-d');
+    
+        $nummonth=0;
+
+        $nummonth=date('m') + 1;
+        if ($nummonth>9) {
+            $month=$nummonth;
+        } else {
+            $month="0".$nummonth;
+        }
+
+        if ($nummonth>11) {
+            $datef=(date('Y')+ 1)."/"."01"."/31";
+        }else {
+            $datef=date('Y')."/".$month."/31";
+        }
+        
+        $dateio = strtotime ('-5 day',strtotime ($datei)) ;
+        $dateio = date ('Y-m-j',$dateio);
+
+        $datefo = strtotime ('+5 day',strtotime ($datef)) ;
+        $datefo = date ('Y-m-j',$datefo);
+
+        $ofertas = Oferta::pluck('idcliente');
+        $blackListp = BlackList::pluck('idcliente');
+
+        $creditos = Credito::
+        join('tbldevengos as dv', 'dv.idCredito', '=', 'tblcreditos.idCredito')
+        ->join('tblsituacioncredito as s', 'tblcreditos.idCredito', '=', 's.idCredito')
+        ->join('tbldomicilioscredito as dc', 'tblcreditos.idCredito', '=', 'dc.idCredito')
+        ->join('catperfiles as cp', 'tblcreditos.idPerfil', '=', 'cp.idPerfil')
+        ->join('catproducto as catp', 'tblcreditos.cveproducto', '=', 'catp.cveproducto') //agregamos la relacion con catproducto
+        ->join('catsucursales as sc', 'cp.idSucursal','=','sc.idSucursal')
+        ->join('catregionales as rg', 'rg.idRegional','=','sc.idRegional')
+        //->join('tbldevengos as dv', 'dv.idCredito', '=', 'tblcreditos.idCredito')
+        ->select('tblcreditos.idCredito','tblcreditos.cveproducto','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular','catp.refinan_si','sc.sucursal','rg.descripcion','catp.producto','tblcreditos.frecuenciaPago','dv.cuota',DB::raw('max(fechaDevengo) as fechaDevengo'))
+        ->groupBy(['dv.cuota','tblcreditos.cveproducto','tblcreditos.idCredito','tblcreditos.idCliente', 'tblcreditos.nomCliente', 'tblcreditos.fechaFin', 's.maxDiasAtraso', 'tblcreditos.montoInicial', 'dc.colonia', 'dc.telefonoCelular','catp.refinan_si','sc.sucursal','rg.descripcion','catp.producto','tblcreditos.frecuenciaPago'])
+        ->where('s.estatus', '=', '1')
+        ->whereNotIn('tblcreditos.idCliente',$ofertas) //que no este en ofertas
+        ->whereNotIn('tblcreditos.idCliente',$blackListp) //que no este en lista actual
+        ->whereRaw('fechaFin>="'.$datei.'" and fechaFin<="'.$datef.'"')//fecha de hoy al 31 del otro mes.
+        ->where('s.maxDiasAtraso', "<", 31) //maximo dias atrazado es 16
+        ->where('refinan_si',1) //refinan_si con valor en 1
+        ->orderBy('tblcreditos.fechaFin', 'ASC')
+        ->orderBy('dc.colonia', 'DESC')
+        ->get();
+
+        //return count($creditos);
         $ofertasHechas = 0 ;
         $cve = [];
         $pasar = 0;
@@ -810,6 +866,7 @@ class SocioeconomicoController extends Controller
             $cliente = Cliente::where('idcliente',$credito->idCliente)->first();
             if (!is_null($credito->product)) {
                 if (!is_null($cliente)) {
+                    //return $credito->idCliente;
                     //$credito = Credito::where('idCredito',$request->idCredito)->first();
                     $informacion = InformacionCrediticia::where('idcliente',$credito->idCliente)->orderBy('fechaconsulta',' DESC')->get();//buscamos la informacion crediticia
                     if (count($informacion)>0) {
@@ -898,8 +955,17 @@ class SocioeconomicoController extends Controller
                                         
                                         //fecha fin
                                         $fechaFin = $credito->fechaFin;
-                                        $nuevaFecha = strtotime ('+5 day',strtotime ($fechaFin)) ;
-                                        $nuevaFecha = date ('Y-m-j',$nuevaFecha);
+                                        $nuevaFecha = strtotime ('-5 day',strtotime ($fechaFin)) ;
+                                        $nuevaFecha = date ('Y-m-d',$nuevaFecha);
+
+                                        $fechainicio = strtotime(date('Y-m-d'));
+                                        $fechafin = strtotime($nuevaFecha);
+
+                                        if ($fechafin < $fechainicio) {
+                                            $fechainicio = $nuevaFecha;
+                                        }else{
+                                            $fechainicio = date('Y-m-d');
+                                        }
                                         //return  $credito->product->negocio_op;
                                         if ($credito->product->negocio_op == 'VIVIENDA') {
                                             if ($plazo < 13) {
@@ -917,7 +983,7 @@ class SocioeconomicoController extends Controller
                                                         'idcliente'     =>  $credito->idCliente,
                                                         'idto'          =>  2,
                                                         'idcredito'     =>  $credito->idCredito,
-                                                        'fechai'        =>  date('Y-m-d'),
+                                                        'fechai'        =>  $fechainicio,
                                                         'fechaf'        =>  $nuevaFecha,
                                                         'plazo'         =>  $i,
                                                         'monto'         =>  $monto,
@@ -938,7 +1004,7 @@ class SocioeconomicoController extends Controller
                                                     'idcliente'     =>  $credito->idCliente,
                                                     'idto'          =>  2,
                                                     'idcredito'     =>  $credito->idCredito,
-                                                    'fechai'        =>  date('Y-m-d'),
+                                                    'fechai'        =>  $fechainicio,
                                                     'fechaf'        =>  $nuevaFecha,
                                                     'plazo'         =>  13,
                                                     'monto'         =>  $monto,
@@ -959,7 +1025,7 @@ class SocioeconomicoController extends Controller
                                                         'idcliente'     =>  $credito->idCliente,
                                                         'idto'          =>  1,
                                                         'idcredito'     =>  $credito->idCredito,
-                                                        'fechai'        =>  date('Y-m-d'),
+                                                        'fechai'        =>  $fechainicio,
                                                         'fechaf'        =>  $nuevaFecha,
                                                         'plazo'         =>  $i,
                                                         'monto'         =>  $monto,
@@ -987,7 +1053,7 @@ class SocioeconomicoController extends Controller
                                                         'idcliente'     =>  $credito->idCliente,
                                                         'idto'          =>  1,
                                                         'idcredito'     =>  $credito->idCredito,
-                                                        'fechai'        =>  date('Y-m-d'),
+                                                        'fechai'        =>  $fechainicio,
                                                         'fechaf'        =>  $nuevaFecha,
                                                         'plazo'         =>  $i,
                                                         'monto'         =>  $monto,
@@ -1008,7 +1074,7 @@ class SocioeconomicoController extends Controller
                                                     'idcliente'     =>  $credito->idCliente,
                                                     'idto'          =>  1,
                                                     'idcredito'     =>  $credito->idCredito,
-                                                    'fechai'        =>  date('Y-m-d'),
+                                                    'fechai'        =>  $fechainicio,
                                                     'fechaf'        =>  $nuevaFecha,
                                                     'plazo'         =>  6,
                                                     'monto'         =>  $monto,
@@ -1030,7 +1096,7 @@ class SocioeconomicoController extends Controller
                                                         'idcliente'     =>  $credito->idCliente,
                                                         'idto'          =>  2,
                                                         'idcredito'     =>  $credito->idCredito,
-                                                        'fechai'        =>  date('Y-m-d'),
+                                                        'fechai'        =>  $fechainicio,
                                                         'fechaf'        =>  $nuevaFecha,
                                                         'plazo'         =>  $j,
                                                         'monto'         =>  $monto,
@@ -1052,7 +1118,7 @@ class SocioeconomicoController extends Controller
                                                     'idcliente'     =>  $credito->idCliente,
                                                     'idto'          =>  2,
                                                     'idcredito'     =>  $credito->idCredito,
-                                                    'fechai'        =>  date('Y-m-d'),
+                                                    'fechai'        =>  $fechainicio,
                                                     'fechaf'        =>  $nuevaFecha,
                                                     'plazo'         =>  13,
                                                     'monto'         =>  $monto,

@@ -44,6 +44,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('ofertas/{idCliente}', 'SocioeconomicoController@ofertas')->name('ofertas');
     Route::get('oferta_aceptada/{oferta}','SocioeconomicoController@ofertaAceptada')->name('ofertaAceptada');
     Route::get('verificar_oferta/{cliente}','SocioeconomicoController@verificarOferta')->name('verificarOferta');
+    Route::resource('consulta', 'ConsultaController');
+    Route::get('renovaciones_totales', 'ConsultaController@renovaciones')->name('renovaciones_totales');
+    Route::get('ofertas_totales', 'ConsultaController@ofertas')->name('ofertas_totales');
 
     //Route::post('cerrar_sesion', 'LoginController@logout')->name('cerrarSesion');
 
