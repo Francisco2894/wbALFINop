@@ -129,7 +129,7 @@ class ConsultaController extends Controller
 
         Excel::create('Vencimientos', function($excel) use ($vencimientos){
             $excel->sheet('dtResOP', function($sheet) use($vencimientos) {
-                $sheet->row(1,['ID Cliente','ID Credito','Nombre','Fecha Fin','Max Atraso','Monto Inicial','Solonia','Telefono','Sucursal','Regional','Producto','Frecuencia','Cuota']);
+                $sheet->row(1,['ID Cliente','ID Credito','Nombre','Fecha Fin','Max Atraso','Monto Inicial','Colonia','Telefono','Sucursal','Regional','Producto','Frecuencia','Cuota']);
                 $sheet->setColumnFormat(array(
                     'D'=>'dd/mm/yyyy',
                     'F'=>'0.00',
