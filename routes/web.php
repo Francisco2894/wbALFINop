@@ -21,7 +21,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('agenda/devengo','DevengoController');
     Route::resource('agenda/acuerdo','AcuerdoController');
     Route::resource('agenda/vencimiento','VencimientoController');
-    Route::resource('agenda/renovacion','RenovacionController');
+    Route::resource('agenda/renovaciona','RenovacionController');
     Route::resource('agenda/promocion','ProspectobcController');
     Route::resource('agenda/gestor','GestorController');
 
