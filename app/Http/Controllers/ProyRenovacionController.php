@@ -15,6 +15,8 @@ use wbALFINop\BlackList;
 use wbALFINop\Producto;
 use wbALFINop\Perfil;
 
+use wbALFINop\User;
+
 class ProyRenovacionController extends Controller
 {
     /**
@@ -25,6 +27,11 @@ class ProyRenovacionController extends Controller
     public function index(Request $request)
     {
         //
+        // return $users = User::join('catperfiles as ct','ct.idPerfil','=','users.idPerfil')
+        // ->join('catsucursales as sc','sc.idSucursal','=','ct.idSucursal')
+        // ->select('users.*','sc.idSucursal')
+        // ->where('idNivel',4)
+        // ->where('ct.idSucursal','45V')->get();
         if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6 && Auth::user()->idNivel!=3 && Auth::user()->idNivel!=4) {
             return redirect()->route('devengo.index');
         }
@@ -63,8 +70,8 @@ class ProyRenovacionController extends Controller
 
         
             
-                if (Auth::user()->idNivel>3) {
-                    if (Auth::user()->idNivel==6) {
+                if (Auth::user()->idNivel>=3) {
+                    if (Auth::user()->idNivel==6 || Auth::user()->idNivel==4 || Auth::user()->idNivel==3) {
                         $query= trim($request ->get('searchTxt'));
                     } else {
                         $query=Auth::user()->idPerfil;

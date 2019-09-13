@@ -25,7 +25,9 @@
           <th>Celular</th>
           <th>Socioeconomico</th>
           <th>&nbsp;</th>
-          <th>Cal. Oferta</th>
+          @if (auth()->user()->idNivel !=4 && auth()->user()->idNivel !=3)
+          <th>Cal. Oferta</th>              
+          @endif
         </tr>
         </thead>
         @php
@@ -41,13 +43,15 @@
           <td>{{'$ '.number_format($vencimiento->montoInicial,2)}}</td>
           <td>{{$vencimiento->colonia}}</td>
           <td>{{$vencimiento->telefonoCelular}}</td>
-          <td class="text-center">
+          @if (auth()->user()->idNivel !=4 && auth()->user()->idNivel !=3)
+            <td class="text-center">
               @if (count($vencimiento->actividades) > 0)
-              <a href="{{URL::action('SocioeconomicoController@edit',$vencimiento->idCredito)}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
+                <a href="{{URL::action('SocioeconomicoController@edit',$vencimiento->idCredito)}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
               @else
-              <a href="{{URL::action('SocioeconomicoController@create',['id'=>$vencimiento->idCredito])}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
+                <a href="{{URL::action('SocioeconomicoController@create',['id'=>$vencimiento->idCredito])}}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
               @endif 
-          </td>
+            </td>
+          @endif
           <td class="text-center">
             @foreach ($actividades as $actividad)
               @if ($vencimiento->idCliente == $actividad->idcliente)
@@ -55,16 +59,18 @@
               @endif 
             @endforeach
           </td>
-          <td class="text-center">
-            @foreach ($actividades as $actividad)
-              @if ($vencimiento->idCliente == $actividad->idcliente)
-                {!!Form::open(['route'=>'califiaroferta','method'=>'POST', 'id'=>"calificar$vencimiento->idCredito"])!!}
-                  <input type="hidden" value="{{ $vencimiento->idCredito }}" name="idCredito">
-                  <button class="btn btn-primary btn-simple btn-xs" type="button" onclick="calificar({{ $vencimiento->idCredito }});" name="btnSocioeconomico" rel="tooltip" title="¿Calificar?"><i class="material-icons">playlist_add_check</i></button>
-                {{Form::close()}}
-              @endif 
-            @endforeach
-          </td>
+          @if (auth()->user()->idNivel !=4 && auth()->user()->idNivel !=3)
+            <td class="text-center">
+              @foreach ($actividades as $actividad)
+                @if ($vencimiento->idCliente == $actividad->idcliente)
+                  {!!Form::open(['route'=>'califiaroferta','method'=>'POST', 'id'=>"calificar$vencimiento->idCredito"])!!}
+                    <input type="hidden" value="{{ $vencimiento->idCredito }}" name="idCredito">
+                    <button class="btn btn-primary btn-simple btn-xs" type="button" onclick="calificar({{ $vencimiento->idCredito }});" name="btnSocioeconomico" rel="tooltip" title="¿Calificar?"><i class="material-icons">playlist_add_check</i></button>
+                  {{Form::close()}}
+                @endif 
+              @endforeach
+            </td>
+          @endif 
         </tr>
       @endforeach
       </table>
@@ -109,7 +115,7 @@
                   <a href="{{ route('informacion',$vencimientoOferta->idCredito) }}" ><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Socioeconomicos"><i class="material-icons">monetization_on</i></button></a>
                 </td>
                 <td class="text-center">
-                  <button class="btn btn-primary btn-simple btn-xs" data-toggle="modal" data-backdrop="false" data-target="#ofertas" onclick="verificarOferta({{ $vencimientoOferta->idCredito }});"><i class="material-icons">info</i></button>
+                  <button class="btn btn-primary btn-simple btn-xs" onclick="verificarOferta({{ $vencimientoOferta->idCredito }});"><i class="material-icons">info</i></button>
                 </td>
                 <td class="text-center">
                   <a href="{{ route('pdfrenovacion',['cliente'=>$vencimientoOferta->idCredito,'sucursal'=>$querys]) }}" style="{{ count($vencimientoOferta->oferta)==1?'':'display: none;' }}" id="pdf{{ $vencimientoOferta->idCredito }}"><button class="btn btn-primary btn-simple btn-xs" name="btnSocioeconomico" rel="tooltip" title="Descargar"><i class="material-icons">save_alt</i></button></a>
@@ -123,10 +129,39 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="calificarDatos" role="dialog" tabindex="-1" aria-labelledby="calificarDatos" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center">Solo podra Calificar esta Oferta 1 vez
+            <br>
+            <strong>¿Esta Seguro de Calificarla Ahora?</strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+              <input type="hidden" id="idCalificar">
+              <div class="col-sm-6">
+                <button type="button" class="btn btn-success btn-block" id="aceptar" onclick="verificarCalificacion();">Calificar</button>
+              </div>
+              <div class="col-sm-6">
+                <button type="button" class="btn btn-default btn-block" id="cancelar" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 <!-- Modal -->
 <div class="modal fade" id="ofertas" tabindex="-1" role="dialog" aria-labelledby="oferta" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="margin-top: 130px;">
+    <div class="modal-content">
       <div class="modal-header">
       </div>
       <div class="modal-body">
@@ -192,10 +227,11 @@
 
       function verificarOferta(id)
       {
+        $("#ofertas").appendTo("body").modal('show');
         $('#tablaproductivo').empty();
         $('#tablavivienda').empty();
         $.ajax({
-          url     :  "/verificar_oferta/"+id,
+          url     :  "{{ url('verificar_oferta') }}/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -213,15 +249,23 @@
       }
       
       function calificar(credito){
-        var calificar = confirm('Solo podra Calificar esta Oferta 1 vez, ¿Esta seguro de Calificarla Ahora?')
-        if (calificar == true) {
-          $('#calificar'+credito).submit(); 
-        }
+        $('#idCalificar').val(credito);
+        $("#calificarDatos").appendTo("body").modal('show');
+      }
+      function verificarCalificacion(){
+        var credito = $('#idCalificar').val();
+        $('#aceptar').prop('disabled', true);;
+        $('#cancelar').prop('disabled', true);;
+        console.log(credito)
+        //var calificar = confirm('Solo podra Calificar esta Oferta 1 vez, ¿Esta seguro de Calificarla Ahora?')
+        // if (calificar == true) {
+        $('#calificar'+credito).submit(); 
+        // }
       }
 
       function listarOferta(id){
         $.ajax({
-          url     :  "/ofertas/"+id,
+          url     :  "{{ url('ofertas') }}/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -289,7 +333,7 @@
           $('#tablaproductivo').empty();
           $('#tablavivienda').empty();
           $.ajax({
-            url     :  "/oferta_aceptada/"+id,
+            url     :  "{{ url('oferta_aceptada') }}/"+id,
             type    :  'get',
             dataType:  'json',
             success :   function (response) {
@@ -354,7 +398,7 @@
       }
       function ofertas(id){
         $.ajax({
-          url     :  "/ofertas/"+id,
+          url     :  "{{ url('ofertas') }}/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -376,16 +420,28 @@
                       texto = 'Mensual';
                     }
 
-                    if (tipo == 1) {
-                      $('#tablaproductivo').append("<tr>"+
-                        "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                        "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button> </td></tr>"
-                      ); 
-                    } else {
-                      $('#tablavivienda').append("<tr>"+
-                        "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                        "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
-                      );
+                    if ({{ auth()->user()->idNivel }} !=4 && {{ auth()->user()->idNivel }} !=3) {
+                      if (tipo == 1) {
+                        $('#tablaproductivo').append("<tr>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button> </td></tr>"
+                        ); 
+                      } else {
+                        $('#tablavivienda').append("<tr>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
+                        );
+                      } 
+                    }else{
+                      if (tipo == 1) {
+                        $('#tablaproductivo').append("<tr>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"
+                        ); 
+                      } else {
+                        $('#tablavivienda').append("<tr>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"
+                        );
+                      }
                     }
                 }
               }

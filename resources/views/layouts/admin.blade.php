@@ -195,12 +195,14 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{{route('renovacion.index')}}"><i class="material-icons">attach_money</i> Socioeconomico</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{route('resumenAvance')}}"><i class="material-icons">timeline</i> Resumen de Avance</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{route('datosrenovacion')}}"><i class="material-icons">import_export</i> Datos de Renovacion</a>
-						</li>	
+						@if (auth()->user()->idNivel !=4 && auth()->user()->idNivel !=4)
+							<li class="nav-item">
+								<a class="nav-link" href="{{route('resumenAvance')}}"><i class="material-icons">timeline</i> Resumen de Avance</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{route('datosrenovacion')}}"><i class="material-icons">import_export</i> Datos de Renovacion</a>
+							</li>
+						@endif
 					</ul>
 				</li>
 				@endif
