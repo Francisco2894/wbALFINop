@@ -77,6 +77,7 @@ Route::group(['middleware' => 'admin'], function () {
     //Proceso Operaciones
     Route::get('proceso/operacion','DashOperacionController@index');
     Route::get('execProcesoOperacion','DashOperacionController@execDashOper');
+    Route::get('execProcesoOperacionSuc','DashOperacionController@execDashOperSuc');
     //Cálculo de comisiones
     Route::get('proceso/operacion/comision','ComisionController@index');
     Route::get('execCalcCom','ComisionController@execCalcCom');

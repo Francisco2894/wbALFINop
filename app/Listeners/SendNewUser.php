@@ -19,8 +19,8 @@ class SendNewUser
     public function handle(UserNew $event)
     {
         //
-        //Mail::to($event->usuario)->queue(
-        Mail::to('coordinador.soporteinf@alfin.mx')->queue(
+        Mail::to($event->usuario)->queue(
+        //Mail::to('coordinador.soporteinf@alfin.mx')->queue(
             new LoginAccess($event->usuario, $event->password)
         );
     }

@@ -180,7 +180,7 @@
 
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/./assets/js/moment.js"></script>
+    <script src="/agenda/assets/js/moment.js"></script>
     <script>
       let fechai, fechaf = "";
       let tipo, plazo = "";
@@ -193,7 +193,7 @@
         $('#tablaproductivo').empty();
         $('#tablavivienda').empty();
         $.ajax({
-          url     :  "/./verificar_oferta/"+id,
+          url     :  "/agenda/verificar_oferta/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -219,7 +219,7 @@
 
       function listarOferta(id){
         $.ajax({
-          url     :  "/./ofertas/"+id,
+          url     :  "/agenda/ofertas/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -286,7 +286,7 @@
           $('#tablaproductivo').empty();
           $('#tablavivienda').empty();
           $.ajax({
-            url     :  "/./oferta_aceptada/"+id,
+            url     :  "/agenda/oferta_aceptada/"+id,
             type    :  'get',
             dataType:  'json',
             success :   function (response) {
@@ -350,7 +350,7 @@
       }
       function ofertas(id){
         $.ajax({
-          url     :  "/./ofertas/"+id,
+          url     :  "/agenda/ofertas/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {

@@ -19,8 +19,8 @@ class SendNewPassword
     public function handle(UserNewPassword $event)
     {
         //Envio de correo electronico
-        //Mail::to($event->usuario)->queue(
-        Mail::to('coordinador.soporteinf@alfin.mx')->queue(
+        Mail::to($event->usuario)->queue(
+        //Mail::to('coordinador.soporteinf@alfin.mx')->queue(
             new LoginCredentials($event->usuario, $event->password)
         );
     }

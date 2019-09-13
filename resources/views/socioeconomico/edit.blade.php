@@ -833,7 +833,7 @@
 
         function inventarioTotal() {
             $.ajax({
-                url     :  "/./inventario/{{ $actividad->idact }}",
+                url     :  "/agenda/inventario/{{ $actividad->idact }}",
                 type    :  'get',
                 dataType:  'json',
                 success :   function (response) {

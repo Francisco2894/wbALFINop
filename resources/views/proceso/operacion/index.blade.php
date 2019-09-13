@@ -34,6 +34,20 @@
             </div>
             </div>
         </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="title">
+              <h3>Proceso resumen Operaciones por producto</h3>
+            </div>
+            <div class="card card-nav">
+            <div class="content">
+              <div class="form-group col-md-2">
+             <a href="{{URL::action('DashOperacionController@execDashOperSuc')}}" > <button type="button" class="btn btn-primary">EJECUTAR PROCESO <i class="material-icons">sync</i></button></a>
+           </div>
+            </div>
+            </div>
+            </div>
+        </div>
         {!!Form::open(array('url'=>'agenda/dataexcel/downloadOpe','method'=>'GET','autocomplete'=>'off','role'=>'search'))!!}
 
         <div class="row">

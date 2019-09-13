@@ -44,7 +44,7 @@ class ConsultaController extends Controller
 
         Excel::create('Ofertas', function($excel) use ($ofertas){
             $excel->sheet('dtResOP', function($sheet) use($ofertas) {
-                $sheet->row(1,['ID Cliente','ID Credito','Nombre','monto','frecuencia ','plazo','Score','Tipo','Fecha Inicio','Fecha Fin','Plazo','Monto','Frecuencia','Cuota']);
+                $sheet->row(1,['ID Cliente','ID Credito','Nombre','monto','frecuencia ','plazo','cuotaAnterior','Score','Tipo','Fecha Inicio','Fecha Fin','Plazo','Monto','Frecuencia','CuotaOfera']);
                 $sheet->setColumnFormat(array(
                     'D'=>'0.00',
                     'I'=>'dd-mm-YYYY',
@@ -60,14 +60,15 @@ class ConsultaController extends Controller
                     $row[3]=$res->montoInicial;
                     $row[4]=$res->frecuenciaPago;
                     $row[5]=$res->plazo;
-                    $row[6]=$res->score;
-                    $row[7]=$res->descripcion;
-                    $row[8]=date("d/m/Y", strtotime($res->fechai));
-                    $row[9]=date("d/m/Y", strtotime($res->fechaf));
-                    $row[10]=$res->plazoOferta;
-                    $row[11]=$res->monto;
-                    $row[12]=$res->frecuencia==1?'Mensual':'';
-                    $row[13]=$res->cuota;
+                    $row[6]=$res-> Devengo::where('idCredito','=', $res->idCredito)->first();
+                    $row[7]=$res->score;
+                    $row[8]=$res->descripcion;
+                    $row[9]=date("d/m/Y", strtotime($res->fechai));
+                    $row[10]=date("d/m/Y", strtotime($res->fechaf));
+                    $row[11]=$res->plazoOferta;
+                    $row[12]=$res->monto;
+                    $row[13]=$res->frecuencia==1?'Mensual':'';
+                    $row[14]=$res->cuota;
                     $sheet->appendRow($row);
                 }
             });

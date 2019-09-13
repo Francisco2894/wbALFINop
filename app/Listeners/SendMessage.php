@@ -21,7 +21,8 @@ class SendMessage
     {
         //
         //Mail::to(['maría.sanchez@alfin.mx','soporte.alfin2.0@gmail.com'])->queue( tiene acento maria
-        Mail::to(['coordinador.soporteinf@alfin.mx','soporte.alfin2.0@gmail.com'])->queue(
+        //Mail::to(['coordinador.soporteinf@alfin.mx','soporte.alfin2.0@gmail.com'])->queue(
+        Mail::to(['miguel.mendez@alfin.mx'])->queue(
             new OfferMessage($event->oferta, $event->credito)
         );
     }

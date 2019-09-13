@@ -127,16 +127,14 @@ class ExcelController extends Controller
           // }
 
           
-        return redirect()->route('datosrenovacion')->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación de Créditos ".$name]);
+        return redirect()->route('datosrenovacion')->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación de Inf Crediticia ".$name]);
     }
 
     public function importBlackList(BlackListRequest $request)
     {
-      global $r,$u,$r2,$u2;
+      global $r,$u;
       $r=0;
       $u=0;
-      $r2=0;
-      $u2=0;
 
             $path = Input::file('blklst')->getRealPath();
             $name = Input::file('blklst')->getClientOriginalName();
@@ -146,8 +144,7 @@ class ExcelController extends Controller
            //if ($pref=="SC") {
 
             Excel::filter('chunk')->load($path)->chunk(250, function ($reader) {
-             global $r,$u,$r2,$u2;
-
+              global $r,$u;
                 if (!empty($reader) && $reader->count()) {
                     foreach ($reader as $fila) {
 
@@ -157,7 +154,7 @@ class ExcelController extends Controller
                             'idcredito'         => $fila->idcredito,
                             'idcliente'         => $fila->idcliente,
                             'montocred'         => $fila->montocred,
-                            'cveProducto'       => $fila->cveProducto,
+                            'cveProducto'       => $fila->cveproducto,
                             'producto'          => $fila->producto
                           ]);
                           $r++;
@@ -165,6 +162,7 @@ class ExcelController extends Controller
                       }
                     }
                 });
+                
           // }else {
           //   return view('agenda.dataexcel.index')
           //   ->with(['records'=>0,'updaterecords'=>0,'proceso'=>"Favor de revisar el nombre del archivo ".$name])
@@ -173,7 +171,7 @@ class ExcelController extends Controller
           // }
 
           
-        return redirect()->route('datosrenovacion')->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación de Créditos ".$name]);
+        return redirect()->route('datosrenovacion')->with(['records'=>$r,'updaterecords'=>$u,'proceso'=>"Importación de BlackList ".$name]);
     }
 
     public function importsca()
@@ -574,8 +572,21 @@ class ExcelController extends Controller
         ->where('d.estatus', '=', '1')
         ->get();
         //$resumen->dd();
+        // consulta por producto
 
-       Excel::create('dtResOp'.date('Ymd'), function($excel) use($resumen) {
+        $resumenp=DB::table('tbldashopneg as d')
+        ->join('catconceptos as cc', 'd.idConcepto', '=', 'cc.idConcepto')
+        ->join('catsucursales as cs', 'd.idSucursal', '=', 'cs.idSucursal')
+        ->join('catregionales as cr', 'cs.idRegional', '=', 'cr.idRegional')
+        ->join('catproducto as cprod', 'd.cveproducto', '=', 'cprod.cveproducto')
+        ->select('cr.descripcion as Regional','cs.sucursal as Sucursal','cprod.cveproducto as Clave_Producto','cprod.negocio_op as Nombre_Negocio',
+        'cc.descripcion as Concepto','d.cuenta as Conteo','d.monto as Monto','d.fechaCorte as Fecha_Actualizacion',DB::raw('MONTH(d.fechaCorte) as Numes'),DB::raw('MONTHNAME(d.fechaCorte) as Mes'),DB::raw('YEAR(d.fechaCorte) as Year'))
+        ->where('d.fechaCorte', '>=', $dateini)
+        ->where('d.fechaCorte', '<=', $datefin)
+        ->where('d.estatus', '=', '1')
+        ->get();  // Revisar duplicidad de filas en la descarga de Excel
+        //return count($resumenp);
+       Excel::create('dtResOp'.date('Ymd'), function($excel) use($resumen,$resumenp) {
       $excel->sheet('dtResOP', function($sheet) use($resumen) {
       $sheet->row(1,['Regional','Sucursal','Clave_Vendedor','Nombre_Vendedor','Concepto','Cuenta','Monto','Fecha_Actualizacion','NUMMES','Mes','Año']);
       //$data=[];
@@ -583,7 +594,7 @@ class ExcelController extends Controller
     'C' => '@',
     'F' => '0',
     'G' => '0.00',
-    'H' => 'dd/mm/yyyy',
+    'H' => 'dd/mm/yyyy',  
     'I' => '@',
     ));
       foreach ($resumen as $res) {
@@ -605,10 +616,40 @@ class ExcelController extends Controller
       //$sheet->fromArray($data);
 
     });
+    $excel->sheet('dtResOPp', function($sheet2) use($resumenp) {
+      $sheet2->row(1,['Regional','Sucursal','Clave_Producto','Nombre_Negocio','Concepto','Cuenta','Monto','Fecha_Actualizacion','NUMMES','Mes','Año']);
+      //$data=[];
+      $sheet2->setColumnFormat(array(
+    'C' => '@',
+    'F' => '0',
+    'G' => '0.00',
+    'H' => 'dd/mm/yyyy',
+    'I' => '@',
+    ));
+      foreach ($resumenp as $res) {
+        $row=[];
+        $row[0]=$res->Regional;
+        $row[1]=$res->Sucursal;
+        $row[2]=$res->Clave_Producto;
+        $row[3]=$res->Nombre_Negocio;
+        $row[4]=$res->Concepto;
+        $row[5]=$res->Conteo;
+        $row[6]=$res->Monto;
+        $row[7]=$res->Fecha_Actualizacion;
+        $row[8]=$res->Numes;
+        $row[9]=$res->Mes;
+        $row[10]=$res->Year;
+        //$data[]=$row;
+        $sheet2->appendRow($row);
+      }
+      //$sheet->fromArray($data);
+
+    });
   })->export('xlsx');
 
      }
     }
+
     public function downCom(request $request)
     {
        if ($request) {
