@@ -29,6 +29,10 @@ class PdfController extends Controller
     }
 
     public function resultadosRenovacion(Request $request, Credito $cliente){
+        if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6 && Auth::user()->idNivel!=3 && Auth::user()->idNivel!=4) {
+            return redirect()->route('devengo.index');
+        }
+        
         $actividad = Actividad::where('idcliente',$cliente->idCliente)->first();
         $gastosOperacion = Gastos::where('idact',$actividad->idact)->where('idtipogasto','1')->orderBy('idngasto','ASC')->get();
         $gastosFamiliares = Gastos::where('idact',$actividad->idact)->where('idtipogasto','2')->orderBy('idngasto','ASC')->get();
@@ -84,7 +88,7 @@ class PdfController extends Controller
         $utilidadNeta = $utilidadBruta - $totalo;
         $porcentajeOtrosIngresos = ($totaloi) * 0.3;
         $disponible = $utilidadNeta + $porcentajeOtrosIngresos - $totalf;
-        $capacidadPago = $disponible * 0.3;
+        $capacidadPago = $disponible * 0.35;
         $capacidadPago50 = $disponible * 0.5;
 
         $coberturaGarantia = ($garantia->valorEstimado / $oferta->monto)*100;

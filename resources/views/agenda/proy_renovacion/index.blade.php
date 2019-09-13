@@ -126,7 +126,7 @@
 <!-- Modal -->
 <div class="modal fade" id="ofertas" tabindex="-1" role="dialog" aria-labelledby="oferta" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="margin-top: 130px;">
       <div class="modal-header">
       </div>
       <div class="modal-body">
@@ -143,6 +143,7 @@
                       <th>Plazo</th>
                       <th>Frecuencia</th>
                       <th>Monto</th>
+                      <th>Garant&iacute;a Liquida</th>
                       <th>Cuota</th>
                       <th style="width: 8%"></th>
                     </tr>
@@ -155,11 +156,12 @@
                 <table class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th>Fecha</th>
+                      <th>Fecha de Vigencia</th>
                       <th>Plazo</th>
-                      <th>Monto</th>
-                      <th>Cuota</th>
                       <th>Frecuencia</th>
+                      <th>Monto</th>
+                      <th>Garant&iacute;a Liquida</th>
+                      <th>Cuota</th>
                       <th style="width: 8%"></th>
                     </tr>
                   </thead>
@@ -180,11 +182,11 @@
 
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/agenda/assets/js/moment.js"></script>
+    <script src="/assets/js/moment.js"></script>
     <script>
       let fechai, fechaf = "";
       let tipo, plazo = "";
-      let idOferta, monto, parcialidad, frecuencia = 0;
+      let idOferta, monto, parcialidad, frecuencia, garantia = 0;
       let texto;
       let status = 0;
 
@@ -193,7 +195,7 @@
         $('#tablaproductivo').empty();
         $('#tablavivienda').empty();
         $.ajax({
-          url     :  "/agenda/verificar_oferta/"+id,
+          url     :  "/verificar_oferta/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -219,7 +221,7 @@
 
       function listarOferta(id){
         $.ajax({
-          url     :  "/agenda/ofertas/"+id,
+          url     :  "/ofertas/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -235,6 +237,7 @@
                     plazo       = response.ofertas[i]['plazo'];
                     frecuencia      = response.ofertas[i]['frecuencia'];
                     monto           = response.ofertas[i]['monto'];
+                    garantia        = monto*0.10;
                     parcialidad     = response.ofertas[i]['cuota'];
                     tipo            = response.ofertas[i]['idto'];
                     status          = response.ofertas[i]['status'];
@@ -245,24 +248,24 @@
                     if (tipo == 1) {
                       if (status == 1) {
                         $('#tablaproductivo').append("<tr class='success'>"+
-                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                           "<i class='material-icons'>check_circle_outline</i></td></tr>"
                         );
                       } else {
                         $('#tablaproductivo').append("<tr>"+
-                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                           "<i class='material-icons'>cancel</i></td></tr>"
                         );
                       } 
                     } else {
                       if (status == 1) {
                         $('#tablavivienda').append("<tr class='success'>"+
-                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                           "<i class='material-icons'>check_circle_outline</i></td></tr>"
                         );
                       } else {
                         $('#tablavivienda').append("<tr>"+
-                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                           "<i class='material-icons'>cancel</i></td></tr>"
                         ); 
                       }
@@ -286,7 +289,7 @@
           $('#tablaproductivo').empty();
           $('#tablavivienda').empty();
           $.ajax({
-            url     :  "/agenda/oferta_aceptada/"+id,
+            url     :  "/oferta_aceptada/"+id,
             type    :  'get',
             dataType:  'json',
             success :   function (response) {
@@ -302,6 +305,7 @@
                       plazo       = response.ofertas[i]['plazo'];
                       frecuencia      = response.ofertas[i]['frecuencia'];
                       monto       = response.ofertas[i]['monto'];
+                      garantia    = monto*0.10;
                       parcialidad     = response.ofertas[i]['cuota'];
                       tipo            = response.ofertas[i]['idto'];
                       status          = response.ofertas[i]['status'];
@@ -313,24 +317,24 @@
                       if (tipo == 1) {
                         if (status == 1) {
                           $('#tablaproductivo').append("<tr class='success'>"+
-                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                             "<i class='material-icons'>check_circle_outline</i></td></tr>"
                           );
                         } else {
                           $('#tablaproductivo').append("<tr>"+
-                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                             "<i class='material-icons'>cancel</i></td></tr>"
                           );
                         } 
                       } else {
                         if (status == 1) {
                           $('#tablavivienda').append("<tr class='success'>"+
-                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                             "<i class='material-icons'>check_circle_outline</i></td></tr>"
                           );
                         } else {
                           $('#tablavivienda').append("<tr>"+
-                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                             "<i class='material-icons'>cancel</i></td></tr>"
                           ); 
                         }
@@ -350,7 +354,7 @@
       }
       function ofertas(id){
         $.ajax({
-          url     :  "/agenda/ofertas/"+id,
+          url     :  "/ofertas/"+id,
           type    :  'get',
           dataType:  'json',
           success :   function (response) {
@@ -365,6 +369,7 @@
                     plazo       = response.ofertas[i]['plazo'];
                     frecuencia      = response.ofertas[i]['frecuencia'];
                     monto       = response.ofertas[i]['monto'];
+                    garantia    = monto*0.10;
                     parcialidad     = response.ofertas[i]['cuota'];
                     tipo            = response.ofertas[i]['idto'];
                     if (frecuencia == 1) {
@@ -373,12 +378,12 @@
 
                     if (tipo == 1) {
                       $('#tablaproductivo').append("<tr>"+
-                        "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                        "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                         "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button> </td></tr>"
                       ); 
                     } else {
                       $('#tablavivienda').append("<tr>"+
-                        "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                        "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
                         "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
                       );
                     }

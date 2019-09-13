@@ -25,7 +25,7 @@ class ProyRenovacionController extends Controller
     public function index(Request $request)
     {
         //
-        if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6) {
+        if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6 && Auth::user()->idNivel!=3 && Auth::user()->idNivel!=4) {
             return redirect()->route('devengo.index');
         }
         $i = 0;

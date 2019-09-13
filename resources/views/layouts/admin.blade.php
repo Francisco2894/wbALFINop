@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head><meta http-equiv="Content-Type" content="text/html; charset=gb18030">
 	
@@ -179,7 +179,7 @@
 			</ul>
 			</li>
 			@endif
-			@if (auth()->user()->idNivel=1 || auth()->user()->idNivel=6)
+			@if (auth()->user()->idNivel==1 || auth()->user()->idNivel==6 || auth()->user()->idNivel==3 || auth()->user()->idNivel==4)
 				{{-- <li class="nav-item">
 					<a class="nav-link" href="{{route('renovacion.index')}}">Renovacion</a>
 				</li>

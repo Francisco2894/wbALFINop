@@ -178,7 +178,7 @@ class SocioeconomicoController extends Controller
     }
 
     public function informacion(Credito $cliente){
-        if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6) {
+        if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6 && Auth::user()->idNivel!=3 && Auth::user()->idNivel!=4) {
             return redirect()->route('devengo.index');
         }
         $urlanterior = $_SERVER['HTTP_REFERER'];
@@ -271,7 +271,7 @@ class SocioeconomicoController extends Controller
         }
 
         $disponible = $utilidadNeta + $porcentajeOtrosIngresos - $familiares;
-        $capacidadPago = $disponible * 0.3;
+        $capacidadPago = $disponible * 0.35;
         $capacidadPago50 = $disponible * 0.5;
 
         return view('socioeconomico.info',compact('cliente','gastosOperacion','gastosFamiliares','otrosIngresos','activos',
@@ -289,7 +289,7 @@ class SocioeconomicoController extends Controller
     public function show(Credito $socioeconomico)
     {
         //
-        if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6) {
+        if (Auth::user()->idNivel!=1 && Auth::user()->idNivel!=6 && Auth::user()->idNivel!=3 && Auth::user()->idNivel!=4) {
             return redirect()->route('devengo.index');
         }
         $urlanterior = $_SERVER['HTTP_REFERER'];
@@ -348,7 +348,7 @@ class SocioeconomicoController extends Controller
         }
 
         $disponible = $utilidadNeta + $porcentajeOtrosIngresos - $familiares;
-        $capacidadPago = $disponible * 0.3;
+        $capacidadPago = $disponible * 0.35;
         $capacidadPago50 = $disponible * 0.5;
         
         return view('socioeconomico.show',compact('activos','otrosIngresos','inventario','totalActivoFijo','totalOtrosIngresos',
