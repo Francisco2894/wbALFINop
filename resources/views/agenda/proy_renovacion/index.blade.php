@@ -129,90 +129,10 @@
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="calificarDatos" role="dialog" tabindex="-1" aria-labelledby="calificarDatos" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-center">Solo podra Calificar esta Oferta 1 vez
-            <br>
-            <strong>¿Esta Seguro de Calificarla Ahora?</strong>
-          </h4>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-              <input type="hidden" id="idCalificar">
-              <div class="col-sm-6">
-                <button type="button" class="btn btn-success btn-block" id="aceptar" onclick="verificarCalificacion();">Calificar</button>
-              </div>
-              <div class="col-sm-6">
-                <button type="button" class="btn btn-default btn-block" id="cancelar" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-<!-- Modal -->
-<div class="modal fade" id="ofertas" tabindex="-1" role="dialog" aria-labelledby="oferta" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-      </div>
-      <div class="modal-body">
-        <div class="panel panel-success">
-          <div class="panel-heading" id="titulo">
-          </div>
-          <div class="panel-body">
-            <div class="responsive">
-              <h4 class="title">Productivo</h4>
-              <table class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>Fecha de Vigencia</th>
-                      <th>Plazo</th>
-                      <th>Frecuencia</th>
-                      <th>Monto</th>
-                      <th>Garant&iacute;a Liquida</th>
-                      <th>Cuota</th>
-                      <th style="width: 8%"></th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaproductivo">
-                  </tbody>
-                </table>
-                <hr>
-                <h4 class="title">Vivienda</h4>
-                <table class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>Fecha de Vigencia</th>
-                      <th>Plazo</th>
-                      <th>Frecuencia</th>
-                      <th>Monto</th>
-                      <th>Garant&iacute;a Liquida</th>
-                      <th>Cuota</th>
-                      <th style="width: 8%"></th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablavivienda">
-                  </tbody>
-                </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+  
+  @include('agenda.proy_renovacion.partials.modalCalificar')
+  @include('agenda.proy_renovacion.partials.modalOfertas')
+  @include('agenda.proy_renovacion.partials.modalOfertaAceptada')
 @endsection
 
 @push('scripts')
@@ -224,9 +144,11 @@
       let idOferta, monto, parcialidad, frecuencia, garantia = 0;
       let texto;
       let status = 0;
+      let panel = 0;
 
       function verificarOferta(id)
       {
+        panel = id;
         $("#ofertas").appendTo("body").modal('show');
         $('#tablaproductivo').empty();
         $('#tablavivienda').empty();
@@ -254,8 +176,8 @@
       }
       function verificarCalificacion(){
         var credito = $('#idCalificar').val();
-        $('#aceptar').prop('disabled', true);;
-        $('#cancelar').prop('disabled', true);;
+        $('#aceptar').prop('disabled', true);
+        $('#cancelar').prop('disabled', true);
         console.log(credito)
         //var calificar = confirm('Solo podra Calificar esta Oferta 1 vez, ¿Esta seguro de Calificarla Ahora?')
         // if (calificar == true) {
@@ -293,24 +215,24 @@
                       if (status == 1) {
                         $('#tablaproductivo').append("<tr class='success'>"+
                           "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                          "<i class='material-icons'>check_circle_outline</i></td></tr>"
+                            "<button type='button' style='border:0px;margin:0;' class='btn btn-success btn-xs btn-simple'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
                         );
                       } else {
                         $('#tablaproductivo').append("<tr>"+
                           "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                          "<i class='material-icons'>cancel</i></td></tr>"
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-xs btn-simple'><i class='material-icons'>cancel</i></button></td></tr>"
                         );
                       } 
                     } else {
                       if (status == 1) {
                         $('#tablavivienda').append("<tr class='success'>"+
                           "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                          "<i class='material-icons'>check_circle_outline</i></td></tr>"
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-success btn-xs btn-simple'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
                         );
                       } else {
                         $('#tablavivienda').append("<tr>"+
                           "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                          "<i class='material-icons'>cancel</i></td></tr>"
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-xs btn-simple'><i class='material-icons'>cancel</i></button></td></tr>"
                         ); 
                       }
                     }
@@ -324,78 +246,95 @@
           }
         });
       }
+      
+      function ofertaAceptada(){
+        var id = $('#idOfertaAceptada').val();
+        $('#aceptarOferta').prop('disabled', true);
+        $('#cancelarOferta').prop('disabled', true);
+        $("#ofertaAceptada").modal('hide');
+        var bd = $('<div class="modal-backdrop"></div>');
+        bd.appendTo(document.body);
+        setTimeout(function () {
+          bd.remove();
+          $("#ofertas").modal("show");
+        }, 1000);
+
+        $('#aceptarOferta').prop('disabled', false);
+        $('#cancelarOferta').prop('disabled', false);
+        console.log(id);
+
+        $('#tablaproductivo').empty();
+        $('#tablavivienda').empty();
+        $.ajax({
+          url     :  "{{ url('oferta_aceptada') }}/"+id,
+          type    :  'get',
+          dataType:  'json',
+          success :   function (response) {
+            console.log(response);
+                if(response.ofertas.length>0){
+                  console.log(response.ofertas[0]['idto']);
+                  $('#tablaproductivo').empty();
+                  $('#tablavivienda').empty();
+                  for(i=0;i<response.ofertas.length;i++){
+                    idOferta    = response.ofertas[i]['idoferta'];
+                    fechai      = response.ofertas[i]['fechai'];
+                    fechaf      = response.ofertas[i]['fechaf'];
+                    plazo       = response.ofertas[i]['plazo'];
+                    frecuencia      = response.ofertas[i]['frecuencia'];
+                    monto       = response.ofertas[i]['monto'];
+                    garantia    = monto*0.10;
+                    parcialidad     = response.ofertas[i]['cuota'];
+                    tipo            = response.ofertas[i]['idto'];
+                    status          = response.ofertas[i]['status'];
+                    idCredito       = response.ofertas[i]['idcredito'];
+                    if (frecuencia == 1) {
+                      texto = 'Mensual';
+                    }
+
+                    if (tipo == 1) {
+                      if (status == 1) {
+                        $('#tablaproductivo').append("<tr class='success'>"+
+                          "<td style='padding: 0;'>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-success btn-xs btn-simple'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
+                        );
+                      } else {
+                        $('#tablaproductivo').append("<tr>"+
+                          "<td style='padding: 0;'>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-xs btn-simple'><i class='material-icons'>cancel</i></button></td></tr>"
+                        );
+                      } 
+                    } else {
+                      if (status == 1) {
+                        $('#tablavivienda').append("<tr class='success'>"+
+                          "<td style='padding: 0;'>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-success btn-xs btn-simple'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
+                        );
+                      } else {
+                        $('#tablavivienda').append("<tr>"+
+                          "<td style='padding: 0;'>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-xs btn-simple'><i class='material-icons'>cancel</i></button></td></tr>"
+                        ); 
+                      }
+                    }
+                }
+              }
+              $('#titulo').text("Oferta ID Cliente: "+response.ofertas[0]['idcliente']+' Nombre del Cliente: '+response.nombre);
+              $("#miModal").modal("show");
+              console.log('#pdf'+idCredito)
+              $('#pdf'+idCredito).show();
+          },
+          error   :   function() {
+              alert('error');
+          }
+        });
+      }
 
       function ofertaSeleccionada(id){
-        console.log(id);
-        var confirmacion;
-        confirmacion = confirm('Solo podra seleccionar una unica Oferta, ¿Esta seguro de selecionar esta?')
-        if (confirmacion == true) {
-          $('#tablaproductivo').empty();
-          $('#tablavivienda').empty();
-          $.ajax({
-            url     :  "{{ url('oferta_aceptada') }}/"+id,
-            type    :  'get',
-            dataType:  'json',
-            success :   function (response) {
-              console.log(response);
-                  if(response.ofertas.length>0){
-                    console.log(response.ofertas[0]['idto']);
-                    $('#tablaproductivo').empty();
-                    $('#tablavivienda').empty();
-                    for(i=0;i<response.ofertas.length;i++){
-                      idOferta    = response.ofertas[i]['idoferta'];
-                      fechai      = response.ofertas[i]['fechai'];
-                      fechaf      = response.ofertas[i]['fechaf'];
-                      plazo       = response.ofertas[i]['plazo'];
-                      frecuencia      = response.ofertas[i]['frecuencia'];
-                      monto       = response.ofertas[i]['monto'];
-                      garantia    = monto*0.10;
-                      parcialidad     = response.ofertas[i]['cuota'];
-                      tipo            = response.ofertas[i]['idto'];
-                      status          = response.ofertas[i]['status'];
-                      idCredito       = response.ofertas[i]['idcredito'];
-                      if (frecuencia == 1) {
-                        texto = 'Mensual';
-                      }
-
-                      if (tipo == 1) {
-                        if (status == 1) {
-                          $('#tablaproductivo').append("<tr class='success'>"+
-                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                            "<i class='material-icons'>check_circle_outline</i></td></tr>"
-                          );
-                        } else {
-                          $('#tablaproductivo').append("<tr>"+
-                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                            "<i class='material-icons'>cancel</i></td></tr>"
-                          );
-                        } 
-                      } else {
-                        if (status == 1) {
-                          $('#tablavivienda').append("<tr class='success'>"+
-                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                            "<i class='material-icons'>check_circle_outline</i></td></tr>"
-                          );
-                        } else {
-                          $('#tablavivienda').append("<tr>"+
-                            "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                            "<i class='material-icons'>cancel</i></td></tr>"
-                          ); 
-                        }
-                      }
-                  }
-                }
-                $('#titulo').text("Oferta ID Cliente: "+response.ofertas[0]['idcliente']+' Nombre del Cliente: '+response.nombre);
-                $("#miModal").modal("show");
-                console.log('#pdf'+idCredito)
-                $('#pdf'+idCredito).show();
-            },
-            error   :   function() {
-                alert('error');
-            }
-          }); 
-        }
+        $('#idOfertaAceptada').val(id);
+        $("#ofertas").modal('hide');
+        $("#ofertaAceptada").appendTo("body").modal('show');
       }
+
       function ofertas(id){
         $.ajax({
           url     :  "{{ url('ofertas') }}/"+id,
@@ -422,24 +361,24 @@
 
                     if ({{ auth()->user()->idNivel }} !=4 && {{ auth()->user()->idNivel }} !=3) {
                       if (tipo == 1) {
-                        $('#tablaproductivo').append("<tr>"+
-                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                          "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button> </td></tr>"
+                        $('#tablaproductivo').append("<tr >"+
+                          "<td style='padding: 0;'>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button> </td></tr>"
                         ); 
                       } else {
-                        $('#tablavivienda').append("<tr>"+
-                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
-                          "<button type='button' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
+                        $('#tablavivienda').append("<tr >"+
+                          "<td style='padding: 0;'>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"+
+                          "<button type='button' style='border:0px;margin:0;' class='btn btn-primary btn-xs btn-simple' onclick='ofertaSeleccionada("+idOferta+")'><i class='material-icons'>check_circle_outline</i></button></td></tr>"
                         );
                       } 
                     }else{
                       if (tipo == 1) {
-                        $('#tablaproductivo').append("<tr>"+
-                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"
+                        $('#tablaproductivo').append("<tr >"+
+                          "<td style='padding: 0;'>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"
                         ); 
                       } else {
-                        $('#tablavivienda').append("<tr>"+
-                          "<td>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"
+                        $('#tablavivienda').append("<tr >"+
+                          "<td style='padding: 0;'>"+moment(fechai.substr(0,10)).format("DD-MM-YYYY")+" - "+moment(fechaf.substr(0,10)).format("DD-MM-YYYY")+"</td><td>"+plazo+"</td><td>"+texto+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(monto)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(garantia)+"</td><td>$"+new Intl.NumberFormat("en-IN",{minimumFractionDigits: 2}).format(parcialidad)+"</td><td>"
                         );
                       }
                     }
