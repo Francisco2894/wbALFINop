@@ -137,7 +137,7 @@
 
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/assets/js/moment.js"></script>
+    <script src="{{ url('/assets/js/moment.js') }}"></script>
     <script>
       let fechai, fechaf = "";
       let tipo, plazo = "";
