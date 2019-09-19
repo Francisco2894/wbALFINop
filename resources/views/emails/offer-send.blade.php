@@ -117,9 +117,10 @@
 <table>
     <thead>
         <tr>
-            <th colspan="6" style="background-color: #5bc0de;"><h3 style="text-align: center; color: white;">Oferta Aceptada (Producto oferta)</h3></th>
+            <th colspan="7" style="background-color: #5bc0de;"><h3 style="text-align: center; color: white;">Oferta Aceptada (Producto oferta)</h3></th>
         </tr>
         <tr>
+            <th>Producto</th>
             <th>Incremento</th>
             <th>Plazo</th>
             <th>Frecuencia</th>
@@ -130,6 +131,7 @@
     </thead>
     <tbody>
         <tr>
+            <td>{{ $oferta->idto==1?'Refinanciamiento Productivo':'Refinanciamiento Vivienda' }}</td>
             <td>{{ $oferta->monto==$credito->montoInicial?'0%':'30%' }}</td>
             <td>{{ $oferta->plazo }}</td>
             <td>{{ $oferta->frecuencia==1?'Mensual':'' }}</td>
