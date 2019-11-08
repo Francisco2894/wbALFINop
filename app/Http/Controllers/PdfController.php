@@ -79,7 +79,7 @@ class PdfController extends Controller
             $totaloi = $totaloi + $oi->monto;
         }
         foreach ($activos as $act) {
-            $totala = $totalv + $act->monto;
+            $totala = $totala + $act->monto;
         }
 
         $ventasMensuales = $totalv * 4;
